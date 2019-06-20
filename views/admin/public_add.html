@@ -29,14 +29,14 @@
             <dd><a href=""><i class="layui-icon">&#xe65c;</i> 退出</a></dd>
           </dl>
         </li>
-
       </ul>
     </div>
     <div class="layui-side layui-bg-black">
       <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree">
-          <li class="layui-nav-item layui-this"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
+          <li class="layui-nav-item"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
+          <li class="layui-nav-item layui-this"><a href="public.html"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
           <li class="layui-nav-item">
             <a class="" href="javascript:;">所有商品</a>
             <dl class="layui-nav-child">
@@ -59,13 +59,77 @@
         </ul>
       </div>
     </div>
-    <div class="layui-body" style="padding: 10px">
-      <blockquote class="layui-elem-quote layui-bg-green">
-        <div id="nowTime"></div>
-      </blockquote>
-      <!-- 内容主体区域 -->
-      <div style="padding: 15px;">内容主体区域</div>
-      
+    <div class="layui-body" style="padding: 20px">
+      <div class="layui-card">
+        <span class="layui-breadcrumb">
+          <a href="">后台管理系统</a>
+          <a href="">网站信息</a>
+          <a class="active" href="">添加网站信息</a>
+        </span>
+      </div>
+      <div class="layui-content">
+        <form class="layui-form">
+          <div class="layui-form-item">
+            <label class="layui-form-label">网站LOGO</label>
+            <div class="layui-input-block">
+              <label>
+                <input type="file" name="logo" id="logo" />
+                <span type="button" class="layui-btn" id="test1">
+                  <i class="layui-icon">&#xe67c;</i>上传LOGO
+                </span>
+                <img class="logo_img" src="/public\upload\15610229618291554277895285icon_search.png" alt="" />
+              </label>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">网站关键字</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" required lay-verify="required" placeholder="请输入网站关键字" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">网站描述</label>
+            <div class="layui-input-block">
+              <textarea name="desc" placeholder="请输入网站描述" class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">服务热线</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" required lay-verify="required" placeholder="请输入服务热线" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">天猫商城</label>
+            <div class="layui-input-block">
+              <input type="http" name="title" required lay-verify="required" placeholder="请输入天猫商城地址" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">英文网站</label>
+            <div class="layui-input-block">
+              <input type="http" name="title" required lay-verify="required" placeholder="请输入英文网站地址" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">网站备案号</label>
+            <div class="layui-input-block">
+              <input type="text" name="title" placeholder="请输入网站备案号" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <a class="layui-btn add">添加信息</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
     <div class="layui-footer">
       <!-- 底部固定区域 -->
@@ -74,10 +138,82 @@
   </div>
   <script>
     //JavaScript代码区域
-    $(function(){
-      layui.use('element', function () {
+    $(function () {
+      layui.use(['element', 'form', 'jquery'], function () {
         var element = layui.element;
-        getNowTime()
+        var form = layui.form;
+        var $ = layui.jquery;
+        //监听提交
+        // form.on('submit(formDemo)', function (data) {
+        //   layer.msg(JSON.stringify(data.field));
+        //   return false;
+        // });
+
+        $('#logo').change(function () {
+          var _file = $(this);
+          var _fileObj = _file[0];
+          var windowURL = window.URL || window.webkitURL;
+          var dataURL;
+          var img = $(".logo_img");
+
+          if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+            dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+            img.attr('src', dataURL);
+          } else {
+            dataURL = _file.val();
+            var imgObj = img[0];
+            // 两个坑:
+            // 1、在设置filter属性时，元素必须已经存在在DOM树中，动态创建的Node，也需要在设置属性前加入到DOM中，先设置属性在加入，无效；
+            // 2、src属性需要像下面的方式添加，上面的两种方式添加，无效；
+            imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+            imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+
+          }
+          // $('.logo_img').attr('src', $(this).file())
+        })
+        $('.add').click(function () {
+          //上传图片的input
+          var file = document.getElementById("logo");
+          //创建formdata对象
+          var formData = new FormData();
+          //给formdata对象中放入数据(键值对的方式)
+          formData.append('file', file.files[0]);
+          //提交请求
+          $.ajax({
+            url: '/api/upload', //请求路径
+            type: 'POST',
+            data: formData,
+            contentType: false, //为了让浏览器根据传入的formdata来判断contentType
+            processData: false, //同上
+            success: function (data) {
+              if (200 === data.code) {
+                $('#result').html("上传成功！");
+                $('#img').attr('src', data.data);
+              } else {
+                $('#result').html("上传失败！");
+              }
+              console.log(2)
+            },
+            error: function () {
+              $("#result").html("与服务器通信发生错误");
+            }
+          });
+          console.log(file)
+        })
+
+
+        //上传图片的业务逻辑函数
+        function uploadFile() {
+          //上传图片的input
+          var file = document.getElementById("file")
+          //因为准备用post提交，又因为图片的内容比较大，所以我们选择使用formdata来承载数据
+          //创建formdata对象
+          var formData = new FormData();
+          //给formdata对象中放入数据(键值对的方式)
+          formData.append('file', file.files[0]);
+
+          console.log(1)
+        }
       });
     })
   </script>

@@ -56,7 +56,7 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname), function (req, res, next) {
 
 
 app.use('/admin', require('./routers/admin'))
-
+app.use('/api', require('./routers/api'))
 
 // 启动 mongodb://<dbuser>:<dbpassword>@ds139427.mlab.com:39427/fusen
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {
