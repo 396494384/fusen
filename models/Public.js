@@ -6,7 +6,7 @@ const PublicSchema = new mongoose.Schema({
   keyword: {
     type: String
   },
-  description: {
+  desc: {
     type: String
   },
   hotline: {

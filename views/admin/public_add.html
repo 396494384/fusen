@@ -36,7 +36,7 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree">
           <li class="layui-nav-item"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item layui-this"><a href="public.html"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
+          <li class="layui-nav-item layui-this"><a href="public"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
           <li class="layui-nav-item">
             <a class="" href="javascript:;">所有商品</a>
             <dl class="layui-nav-child">
@@ -74,7 +74,7 @@
             <div class="layui-input-block">
               <label>
                 <input type="file" name="logo" id="logo" />
-                <span type="button" class="layui-btn" id="test1">
+                <span type="button" class="layui-btn logo_btn">
                   <i class="layui-icon">&#xe67c;</i>上传LOGO
                 </span>
                 <img class="logo_img" src="/public\upload\15610229618291554277895285icon_search.png" alt="" />
@@ -84,8 +84,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">网站关键字</label>
             <div class="layui-input-block">
-              <input type="text" name="title" required lay-verify="required" placeholder="请输入网站关键字" autocomplete="off"
-                class="layui-input">
+              <input type="text" name="keyword" placeholder="请输入网站关键字" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
@@ -97,34 +96,31 @@
           <div class="layui-form-item">
             <label class="layui-form-label">服务热线</label>
             <div class="layui-input-block">
-              <input type="text" name="title" required lay-verify="required" placeholder="请输入服务热线" autocomplete="off"
-                class="layui-input">
+              <input type="text" name="hotline" placeholder="请输入服务热线" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <label class="layui-form-label">天猫商城</label>
             <div class="layui-input-block">
-              <input type="http" name="title" required lay-verify="required" placeholder="请输入天猫商城地址" autocomplete="off"
-                class="layui-input">
+              <input type="http" name="tmall" placeholder="请输入天猫商城地址" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <label class="layui-form-label">英文网站</label>
             <div class="layui-input-block">
-              <input type="http" name="title" required lay-verify="required" placeholder="请输入英文网站地址" autocomplete="off"
-                class="layui-input">
+              <input type="http" name="en" placeholder="请输入英文网站地址" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <label class="layui-form-label">网站备案号</label>
             <div class="layui-input-block">
-              <input type="text" name="title" placeholder="请输入网站备案号" class="layui-input">
+              <input type="text" name="copyright" placeholder="请输入网站备案号" class="layui-input">
             </div>
           </div>
-
           <div class="layui-form-item">
             <div class="layui-input-block">
               <a class="layui-btn add">添加信息</a>
+              <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
             </div>
           </div>
         </form>
@@ -136,18 +132,29 @@
       底部固定区域
     </div>
   </div>
+
+  <!-- 页面样式 -->
+  <style>
+    #logo {
+      width: 0;
+      height: 0;
+      visibility: hidden;
+      display: none;
+    }
+
+    .logo_img {
+      display: none;
+      height: 100px;
+    }
+  </style>
+  <!-- //JavaScript代码区域 -->
   <script>
-    //JavaScript代码区域
     $(function () {
-      layui.use(['element', 'form', 'jquery'], function () {
+      layui.use(['element', 'jquery', 'form', "layer"], function () {
         var element = layui.element;
-        var form = layui.form;
         var $ = layui.jquery;
-        //监听提交
-        // form.on('submit(formDemo)', function (data) {
-        //   layer.msg(JSON.stringify(data.field));
-        //   return false;
-        // });
+        var form = layui.form;
+        var layer = layui.layer;
 
         $('#logo').change(function () {
           var _file = $(this);
@@ -155,66 +162,105 @@
           var windowURL = window.URL || window.webkitURL;
           var dataURL;
           var img = $(".logo_img");
-
+          if (_fileObj.files[0].type.indexOf('image') == -1) {
+            _file.val("");
+            layer.msg("LOGO只支持图片类型", {
+              time: 1000
+            });
+            return;
+          }
           if (_fileObj && _fileObj.files && _fileObj.files[0]) {
             dataURL = windowURL.createObjectURL(_fileObj.files[0]);
-            img.attr('src', dataURL);
+            img.show().attr('src', dataURL);
+            $('.logo_btn').hide();
           } else {
             dataURL = _file.val();
             var imgObj = img[0];
-            // 两个坑:
-            // 1、在设置filter属性时，元素必须已经存在在DOM树中，动态创建的Node，也需要在设置属性前加入到DOM中，先设置属性在加入，无效；
-            // 2、src属性需要像下面的方式添加，上面的两种方式添加，无效；
             imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
             imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
-
           }
-          // $('.logo_img').attr('src', $(this).file())
         })
         $('.add').click(function () {
-          //上传图片的input
-          var file = document.getElementById("logo");
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-          //提交请求
-          $.ajax({
-            url: '/api/upload', //请求路径
-            type: 'POST',
-            data: formData,
-            contentType: false, //为了让浏览器根据传入的formdata来判断contentType
-            processData: false, //同上
-            success: function (data) {
-              if (200 === data.code) {
-                $('#result').html("上传成功！");
-                $('#img').attr('src', data.data);
-              } else {
-                $('#result').html("上传失败！");
+          var _logo = $('input[name="logo"]').val();
+          var _keyword = $('input[name="keyword"]').val();
+          var _desc = $('textarea[name="desc"]').val();
+          var _hotline = $('input[name="hotline"]').val();
+          var _tmall = $('input[name="tmall"]').val();
+          var _en = $('input[name="en"]').val();
+          var _copyright = $('input[name="copyright"]').val();
+
+          var _sendData = {
+            keyword: _keyword,
+            desc: _desc,
+            hotline: _hotline,
+            tmall: _tmall,
+            en: _en,
+            copyright: _copyright
+          }
+
+          if (_logo == "") { //没上传LOGO
+            _sendData.logo = "";
+            addPublic(_sendData)
+          } else {
+            //上传图片的input
+            var file = document.getElementById("logo");
+            //创建formdata对象
+            var formData = new FormData();
+            //给formdata对象中放入数据(键值对的方式)
+            formData.append('file', file.files[0]);
+            //提交请求
+            $.ajax({
+              url: '/api/upload',
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                if (data.code == 200) {
+                  _sendData.logo = data.data;
+                  addPublic(_sendData)
+                } else {
+                  layer.msg("添加失败", {
+                    time: 1000
+                  });
+                }
+              },
+              error: function () {
+                layer.msg("与服务器通信发生错误", {
+                  time: 1000
+                });
               }
-              console.log(2)
-            },
-            error: function () {
-              $("#result").html("与服务器通信发生错误");
-            }
-          });
-          console.log(file)
+            });
+          }
         })
 
-
-        //上传图片的业务逻辑函数
-        function uploadFile() {
-          //上传图片的input
-          var file = document.getElementById("file")
-          //因为准备用post提交，又因为图片的内容比较大，所以我们选择使用formdata来承载数据
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-
-          console.log(1)
+        function addPublic(data) {
+          $.ajax({
+            url: '/api/public_add', //请求路径
+            type: 'POST',
+            data: data,
+            success: function (data) {
+              if (data.code == 200) {
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+                setTimeout(function () {
+                  window.location.href = "public";
+                }, 1000)
+              } else {
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
         }
-      });
+      })
     })
   </script>
 </body>

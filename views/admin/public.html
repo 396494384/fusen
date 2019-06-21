@@ -36,7 +36,7 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree">
           <li class="layui-nav-item"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item layui-this"><a href="public.html"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
+          <li class="layui-nav-item layui-this"><a href="public"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
           <li class="layui-nav-item">
             <a class="" href="javascript:;">所有商品</a>
             <dl class="layui-nav-child">
@@ -66,65 +66,51 @@
           <a class="active" href="">网站信息</a>
         </span>
       </div>
-      <div class="layui-content">
-        <form class="layui-form">
-          <div class="layui-form-item">
-            <label class="layui-form-label">网站LOGO</label>
-            <div class="layui-input-block">
-              <button type="button" class="layui-btn" id="test1">
-                <i class="layui-icon">&#xe67c;</i>上传LOGO
-              </button>
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">网站关键字</label>
-            <div class="layui-input-block">
-              <input type="text" name="title" required lay-verify="required" placeholder="请输入网站关键字" autocomplete="off"
-                class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">网站描述</label>
-            <div class="layui-input-block">
-              <textarea name="desc" placeholder="请输入网站描述" class="layui-textarea"></textarea>
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">服务热线</label>
-            <div class="layui-input-block">
-              <input type="text" name="title" required lay-verify="required" placeholder="请输入服务热线" autocomplete="off"
-                class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">天猫商城</label>
-            <div class="layui-input-block">
-              <input type="http" name="title" required lay-verify="required" placeholder="请输入天猫商城地址" autocomplete="off"
-                class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">英文网站</label>
-            <div class="layui-input-block">
-              <input type="http" name="title" required lay-verify="required" placeholder="请输入英文网站地址" autocomplete="off"
-                class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">网站备案号</label>
-            <div class="layui-input-block">
-              <input type="text" name="title" placeholder="请输入网站备案号" class="layui-input">
-            </div>
-          </div>
-        
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <a class="layui-btn" lay-filter="update"><i class="layui-icon">&#xe642;</i>修改信息</a>
-            </div>
-          </div>
-        </form>
-      </div>
-      
+      {% if data %}
+      <a href="public_update" class="layui-btn to_update">修改网站信息</a>
+      <table class="layui-table" lay-size="lg">
+        <colgroup>
+          <col width="200">
+          <col>
+        </colgroup>
+        <tr>
+          <td>网站LOGO</td>
+          <td>
+            {% if data.logo %}
+            <img src="{{ data.logo }}" alt="">
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>网站关键字</td>
+          <td>{{ data.keyword }}</td>
+        </tr>
+        <tr>
+          <td>网站描述</td>
+          <td>{{ data.desc }}</td>
+        </tr>
+        <tr>
+          <td>服务热线</td>
+          <td>{{ data.hotline }}</td>
+        </tr>
+        <tr>
+          <td>天猫商城</td>
+          <td>{{ data.tmall }}</td>
+        </tr>
+        <tr>
+          <td>英文网站</td>
+          <td>{{ data.en }}</td>
+        </tr>
+        <tr>
+          <td>网站备案号</td>
+          <td>{{ data.keyword }}</td>
+        </tr>
+      </table>
+      {% else %}
+      <blockquote class="layui-elem-quote">还没有添加网站信息 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="public_add"
+          class="layui-btn">去添加</a>
+      </blockquote>
+      {% endif %}
     </div>
     <div class="layui-footer">
       <!-- 底部固定区域 -->
@@ -134,14 +120,8 @@
   <script>
     //JavaScript代码区域
     $(function(){
-      layui.use(['element', 'form'], function () {
+      layui.use(['element'], function () {
         var element = layui.element;
-        var form = layui.form;
-        //监听提交
-        form.on('submit(formDemo)', function (data) {
-          layer.msg(JSON.stringify(data.field));
-          return false;
-        });
       });
     })
   </script>
