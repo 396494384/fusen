@@ -1,86 +1,16 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>后台管理系统</title>
-  <script src="/admin/js/jquery.min.js"></script>
-  <script src="./layui/layui.js"></script>
-  <script src="/admin/js/public.js"></script>
-  <link rel="stylesheet" href="./layui/css/layui.css">
-</head>
-
-<body class="layui-layout-body">
-  <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-      <div class="layui-logo">后台管理系统</div>
-      <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item"><a class="clear_cache" href="javascript:"><i class="layui-icon">&#xe640;</i> 清除缓存</a>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">
-            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-            贤心
-          </a>
-          <dl class="layui-nav-child">
-            <dd><a href=""><i class="layui-icon">&#xe673;</i> 修改密码</a></dd>
-            <dd><a href=""><i class="layui-icon">&#xe65c;</i> 退出</a></dd>
-          </dl>
-        </li>
-
-      </ul>
-    </div>
-    <div class="layui-side layui-bg-black">
-      <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree">
-          <li class="layui-nav-item layui-this"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item">
-            <a class="" href="javascript:;">所有商品</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="javascript:;">列表三</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item"><a href="">云市场</a></li>
-          <li class="layui-nav-item"><a href="">发布商品</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="layui-body" style="padding: 10px">
-      <blockquote class="layui-elem-quote layui-bg-green">
-        <div id="nowTime"></div>
-      </blockquote>
-      <!-- 内容主体区域 -->
-      <div style="padding: 15px;">内容主体区域</div>
-      
-    </div>
-    <div class="layui-footer">
-      <!-- 底部固定区域 -->
-      底部固定区域
-    </div>
-  </div>
-  <script>
-    //JavaScript代码区域
-    $(function(){
-      layui.use('element', function () {
-        var element = layui.element;
-        getNowTime()
-      });
-    })
-  </script>
-</body>
-
-</html>
+{% extends './template/layout.html' %}
+{% block main %}
+<blockquote class="layui-elem-quote layui-bg-green">
+  <div id="nowTime"></div>
+</blockquote>
+<div style="padding: 15px; text-align: center;">内容主体区域1</div>
+<script>
+  // JavaScript代码区域xxx
+  $(function () {
+    layui.use('element', function () {
+      var element = layui.element;
+      getNowTime()
+    });
+  })
+</script>
+{% endblock %}

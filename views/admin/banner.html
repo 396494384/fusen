@@ -1,86 +1,148 @@
-<!DOCTYPE html>
-<html>
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="">后台管理系统</a>
+    <a class="active" href="">Banner管理</a>
+  </span>
+</div>
+<a href="banner_add" class="layui-btn">添加Banner</a>
+<table class="layui-table" id="table" lay-filter="operation"></table>
+<script type="text/html" id="operation">
+  <!-- {{#  if( d.status ){ }} -->
+  <a class="layui-btn layui-btn-xs" lay-event="on">开启</a>
+  <!-- {{#  }else{ }} -->
+  <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a>
+  <!-- {{#  } }} -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+</script>
+<style>
+  .layui-table img.table_img {
+    display: block;
+    width: auto;
+    max-width: inherit;
+    height: 100px;
+    margin: 10px auto;
+  }
+  .layui-table-cell {
+    height: auto;
+  }
+</style>
+<!-- //JavaScript代码区域 -->
+<script>
+  $(function () {
+    var url = '/api/banner_list';
+    var config = {
+      elem: '#table',
+      url: url,
+      cols: [
+        [ //表头
+          {
+            width: "40%",
+            title: 'Banner图片',
+            field: 'banner',
+            templet: function (item) {
+              return "<img src=" + item.banner + " class='table_img' />"
+            }
+          }, {
+            width: "30%",
+            title: '状态',
+            align: "center",
+            field: 'status',
+            templet: function (item) {
+              return item.status ? "开启" : "关闭"
+            }
+          },
+          {
+            width: '30%',
+            title: '操作',
+            align: 'center',
+            toolbar: '#operation'
+          }
+        ]
+      ]
+    };
+    layui.use(['element', 'form', 'layer', 'jquery', 'table'], function () {
+      var element = layui.element;
+      var table = layui.table;
+      var layer = layui.layer;
+      var $ = layui.jquery;
+      table.render(config);
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>后台管理系统</title>
-  <script src="./js/jquery.min.js"></script>
-  <script src="./layui/layui.js"></script>
-  <script src="./js/public.js"></script>
-  <link rel="stylesheet" href="./layui/css/layui.css">
-</head>
-
-<body class="layui-layout-body">
-  <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-      <div class="layui-logo">后台管理系统</div>
-      <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item"><a class="clear_cache" href="javascript:"><i class="layui-icon">&#xe640;</i> 清除缓存</a>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">
-            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-            贤心
-          </a>
-          <dl class="layui-nav-child">
-            <dd><a href=""><i class="layui-icon">&#xe673;</i> 修改密码</a></dd>
-            <dd><a href=""><i class="layui-icon">&#xe65c;</i> 退出</a></dd>
-          </dl>
-        </li>
-
-      </ul>
-    </div>
-    <div class="layui-side layui-bg-black">
-      <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree">
-          <li class="layui-nav-item layui-this"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item">
-            <a class="" href="javascript:;">所有商品</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="javascript:;">列表三</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item"><a href="">云市场</a></li>
-          <li class="layui-nav-item"><a href="">发布商品</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="layui-body" style="padding: 10px">
-      <blockquote class="layui-elem-quote layui-bg-green">
-        <div id="nowTime"></div>
-      </blockquote>
-      <!-- 内容主体区域 -->
-      <div style="padding: 15px;">内容主体区域</div>
-      
-    </div>
-    <div class="layui-footer">
-      <!-- 底部固定区域 -->
-      底部固定区域
-    </div>
-  </div>
-  <script>
-    //JavaScript代码区域
-    $(function(){
-      layui.use('element', function () {
-        var element = layui.element;
-        getNowTime()
+      //监听工具条
+      table.on('tool(operation)', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        var _id = data._id.toString();
+        if (layEvent === 'delete') {
+          layer.open({
+            id: 1,
+            content: '确认要删除吗？',
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+              $.ajax({
+                type: 'POST',
+                url: '/api/banner_delete',
+                data: {
+                  id: _id
+                },
+                success: function (data) {
+                  layer.closeAll();
+                  layer.msg(data.msg, {
+                    time: 1000
+                  });
+                  if (data.code == 200) {
+                    table.render(config);
+                  }
+                },
+                error: function () {
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                },
+              });
+            },
+          })
+        } else if (layEvent === 'edit') {
+          location.href = 'banner_update?id=' + data._id.toString();
+        } else if (layEvent === 'on') {
+          $.ajax({
+            type: 'POST',
+            url: '/api/banner_on',
+            data: {
+              id: _id
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              })
+              if (data.code == 200) {
+                table.render(config);
+              }
+            }
+          });
+        } else if (layEvent === 'off') {
+          $.ajax({
+            type: 'POST',
+            url: '/api/banner_off',
+            data: {
+              id: _id
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              })
+              if (data.code == 200) {
+                table.render(config);
+              }
+            }
+          });
+        }
       });
-    })
-  </script>
-</body>
-
-</html>
+    });
+  })
+</script>
+{% endblock %}

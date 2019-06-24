@@ -22,3 +22,8 @@
 .layui-content{
   width: 70%;
 }
+.table_img{
+  display: block;
+  width: 80%;
+  height: auto;
+}

@@ -1,130 +1,61 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>后台管理系统</title>
-  <script src="./js/jquery.min.js"></script>
-  <script src="./layui/layui.js"></script>
-  <script src="./js/public.js"></script>
-  <link rel="stylesheet" href="./layui/css/layui.css">
-</head>
-
-<body class="layui-layout-body">
-  <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-      <div class="layui-logo">后台管理系统</div>
-      <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item"><a class="clear_cache" href="javascript:"><i class="layui-icon">&#xe640;</i> 清除缓存</a>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">
-            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-            贤心
-          </a>
-          <dl class="layui-nav-child">
-            <dd><a href=""><i class="layui-icon">&#xe673;</i> 修改密码</a></dd>
-            <dd><a href=""><i class="layui-icon">&#xe65c;</i> 退出</a></dd>
-          </dl>
-        </li>
-      </ul>
-    </div>
-    <div class="layui-side layui-bg-black">
-      <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree">
-          <li class="layui-nav-item"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item layui-this"><a href="public"><i class="layui-icon">&#xe62a;</i> 网站信息</a></li>
-          <li class="layui-nav-item">
-            <a class="" href="javascript:;">所有商品</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="javascript:;">列表三</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item"><a href="">云市场</a></li>
-          <li class="layui-nav-item"><a href="">发布商品</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="layui-body" style="padding: 20px">
-      <div class="layui-card">
-        <span class="layui-breadcrumb">
-          <a href="">后台管理系统</a>
-          <a class="active" href="">网站信息</a>
-        </span>
-      </div>
-      {% if data %}
-      <a href="public_update" class="layui-btn to_update">修改网站信息</a>
-      <table class="layui-table" lay-size="lg">
-        <colgroup>
-          <col width="200">
-          <col>
-        </colgroup>
-        <tr>
-          <td>网站LOGO</td>
-          <td>
-            {% if data.logo %}
-            <img src="{{ data.logo }}" alt="">
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td>网站关键字</td>
-          <td>{{ data.keyword }}</td>
-        </tr>
-        <tr>
-          <td>网站描述</td>
-          <td>{{ data.desc }}</td>
-        </tr>
-        <tr>
-          <td>服务热线</td>
-          <td>{{ data.hotline }}</td>
-        </tr>
-        <tr>
-          <td>天猫商城</td>
-          <td>{{ data.tmall }}</td>
-        </tr>
-        <tr>
-          <td>英文网站</td>
-          <td>{{ data.en }}</td>
-        </tr>
-        <tr>
-          <td>网站备案号</td>
-          <td>{{ data.keyword }}</td>
-        </tr>
-      </table>
-      {% else %}
-      <blockquote class="layui-elem-quote">还没有添加网站信息 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="public_add"
-          class="layui-btn">去添加</a>
-      </blockquote>
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="">后台管理系统</a>
+    <a class="active" href="">网站信息</a>
+  </span>
+</div>
+{% if data %}
+<a href="public_update" class="layui-btn to_update">修改网站信息</a>
+<table class="layui-table" lay-size="lg">
+  <colgroup>
+    <col width="200">
+    <col>
+  </colgroup>
+  <tr>
+    <td>网站LOGO</td>
+    <td>
+      {% if data.logo %}
+      <img src="{{ data.logo }}" alt="">
       {% endif %}
-    </div>
-    <div class="layui-footer">
-      <!-- 底部固定区域 -->
-      底部固定区域
-    </div>
-  </div>
-  <script>
-    //JavaScript代码区域
-    $(function(){
-      layui.use(['element'], function () {
-        var element = layui.element;
-      });
-    })
-  </script>
-</body>
-
-</html>
+    </td>
+  </tr>
+  <tr>
+    <td>网站关键字</td>
+    <td>{{ data.keyword }}</td>
+  </tr>
+  <tr>
+    <td>网站描述</td>
+    <td>{{ data.desc }}</td>
+  </tr>
+  <tr>
+    <td>服务热线</td>
+    <td>{{ data.hotline }}</td>
+  </tr>
+  <tr>
+    <td>天猫商城</td>
+    <td>{{ data.tmall }}</td>
+  </tr>
+  <tr>
+    <td>英文网站</td>
+    <td>{{ data.en }}</td>
+  </tr>
+  <tr>
+    <td>网站备案号</td>
+    <td>{{ data.keyword }}</td>
+  </tr>
+</table>
+{% else %}
+<blockquote class="layui-elem-quote">还没有添加网站信息 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="public_add"
+    class="layui-btn">去添加</a>
+</blockquote>
+{% endif %}
+<script>
+  $(function () {
+    layui.use(['element'], function () {
+      var element = layui.element;
+    });
+  })
+</script>
+{% endblock %}

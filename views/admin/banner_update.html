@@ -1,86 +1,169 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>后台管理系统</title>
-  <script src="./js/jquery.min.js"></script>
-  <script src="./layui/layui.js"></script>
-  <script src="./js/public.js"></script>
-  <link rel="stylesheet" href="./layui/css/layui.css">
-</head>
-
-<body class="layui-layout-body">
-  <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-      <div class="layui-logo">后台管理系统</div>
-      <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item"><a class="clear_cache" href="javascript:"><i class="layui-icon">&#xe640;</i> 清除缓存</a>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">
-            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-            贤心
-          </a>
-          <dl class="layui-nav-child">
-            <dd><a href=""><i class="layui-icon">&#xe673;</i> 修改密码</a></dd>
-            <dd><a href=""><i class="layui-icon">&#xe65c;</i> 退出</a></dd>
-          </dl>
-        </li>
-
-      </ul>
-    </div>
-    <div class="layui-side layui-bg-black">
-      <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree">
-          <li class="layui-nav-item layui-this"><a href=""><i class="layui-icon">&#xe68e;</i> 首页</a></li>
-          <li class="layui-nav-item">
-            <a class="" href="javascript:;">所有商品</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="javascript:;">列表三</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child">
-              <dd><a href="javascript:;">列表一</a></dd>
-              <dd><a href="javascript:;">列表二</a></dd>
-              <dd><a href="">超链接</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item"><a href="">云市场</a></li>
-          <li class="layui-nav-item"><a href="">发布商品</a></li>
-        </ul>
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="">后台管理系统</a>
+    <a href="">Banner管理</a>
+    <a class="active" href="">Banner修改</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <input type="hidden" name="id" value="{{ data._id.toString() }}">
+    <div class="layui-form-item">
+      <label class="layui-form-label">Banner图片</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="banner" id="banner" />
+          {% if data.banner %}
+          <img class="banner_img" src="{{ data.banner }}" alt="" />
+          {% else %}
+          <span type="button" class="layui-btn banner_btn">
+            <i class="layui-icon">&#xe67c;</i>上传banner
+          </span>
+          {% endif %}
+        </label>
       </div>
     </div>
-    <div class="layui-body" style="padding: 10px">
-      <blockquote class="layui-elem-quote layui-bg-green">
-        <div id="nowTime"></div>
-      </blockquote>
-      <!-- 内容主体区域 -->
-      <div style="padding: 15px;">内容主体区域</div>
-      
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        {% if data.status %}
+        <input type="radio" name="status" value="true" title="开启" checked>
+        {% else %}
+        <input type="radio" name="status" value="true" title="开启">
+        {% endif %}
+        {% if !data.status %}
+        <input type="radio" name="status" value="false" title="关闭" checked>
+        {% else %}
+        <input type="radio" name="status" value="false" title="关闭">
+        {% endif %}
+      </div>
     </div>
-    <div class="layui-footer">
-      <!-- 底部固定区域 -->
-      底部固定区域
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn update">修改Banner</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
     </div>
-  </div>
-  <script>
-    //JavaScript代码区域
-    $(function(){
-      layui.use('element', function () {
-        var element = layui.element;
-        getNowTime()
-      });
-    })
-  </script>
-</body>
+  </form>
+</div>
+<style>
+  #banner {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+  .banner_img {
+    /* display: none; */
+    height: 100px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element', 'jquery', 'form', "layer"], function () {
+      var element = layui.element;
+      var $ = layui.jquery;
+      var form = layui.form;
+      var layer = layui.layer;
 
-</html>
+      var _changeStrtus = false; //是否重新选择了banner
+      $('#banner').change(function () {
+        _changeStrtus = true;
+        var _file = $(this);
+        var _fileObj = _file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var img = $(".banner_img");
+        if (_fileObj.files[0].type.indexOf('image') == -1) {
+          _file.val("");
+          layer.msg("Banner只支持图片类型", {
+            time: 1000
+          });
+          return;
+        }
+        if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+          dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+          img.show().attr('src', dataURL);
+          $('.banner_btn').hide();
+        } else {
+          dataURL = _file.val();
+          var imgObj = img[0];
+          imgObj.style.filter =
+            "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+      })
+      $('.update').click(function () {
+        var _sendData = {
+          banner: $('input[name="banner"]').val(),
+          status: $('input[name="status"]:checked').val(),
+          id: $('input[name="id"]').val()
+        }
+        if (_changeStrtus) { //修改了图片
+          //上传图片的input
+          var file = document.getElementById("banner");
+          //创建formdata对象
+          var formData = new FormData();
+          //给formdata对象中放入数据(键值对的方式)
+          formData.append('file', file.files[0]);
+          //提交请求
+          $.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              if (data.code == 200) {
+                _sendData.banner = data.data;
+                bannerUpdate(_sendData)
+              } else {
+                layer.msg("添加失败", {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        } else {
+          delete _sendData.banner;
+          bannerUpdate(_sendData)
+        }
+      })
+
+      function bannerUpdate(data) {
+        $.ajax({
+          type: 'POST',
+          url: '/api/banner_update',
+          data: data,
+          success: function (data) {
+            if (data.code == 200) {
+              layer.msg(data.msg, {
+                time: 1000
+              });
+              setTimeout(function () {
+                window.location.href = "banner";
+              }, 1000)
+            } else {
+              layer.msg(data.msg, {
+                time: 1000
+              });
+            }
+          },
+          error: function () {
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
+          }
+        });
+      }
+    })
+  })
+</script>
+{% endblock %}

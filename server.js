@@ -9,16 +9,8 @@ const app = express();
 // 设置静态文件托管
 app.use('/public', express.static(__dirname + '/public'))
 app.use('/ueditor', express.static(__dirname + '/ueditor'))
-app.use('/layui', express.static(__dirname + '/views/admin/layui'))
-app.use('/admin', express.static(__dirname + '/views/admin'))
-// app.use('/ueditor', express.static(__dirname + '/ueditor'))
+app.use('/backend', express.static(__dirname + '/views/admin'))
 // app.use('/views/public', express.static(__dirname + '/views/public'))
-
-// body-parser设置
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json());
 
 // 定义模板引擎
 app.engine('html', swig.renderFile);
@@ -30,6 +22,12 @@ app.set('view engine', 'html');
 swig.setDefaults({
   cache: false
 });
+
+// body-parser设置
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
+app.use(bodyParser.json());
 
 //使用ueditor模块
 app.use("/ueditor/ue", ueditor(path.join(__dirname), function (req, res, next) {
@@ -48,7 +46,6 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname), function (req, res, next) {
   }
   // 客户端发起其它请求
   else {
-    // console.log('config.json')
     res.setHeader('Content-Type', 'application/json');
     res.redirect('/ueditor/php/config.json');
   }

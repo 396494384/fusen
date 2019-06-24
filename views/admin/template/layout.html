@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>后台管理系统</title>
+  <script src="/backend/js/jquery.min.js"></script>
+  <script src="/backend/layui/layui.js"></script>
+  <script src="/backend/js/public.js"></script>
+  <link rel="stylesheet" href="/backend/layui/css/layui.css">
+</head>
+
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    {% include 'header.html' %}
+    {% include 'aside.html' %}
+    <div class="layui-body" style="padding: 10px">
+      {% block main %}{% endblock %}
+    </div>
+    {% include 'footer.html' %}
+  </div>
+</body>
+
+</html>
