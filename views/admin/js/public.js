@@ -18,6 +18,24 @@ function dateFilter(date) { //时间补0
 
 
 $(function () {
+  //左侧列表选中当前
+  var _key = window.location.href.split('admin')[1];
+  var _asideItem = $('.aside .layui-nav li');
+  if(_key === '/'){
+    _key = '/index'
+  }
+  _asideItem.each(function(){
+    var _currKey = $(this).attr('data-key');
+    var _idx = $(this).index();
+    if (_key.indexOf(_currKey) != -1) {
+      _asideItem.removeClass('layui-this').removeClass('layui-nav-itemed').eq(_idx).addClass('layui-this');
+      if ($(this).find('dd').size() > 0){
+        $(this).addClass('layui-nav-itemed');
+      }
+      return;
+    }
+  })
+
   layui.use(['layer'], function(){
     var layer = layui.layer;
     //清除缓存

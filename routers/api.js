@@ -4,6 +4,8 @@ const fs = require('fs');
 const multer = require('multer');
 const Public = require('../models/Public');
 const Banner = require('../models/Banner');
+const City = require('../models/City');
+const Store = require('../models/Store');
 
 // 自定义上传的文件名和文件路径
 const storage = multer.diskStorage({
@@ -172,4 +174,92 @@ router.post('/banner_delete', (req, res) => {
     })
   })
 })
+
+// 获取服务网点城市
+router.get('/store_city_list', (req, res) => {
+  var _skip = (req.query.page - 1) * req.query.limit;
+  City.countDocuments().then(count=>{
+    City.find().skip(_skip).limit(parseInt(req.query.limit)).then(data => {
+      res.json({
+        code: 0,
+        data: data,
+        count: count,
+        msg: "获取成功"
+      })
+    })
+  })
+})
+// 添加服务网点城市
+router.post('/store_city_add', (req, res) => {
+  City.findOne({
+    name: req.body.city
+  }).then(data => {
+    if (data) {
+      res.json({
+        code: 0,
+        msg: "不能重复添加"
+      })
+    } else {
+      new City({
+        name: req.body.city,
+        number: 0
+      }).save(() => {
+        res.json({
+          code: 200,
+          msg: "添加成功"
+        })
+      })
+    }
+  })
+})
+// 修改服务网点城市
+router.post('/store_city_update', (req, res) => {
+  City.findOne({
+    name: req.body.city
+  }).then(data => {
+    if (data) {
+      res.json({
+        code: 0,
+        msg: "修改城市名已存在"
+      })
+    } else {
+      City.updateOne({
+        _id: req.body.id
+      }, {
+        name: req.body.city
+      }).then(() => {
+        res.json({
+          code: 200,
+          msg: "修改成功"
+        })
+      })
+    }
+  })
+})
+// 删除服务网点城市
+router.post('/store_city_delete', (req, res) => {
+  City.findOne({
+    _id: req.body.id
+  }).then(data => {
+    if (data.number > 0) {
+      res.json({
+        code: 0,
+        msg: "删除失败, 当前城市下还有服务网点"
+      })
+    } else {
+      City.deleteOne({
+        _id: req.body.id
+      }).then(() => {
+        res.json({
+          code: 200,
+          msg: "删除成功"
+        })
+      })
+    }
+  })
+})
+
+
+
+
 module.exports = router;

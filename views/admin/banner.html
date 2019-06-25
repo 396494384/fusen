@@ -93,7 +93,9 @@
                     time: 1000
                   });
                   if (data.code == 200) {
-                    table.render(config);
+                    setTimeout(function(){
+                      table.render(config);
+                    },1000)
                   }
                 },
                 error: function () {

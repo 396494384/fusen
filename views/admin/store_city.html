@@ -1,0 +1,170 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="strore_city">服务网点管理</a>
+    <a class="active">城市管理</a>
+  </span>
+</div>
+<a class="layui-btn add">添加城市</a>
+<table class="layui-table" id="table" lay-filter="operation"></table>
+<script type="text/html" id="operation">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+</script>
+<script>
+  $(function () {
+    var url = '/api/store_city_list';
+    var config = {
+      elem: '#table',
+      url: url,
+      cols: [
+        [ //表头
+          {
+            width: "40%",
+            title: '城市',
+            align: "center",
+            field: 'name'
+          }, {
+            width: "30%",
+            title: '网点数量',
+            align: "center",
+            field: 'number'
+          },
+          {
+            width: '30%',
+            title: '操作',
+            align: 'center',
+            toolbar: '#operation'
+          }
+        ]
+      ],
+      page: true
+    };
+    layui.use(['element', 'form', 'table'], function () {
+      var element = layui.element;
+      var table = layui.table;
+      var form = layui.form;
+      table.render(config)
+      // 添加
+      $('.add').click(function () {
+        layer.open({
+          type: 1,
+          title: "添加城市",
+          closeBtn: 2,
+          btn: ['添加'],
+          content: '<div class="layui-item" style="padding: 20px 20px 0;">城市: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入城市" name="city" /></div></div>',
+          yes: function () {
+            var city = $('input[name="city"]').val();
+            if (city == "") {
+              layer.msg("请输入城市", {
+                time: 1000
+              });
+            } else {
+              $.ajax({
+                type: 'POST',
+                url: '/api/store_city_add',
+                data: {
+                  city: city
+                },
+                success: function (data) {
+                  layer.msg(data.msg, {
+                    time: 1000
+                  });
+                  if (data.code == 200) {
+                    setTimeout(function () {
+                      layer.closeAll();
+                      table.render(config)
+                    }, 1000)
+                  }
+                },
+                error: function () {
+                  layer.msg("充值失败");
+                },
+              });
+            }
+          }
+        })
+      });
+      table.on('tool(operation)', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        var _id = data._id.toString();
+        if (layEvent === "edit") {
+          layer.open({
+            type: 1,
+            title: "修改城市",
+            closeBtn: 2,
+            btn: ['修改'],
+            content: '<div class="layui-item" style="padding: 20px 20px 0;">城市: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入城市" name="city" value="' +
+              data.name + '" /></div></div>',
+            yes: function () {
+              var city = $('input[name="city"]').val();
+              if (city == "") {
+                layer.msg("请输入城市", {
+                  time: 1000
+                });
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: '/api/store_city_update',
+                  data: {
+                    city: city,
+                    id: _id
+                  },
+                  success: function (data) {
+                    layer.msg(data.msg, {
+                      time: 1000
+                    });
+                    if (data.code == 200) {
+                      setTimeout(function () {
+                        layer.closeAll();
+                        table.render(config)
+                      }, 1000)
+                    }
+                  },
+                  error: function () {
+                    layer.msg("充值失败");
+                  },
+                });
+              }
+            }
+          })
+        } else if (layEvent === "delete") {
+          layer.open({
+            id: 1,
+            content: '确认要删除吗？',
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+              $.ajax({
+                type: 'POST',
+                url: '/api/store_city_delete',
+                data: {
+                  id: _id
+                },
+                success: function (data) {
+                  layer.closeAll();
+                  layer.msg(data.msg, {
+                    time: 1000
+                  });
+                  if (data.code == 200) {
+                    setTimeout(function(){
+                      table.render(config);
+                    },1000)
+                  }
+                },
+                error: function () {
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                },
+              });
+            },
+          })
+        }
+      })
+    });
+  })
+</script>
+{% endblock %}

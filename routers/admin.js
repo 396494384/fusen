@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const Public = require('../models/Public')
 const Banner = require('../models/Banner')
+const City = require('../models/City')
 
 router.get('/', (req, res)=>{
   res.render('admin/index')
@@ -45,5 +46,25 @@ router.get('/banner_update', (req, res) => {
   })
 })
 // Banner管理 end
+
+
+// 服务网点管理
+router.get('/store', (req, res)=>{
+  res.render('admin/store')
+})
+router.get('/store_city', (req, res) => {
+  res.render('admin/store_city')
+})
+router.get('/store_add', (req, res) => {
+  City.find().then(data=>{
+    res.render('admin/store_add',{
+      city: data
+    });
+  })
+  
+})
+router.get('/store_update', (req, res) => {
+  res.render('admin/store_update')
+})
 
 module.exports = router;

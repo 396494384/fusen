@@ -1,0 +1,137 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="strore">服务网点管理</a>
+    <a class="active">网点添加</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点城市</label>
+      <div class="layui-input-block">
+        <select name="city" lay-verify="required">
+          <option value="">请选择服务网点所在城市</option>
+          {% for item in city %}
+          <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入网点名称" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点电话</label>
+      <div class="layui-input-block">
+        <input type="text" name="phone" placeholder="请输入网点电话" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点地址</label>
+      <div class="layui-input-block">
+        <input type="text" name="position" placeholder="请输入网点地址" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点服务时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="worktime" placeholder="请输入网点服务时间, 如: 周一至周五 8:00 - 18:00" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn add">添加网点</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- 页面样式 -->
+<style>
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<!-- //JavaScript代码区域 -->
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+
+
+      $('.add').click(function () {
+        var _city = $('select[name="city"]').find("option:selected").val();
+        var _name = $('input[name="name"]').val();
+        var _phone = $('input[name="phone"]').val();
+        var _position = $('input[name="position"]').val();
+        var _worktime = $('input[name="worktime"]').val();
+
+        if (_city == "" || !_city) {
+          layer.msg('请选择服务网点所在城市', {
+            time: 1000
+          });
+        } else if (_name == "") {
+          layer.msg('请输入网点名称', {
+            time: 1000
+          });
+        } else if (_phone == "") {
+          layer.msg('请输入网点电话', {
+            time: 1000
+          });
+        } else if (_position == "") {
+          layer.msg('请输入网点地址', {
+            time: 1000
+          });
+        } else if (_worktime == "") {
+          layer.msg('网点服务时间', {
+            time: 1000
+          });
+        } else {
+          return
+          $.ajax({
+            type: 'POST',
+            url: '/api/store_add',
+            data: {
+              city: _city,
+              name: _name,
+              phone: _phone,
+              position: _position,
+              worktime: _worktime
+            },
+            success: function (data) {
+              if (data.code == 200) {
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+                setTimeout(function () {
+                  window.location.href = "store";
+                }, 1000)
+              } else {
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+      })
+    })
+  })
+</script>
+{% endblock %}
