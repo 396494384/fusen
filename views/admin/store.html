@@ -7,55 +7,78 @@
     <a class="active">网点管理</a>
   </span>
 </div>
-{% if data %}
-<a href="store_update" class="layui-btn to_update">修改网站信息</a>
-<table class="layui-table" lay-size="lg">
-  <colgroup>
-    <col width="200">
-    <col>
-  </colgroup>
-  <tr>
-    <td>网站LOGO</td>
-    <td>
-      {% if data.logo %}
-      <img src="{{ data.logo }}" alt="">
-      {% endif %}
-    </td>
-  </tr>
-  <tr>
-    <td>网站关键字</td>
-    <td>{{ data.keyword }}</td>
-  </tr>
-  <tr>
-    <td>网站描述</td>
-    <td>{{ data.desc }}</td>
-  </tr>
-  <tr>
-    <td>服务热线</td>
-    <td>{{ data.hotline }}</td>
-  </tr>
-  <tr>
-    <td>天猫商城</td>
-    <td>{{ data.tmall }}</td>
-  </tr>
-  <tr>
-    <td>英文网站</td>
-    <td>{{ data.en }}</td>
-  </tr>
-  <tr>
-    <td>网站备案号</td>
-    <td>{{ data.keyword }}</td>
-  </tr>
-</table>
-{% else %}
-<blockquote class="layui-elem-quote">还没有添加网站信息 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="store_add"
-    class="layui-btn">去添加</a>
-</blockquote>
-{% endif %}
+<a href="store_add" class="layui-btn">添加网点</a>
+<table class="layui-table" id="table" lay-filter="operation"></table>
+<script type="text/html" id="operation">
+  <!-- {{#  if( d.status ){ }} -->
+  <a class="layui-btn layui-btn-xs" lay-event="on">开启</a>
+  <!-- {{#  }else{ }} -->
+  <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a>
+  <!-- {{#  } }} -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+</script>
 <script>
   $(function () {
-    layui.use(['element'], function () {
+    var url = '/api/store_list';
+    var config = {
+      elem: '#table',
+      url: url,
+      cols: [
+        [ //表头
+          {
+            width: "15%",
+            title: '城市',
+            align: "center",
+            field: 'city',
+            templet: function (item) {
+              return item.city.name
+            }
+          }, {
+            width: "30%",
+            title: '网点名称',
+            align: "center",
+            field: 'name'
+          },
+          {
+            width: '15%',
+            title: '网点电话',
+            align: 'center',
+            field: 'phone'
+          },
+          {
+            width: '15%',
+            title: '状态',
+            align: 'center',
+            field: 'status',
+            templet: function (item) {
+              return item.status ? "开启" : "关闭"
+            }
+          },
+          {
+            width: '25%',
+            title: '操作',
+            align: 'center',
+            toolbar: '#operation'
+          }
+        ]
+      ],
+      page: true
+    };
+    layui.use(['element', 'table'], function () {
       var element = layui.element;
+      var table = layui.table;
+      table.render(config)
+
+      table.on('tool(operation)', function(obj){
+        var data = obj.data;
+        var layEvent = obj.event;
+        var _id = data._id.toString();
+        if(layEvent == 'edit'){
+          location.href = 'store_update?id=' + _id;
+        }
+      })
     });
   })
 </script>

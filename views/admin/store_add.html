@@ -45,6 +45,13 @@
       </div>
     </div>
     <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        <input type="radio" name="status" value="true" title="开启" checked>
+        <input type="radio" name="status" value="false" title="关闭">
+      </div>
+    </div>
+    <div class="layui-form-item">
       <div class="layui-input-block">
         <a class="layui-btn add">添加网点</a>
         <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
@@ -98,7 +105,6 @@
             time: 1000
           });
         } else {
-          return
           $.ajax({
             type: 'POST',
             url: '/api/store_add',
@@ -107,7 +113,8 @@
               name: _name,
               phone: _phone,
               position: _position,
-              worktime: _worktime
+              worktime: _worktime,
+              status: $('input[name="status"]:checked').val()
             },
             success: function (data) {
               if (data.code == 200) {

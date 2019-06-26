@@ -3,7 +3,7 @@ const router = express.Router();
 const Public = require('../models/Public')
 const Banner = require('../models/Banner')
 const City = require('../models/City')
-
+const Store = require('../models/Store')
 router.get('/', (req, res)=>{
   res.render('admin/index')
 })
@@ -64,7 +64,15 @@ router.get('/store_add', (req, res) => {
   
 })
 router.get('/store_update', (req, res) => {
-  res.render('admin/store_update')
+  City.find().then(data => {
+    let _city = data;
+    Store.findById(req.query.id).populate(['city']).then(data=>{
+      res.render('admin/store_update', {
+        city: _city,
+        data: data
+      });
+    })
+  })
 })
 
 module.exports = router;

@@ -258,6 +258,85 @@ router.post('/store_city_delete', (req, res) => {
     }
   })
 })
+// 获取服务网点
+router.get('/store_list', (req, res) => {
+  var _skip = (req.query.page - 1) * req.query.limit;
+  Store.countDocuments().then(count => {
+    Store.find().skip(_skip).limit(parseInt(req.query.limit)).populate(['city']).then(data => {
+      res.json({
+        code: 0,
+        data: data,
+        count: count,
+        msg: "获取成功"
+      })
+    })
+  })
+})
+// 修改服务网点
+router.post('/store_update', (req, res)=>{
+  let _newCity = req.body.city;
+  let _id = req.body.id;
+  Store.findById(req.body.id).then(data=>{
+    let _oldCity = data.city;
+    if (_newCity === _oldCity) { //没有修改城市
+      Store.updateOne({
+        _id: _id
+      }, req.body).then(()=>{
+        res.json({
+          code: 200,
+          msg:"修改成功"
+        })
+      })
+    } else { //修改了城市
+      City.findById(_oldCity).then(data=>{
+        let _number = data.number;
+        return City.updateOne({
+          _id: _oldCity
+        },{
+          number: _number - 1
+        })
+      }).then(()=>{
+        City.findById(_newCity).then(data => {
+          let _number = data.number;
+          return City.updateOne({
+            _id: _newCity
+          }, {
+            number: _number + 1
+          })
+        }).then(()=>{
+          Store.updateOne({
+            _id: _id
+          }, req.body).then(() => {
+            res.json({
+              code: 200,
+              msg: "修改成功"
+            })
+          })
+        })
+      })
+      
+    }
+  })
+  
+})
+// 修改服务网点
+router.post('/store_add', (req, res) => {
+  new Store(req.body).save().then(() => {
+    City.findById(req.body.city).then(data => {
+      let _number = data.number;
+      City.updateOne({
+        _id: req.body.city
+      }, {
+        number: _number + 1
+      }).then(() => {
+        res.json({
+          code: 200,
+          msg: "添加成功"
+        })
+      })
+    })
+  })
+})
 
 
 

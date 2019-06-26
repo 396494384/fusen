@@ -19,6 +19,10 @@ const StoreSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true
+  },
+  status: {
+    type: Boolean,
+    default: true
   }
 })
 
