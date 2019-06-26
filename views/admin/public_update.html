@@ -14,13 +14,12 @@
       <div class="layui-input-block">
         <label>
           <input type="file" name="logo" id="logo" />
-          {% if data.logo %}
-          <img class="logo_img" src="{{ data.logo }}" alt="" />
-          {% else %}
-          <span type="button" class="layui-btn logo_btn">
+          <img class="logo_img" src="{{ data.logo }}" alt="" {% if data.logo %} style="display: block" {% else %}
+            style="display: none" {% endif %} />
+          <span type="button" class="layui-btn logo_btn" {% if !data.logo %} style="display: inline-block" {% else %}
+            style="display: none" {% endif %}>
             <i class="layui-icon">&#xe67c;</i>上传LOGO
           </span>
-          {% endif %}
         </label>
       </div>
     </div>
@@ -134,7 +133,7 @@
 
         if (_logo == "") { //没上传LOGO
           _sendData.logo = "";
-          addPublic(_sendData)
+          publicUpdate(_sendData)
         } else {
           //上传图片的input
           var file = document.getElementById("logo");
@@ -152,7 +151,7 @@
             success: function (data) {
               if (data.code == 200) {
                 _sendData.logo = data.data;
-                addPublic(_sendData)
+                publicUpdate(_sendData)
               } else {
                 layer.msg("图片上传失败", {
                   time: 1000
@@ -168,7 +167,7 @@
         }
       })
 
-      function addPublic(data) {
+      function publicUpdate(data) {
         $.ajax({
           url: '/api/public_update', //请求路径
           type: 'POST',

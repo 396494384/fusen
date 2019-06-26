@@ -130,7 +130,7 @@
 
         if (_logo == "") { //没上传LOGO
           _sendData.logo = "";
-          addPublic(_sendData)
+          publicAdd(_sendData)
         } else {
           //上传图片的input
           var file = document.getElementById("logo");
@@ -148,9 +148,9 @@
             success: function (data) {
               if (data.code == 200) {
                 _sendData.logo = data.data;
-                addPublic(_sendData)
+                publicAdd(_sendData)
               } else {
-                layer.msg("添加失败", {
+                layer.msg("图片上传失败", {
                   time: 1000
                 });
               }
@@ -164,7 +164,7 @@
         }
       })
 
-      function addPublic(data) {
+      function publicAdd(data) {
         $.ajax({
           url: '/api/public_add', //请求路径
           type: 'POST',

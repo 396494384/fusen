@@ -1,0 +1,231 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/contact">联系我们管理</a>
+    <a class="active">添加联系我们</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">公司名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入公司名称" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">公司地址</label>
+      <div class="layui-input-block">
+        <input type="text" name="address" placeholder="请输入公司地址" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">邮编</label>
+      <div class="layui-input-block">
+        <input type="text" name="postal_code" placeholder="请输入邮编" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">公司邮箱</label>
+      <div class="layui-input-block">
+        <input type="text" name="email" placeholder="请输入公司邮箱" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">座机</label>
+      <div class="layui-input-block">
+        <input type="http" name="telephone" placeholder="请输入座机" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">加盟管理人职位</label>
+      <div class="layui-input-block">
+        <input type="text" name="join_position" placeholder="请输入加盟管理人职位" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">加盟管理人称呼</label>
+      <div class="layui-input-block">
+        <input type="text" name="join_name" placeholder="请输入加盟管理人称呼" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">加盟管理人邮箱</label>
+      <div class="layui-input-block">
+        <input type="text" name="join_email" placeholder="请输入加盟管理人邮箱" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">加盟管理人电话</label>
+      <div class="layui-input-block">
+        <input type="text" name="join_phone" placeholder="请输入加盟管理人电话" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">微信公众号二维码</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="code" id="code" />
+          <span type="button" class="layui-btn code_btn">
+            <i class="layui-icon">&#xe67c;</i>上传二维码
+          </span>
+          <img class="code_img" src="" alt="" />
+        </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn add">添加联系我们</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- 页面样式 -->
+<style>
+  #code {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+  .code_img {
+    display: none;
+    height: 100px;
+  }
+  .layui-form-label {
+    width: 120px;
+  }
+
+  .layui-input-block {
+    margin-left: 150px;
+  }
+</style>
+<!-- //JavaScript代码区域 -->
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+
+      $('#code').change(function () {
+        var _file = $(this);
+        var _fileObj = _file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var img = $(".code_img");
+        if (_fileObj.files[0].type.indexOf('image') == -1) {
+          _file.val("");
+          layer.msg("二维码只支持图片类型", {
+            time: 1000
+          });
+          return;
+        }
+        if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+          dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+          img.show().attr('src', dataURL);
+          $('.code_btn').hide();
+        } else {
+          dataURL = _file.val();
+          var imgObj = img[0];
+          imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+      })
+      $('.add').click(function () {
+        var _name = $('input[name="name"]').val();
+        var _address = $('input[name="address"]').val();
+        var _postalCode = $('input[name="postal_code"]').val();
+        var _email = $('input[name="email"]').val();
+        var _telephone = $('input[name="telephone"]').val();
+        var _joinPosition = $('input[name="join_position"]').val();
+        var _joinName = $('input[name="join_name"]').val();
+        var _joinEmail = $('input[name="join_email"]').val();
+        var _joinPhone = $('input[name="join_phone"]').val();
+        var _code = $('input[name="code"]').val();
+        
+        var _sendData = {
+          name: _name,
+          address: _address,
+          postal_code: _postalCode,
+          email: _email,
+          telephone: _telephone,
+          join_position: _joinPosition,
+          join_name: _joinName,
+          join_email: _joinEmail,
+          join_phone: _joinPhone,
+          code: _code
+        }
+
+        if (_code == "") { //没上传code
+          _sendData.code = "";
+          contactAdd(_sendData)
+        } else {
+          //上传图片的input
+          var file = document.getElementById("code");
+          //创建formdata对象
+          var formData = new FormData();
+          //给formdata对象中放入数据(键值对的方式)
+          formData.append('file', file.files[0]);
+          //提交请求
+          $.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              if (data.code == 200) {
+                _sendData.code = data.data;
+                contactAdd(_sendData)
+              } else {
+                layer.msg("图片上传失败", {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+      })
+
+      function contactAdd(data) {
+        $.ajax({
+          url: '/api/contact_add',
+          type: 'POST',
+          data: data,
+          beforeSend: function () {
+            layer.load(2, {
+              shade: [0.2, '#000']
+            });
+          },
+          success: function (data) {
+            layer.closeAll();
+            layer.msg(data.msg, {
+              time: 1000
+            });
+            if (data.code == 200) {
+              return;
+              setTimeout(function () {
+                window.location.href = "/admin/contact";
+              }, 1000)
+            }
+          },
+          error: function () {
+            layer.closeAll();
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
+          }
+        });
+      }
+    })
+  })
+</script>
+{% endblock %}

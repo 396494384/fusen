@@ -4,6 +4,8 @@ const Public = require('../models/Public')
 const Banner = require('../models/Banner')
 const City = require('../models/City')
 const Store = require('../models/Store')
+const Contact = require('../models/Contact');
+
 router.get('/', (req, res)=>{
   res.render('admin/index')
 })
@@ -86,5 +88,25 @@ router.get('/store_detail', (req, res) => {
   })
 })
 // 服务网点管理 end
+
+// 联系我们管理
+router.get('/contact', (req, res) => {
+  Contact.find().then(data => {
+    res.render('admin/contact', {
+      data: data[0]
+    })
+  })
+})
+router.get('/contact_add', (req, res) => {
+  res.render('admin/contact_add')
+})
+router.get('/contact_update', (req, res) => {
+  Contact.find().then(data => {
+    res.render('admin/contact_update', {
+      data: data[0]
+    })
+  })
+})
+// 联系我们管理 end
 
 module.exports = router;

@@ -3,7 +3,7 @@
 
 
 
- .layui-card{
+ .layui-bread{
    padding: 10px 20px 25px;
    margin-bottom: 30px;
    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0);
@@ -12,10 +12,10 @@
    /* 
    margin: 20px; */
  }
-.layui-card .layui-breadcrumb>*{
+.layui-bread .layui-breadcrumb>* {
   font-size: 16px;
 }
-.layui-card .layui-breadcrumb a.active{
+.layui-bread .layui-breadcrumb a.active {
   color: #009688 !important;
   /* font-weight: bold; */
 }

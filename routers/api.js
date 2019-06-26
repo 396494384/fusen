@@ -6,6 +6,7 @@ const Public = require('../models/Public');
 const Banner = require('../models/Banner');
 const City = require('../models/City');
 const Store = require('../models/Store');
+const Contact = require('../models/Contact');
 
 // 自定义上传的文件名和文件路径
 const storage = multer.diskStorage({
@@ -66,11 +67,13 @@ router.post('/public_update', (req, res) => {
   if (_update.logo) {
     Public.findById(_id).then((data) => {
       let _path = data.logo;
-      _path = _path.replace(/\\/g, "/");
-      if (_path.search(/\//) == 0) {
-        _path = _path.slice(1);
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        if (_path.search(/\//) == 0) {
+          _path = _path.slice(1);
+        }
+        fs.unlinkSync(_path);
       }
-      fs.unlinkSync(_path);
     })
   } else {
     delete _update.logo
@@ -135,12 +138,14 @@ router.post('/banner_update', (req, res) => {
   let _banner = req.body.banner;
   if (_banner) { //修改了banner
     Banner.findById(req.body.id).then(data => {
-      let _banner = data.banner;
-      _banner = _banner.replace(/\\/g, "/");
-      if (_banner.search(/\//) == 0) {
-        _banner = _banner.slice(1);
+      let _path = data.banner;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        if (_path.search(/\//) == 0) {
+          _path = _path.slice(1);
+        }
+        fs.unlinkSync(_path);
       }
-      fs.unlinkSync(_banner);
       return;
     })
   }
@@ -156,12 +161,14 @@ router.post('/banner_update', (req, res) => {
 // 删除Banner
 router.post('/banner_delete', (req, res) => {
   Banner.findById(req.body.id).then(data => {
-    let _banner = data.banner;
-    _banner = _banner.replace(/\\/g, "/");
-    if (_banner.search(/\//) == 0) {
-      _banner = _banner.slice(1);
+    let _path = data.banner;
+    if (_path) {
+      _path = _path.replace(/\\/g, "/");
+      if (_path.search(/\//) == 0) {
+        _path = _path.slice(1);
+      }
+      fs.unlinkSync(_path);
     }
-    fs.unlinkSync(_banner);
     return;
   }).then(() => {
     Banner.deleteOne({
@@ -388,6 +395,53 @@ router.post('/store_delete', (req, res) => {
   })
 })
 
+
+//添加联系我们
+router.post('/contact_add', (req, res) => {
+  Contact.countDocuments().then(count => {
+    if (count == 0) {
+      new Contact(req.body).save().then(() => {
+        res.json({
+          code: 200,
+          msg: "添加成功"
+        })
+      })
+    } else {
+      res.json({
+        code: 0,
+        msg: "己添加, 请去修改"
+      })
+    }
+  })
+})
+
+//修改联系我们
+router.post('/contact_update', (req, res) => {
+  let _update = req.body;
+  let _id = _update.id;
+  if (_update.code) {
+    Contact.findById(_id).then((data) => {
+      let _path = data.code;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        if (_path.search(/\//) == 0) {
+          _path = _path.slice(1);
+        }
+        fs.unlinkSync(_path);
+      }
+    })
+  } else {
+    delete _update.code
+  }
+  Contact.updateOne({
+    _id: _id
+  }, _update).then(() => {
+    res.json({
+      code: 200,
+      msg: "修改成功"
+    })
+  })
+})
 
 
 

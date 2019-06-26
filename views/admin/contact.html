@@ -1,0 +1,73 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a class="active">联系我们管理</a>
+  </span>
+</div>
+{% if data %}
+<a href="/admin/contact_update" class="layui-btn to_update">修改联系我们</a>
+<table class="layui-table" lay-size="lg">
+  <colgroup>
+    <col width="200">
+    <col>
+  </colgroup>
+  <tr>
+    <td>公司名称</td>
+    <td>{{ data.name }}</td>
+  </tr>
+  <tr>
+    <td>公司地址</td>
+    <td>{{ data.address }}</td>
+  </tr>
+  <tr>
+    <td>邮编</td>
+    <td>{{ data.postal_code }}</td>
+  </tr>
+  <tr>
+    <td>公司邮箱</td>
+    <td>{{ data.email }}</td>
+  </tr>
+  <tr>
+    <td>座机</td>
+    <td>{{ data.telephone }}</td>
+  </tr>
+  <tr>
+    <td>加盟管理人职位</td>
+    <td>{{ data.join_position }}</td>
+  </tr>
+  <tr>
+    <td>加盟管理人称呼</td>
+    <td>{{ data.join_name }}</td>
+  </tr>
+  <tr>
+    <td>加盟管理人邮箱</td>
+    <td>{{ data.join_email }}</td>
+  </tr>
+  <tr>
+    <td>加盟管理人电话</td>
+    <td>{{ data.join_phone }}</td>
+  </tr>
+  <tr>
+    <td>微信公众号二维码</td>
+    <td>
+      {% if data.code %}
+      <img src="{{ data.code }}" alt="" />
+      {% endif %}
+    </td>
+  </tr>
+</table>
+{% else %}
+<blockquote class="layui-elem-quote">还没有添加联系我们信息 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/admin/contact_add"
+    class="layui-btn">去添加</a>
+</blockquote>
+{% endif %}
+<script>
+  $(function () {
+    layui.use(['element'], function () {
+      var element = layui.element;
+    });
+  })
+</script>
+{% endblock %}
