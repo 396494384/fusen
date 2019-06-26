@@ -3,7 +3,7 @@
 <div class="layui-card">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a href="strore">服务网点管理</a>
+    <a href="/admin/strore">服务网点管理</a>
     <a class="active">网点修改</a>
   </span>
 </div>
@@ -16,11 +16,11 @@
         <select name="city" lay-verify="required">
           <!-- <option value="">请选择服务网点所在城市</option> -->
           {% for item in city %}
-            {% if item._id.toString() == data.city._id.toString() %}
-            <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
-            {% else %}
-            <option value="{{ item._id.toString() }}">{{ item.name }}</option>
-            {% endif %}
+          {% if item._id.toString() == data.city._id.toString() %}
+          <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
+          {% else %}
+          <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+          {% endif %}
           {% endfor %}
         </select>
       </div>
@@ -117,9 +117,6 @@
             time: 1000
           });
         } else {
-          layer.load(2, {
-            shade: [0.2,'#000']
-          });
           $.ajax({
             type: 'POST',
             url: '/api/store_update',
@@ -132,6 +129,11 @@
               status: $('input[name="status"]:checked').val(),
               id: $('input[name="id"]').val()
             },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
             success: function (data) {
               layer.closeAll();
               layer.msg(data.msg, {
@@ -139,10 +141,8 @@
               });
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = "store";
+                  window.location.href = "/admin/store";
                 }, 1000)
-              } else {
-                
               }
             },
             error: function () {

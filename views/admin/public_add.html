@@ -2,9 +2,9 @@
 {% block main %}
 <div class="layui-card">
   <span class="layui-breadcrumb">
-    <a href="">后台管理系统</a>
-    <a href="">网站信息</a>
-    <a class="active" href="">添加网站信息</a>
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/public">网站信息</a>
+    <a class="active">添加网站信息</a>
   </span>
 </div>
 <div class="layui-content">
@@ -82,11 +82,9 @@
 <!-- //JavaScript代码区域 -->
 <script>
   $(function () {
-    layui.use(['element', 'jquery', 'form', "layer"], function () {
+    layui.use(['element', 'form'], function () {
       var element = layui.element;
-      var $ = layui.jquery;
       var form = layui.form;
-      var layer = layui.layer;
 
       $('#logo').change(function () {
         var _file = $(this);
@@ -171,21 +169,24 @@
           url: '/api/public_add', //请求路径
           type: 'POST',
           data: data,
+          beforeSend: function () {
+            layer.load(2, {
+              shade: [0.2, '#000']
+            });
+          },
           success: function (data) {
+            layer.closeAll();
+            layer.msg(data.msg, {
+              time: 1000
+            });
             if (data.code == 200) {
-              layer.msg(data.msg, {
-                time: 1000
-              });
               setTimeout(function () {
-                window.location.href = "public";
+                window.location.href = "/admin/public";
               }, 1000)
-            } else {
-              layer.msg(data.msg, {
-                time: 1000
-              });
             }
           },
           error: function () {
+            layer.closeAll();
             layer.msg("与服务器通信发生错误", {
               time: 1000
             });

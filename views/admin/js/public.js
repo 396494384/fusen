@@ -21,9 +21,10 @@ $(function () {
   //左侧列表选中当前
   var _key = window.location.href.split('admin')[1];
   var _asideItem = $('.aside .layui-nav li');
-  if(_key === '/'){
+  if (_key === '/' || _key === '') {
     _key = '/index'
   }
+  console.log(_key)
   _asideItem.each(function(){
     var _currKey = $(this).attr('data-key');
     var _idx = $(this).index();
@@ -53,4 +54,6 @@ $(function () {
       }, 1000);
     })
   })
+
+  
 })

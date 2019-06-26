@@ -1,0 +1,93 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-card">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/strore">服务网点管理</a>
+    <a class="active">网点信息</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点城市</label>
+      <div class="layui-input-block">
+        <select name="city" lay-verify="required" disabled>
+          <!-- <option value="">请选择服务网点所在城市</option> -->
+          {% for item in city %}
+            {% if item._id.toString() == data.city._id.toString() %}
+            <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
+            {% else %}
+            <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入网点名称" class="layui-input" value="{{ data.name }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点电话</label>
+      <div class="layui-input-block">
+        <input type="text" name="phone" placeholder="请输入网点电话" class="layui-input" value="{{ data.phone }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点地址</label>
+      <div class="layui-input-block">
+        <input type="text" name="position" placeholder="请输入网点地址" class="layui-input" value="{{ data.position }}"
+          disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网点服务时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="worktime" placeholder="请输入网点服务时间, 如: 周一至周五 8:00 - 18:00" class="layui-input"
+          value="{{ data.worktime }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        {% if data.status %}
+        <input type="radio" name="status" value="true" title="开启" checked>
+        {% else %}
+        <input type="radio" name="status" value="true" title="开启" disabled>
+        {% endif %}
+        {% if !data.status %}
+        <input type="radio" name="status" value="false" title="关闭" checked>
+        {% else %}
+        <input type="radio" name="status" value="false" title="关闭" disabled>
+        {% endif %}
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn" href="/admin/store_update?id={{ data._id.toString() }}">去修改网点</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- 页面样式 -->
+<style>
+  .layui-form-label {
+    width: 100px;
+  }
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<!-- //JavaScript代码区域 -->
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+    })
+  })
+</script>
+{% endblock %}

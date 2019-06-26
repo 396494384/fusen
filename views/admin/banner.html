@@ -8,15 +8,6 @@
 </div>
 <a href="banner_add" class="layui-btn">添加Banner</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
-<script type="text/html" id="operation">
-  <!-- {{#  if( d.status ){ }} -->
-  <a class="layui-btn layui-btn-xs" lay-event="on">开启</a>
-  <!-- {{#  }else{ }} -->
-  <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a>
-  <!-- {{#  } }} -->
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-</script>
 <style>
   .layui-table img.table_img {
     display: block;
@@ -25,6 +16,7 @@
     height: 100px;
     margin: 10px auto;
   }
+
   .layui-table-cell {
     height: auto;
   }
@@ -58,7 +50,16 @@
             width: '30%',
             title: '操作',
             align: 'center',
-            toolbar: '#operation'
+            templet: function (item) {
+              var btns =
+                '<a class="layui-btn layui-btn-xs" lay-event="on">开启</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
+              console.log(item.status)
+              if (item.status) {
+                btns =
+                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>'
+              }
+              return btns;
+            }
           }
         ]
       ]
@@ -87,27 +88,33 @@
                 data: {
                   id: _id
                 },
+                beforeSend: function () {
+                  layer.load(2, {
+                    shade: [0.2, '#000']
+                  });
+                },
                 success: function (data) {
                   layer.closeAll();
                   layer.msg(data.msg, {
                     time: 1000
                   });
                   if (data.code == 200) {
-                    setTimeout(function(){
-                      table.render(config);
-                    },1000)
+                    setTimeout(function () {
+                      window.location.href = '/admin/banner'
+                    }, 1000)
                   }
                 },
                 error: function () {
+                  layer.closeAll();
                   layer.msg("与服务器通信发生错误", {
                     time: 1000
                   });
-                },
+                }
               });
             },
           })
         } else if (layEvent === 'edit') {
-          location.href = 'banner_update?id=' + data._id.toString();
+          window.location.href = 'banner_update?id=' + data._id.toString();
         } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
@@ -115,14 +122,27 @@
             data: {
               id: _id
             },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
             success: function (data) {
               layer.closeAll();
               layer.msg(data.msg, {
                 time: 1000
               })
               if (data.code == 200) {
-                table.render(config);
+                setTimeout(function () {
+                  window.location.href = '/admin/banner'
+                }, 1000)
               }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
             }
           });
         } else if (layEvent === 'off') {
@@ -132,14 +152,27 @@
             data: {
               id: _id
             },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
             success: function (data) {
               layer.closeAll();
               layer.msg(data.msg, {
                 time: 1000
               })
               if (data.code == 200) {
-                table.render(config);
+                setTimeout(function () {
+                  window.location.href = '/admin/banner'
+                }, 1000)
               }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
             }
           });
         }

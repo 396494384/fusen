@@ -178,7 +178,7 @@ router.post('/banner_delete', (req, res) => {
 // 获取服务网点城市
 router.get('/store_city_list', (req, res) => {
   var _skip = (req.query.page - 1) * req.query.limit;
-  City.countDocuments().then(count=>{
+  City.countDocuments().then(count => {
     City.find().skip(_skip).limit(parseInt(req.query.limit)).then(data => {
       res.json({
         code: 0,
@@ -273,29 +273,29 @@ router.get('/store_list', (req, res) => {
   })
 })
 // 修改服务网点
-router.post('/store_update', (req, res)=>{
+router.post('/store_update', (req, res) => {
   let _newCity = req.body.city;
   let _id = req.body.id;
-  Store.findById(req.body.id).then(data=>{
+  Store.findById(req.body.id).then(data => {
     let _oldCity = data.city;
     if (_newCity === _oldCity) { //没有修改城市
       Store.updateOne({
         _id: _id
-      }, req.body).then(()=>{
+      }, req.body).then(() => {
         res.json({
           code: 200,
-          msg:"修改成功"
+          msg: "修改成功"
         })
       })
     } else { //修改了城市
-      City.findById(_oldCity).then(data=>{
+      City.findById(_oldCity).then(data => {
         let _number = data.number;
         return City.updateOne({
           _id: _oldCity
-        },{
+        }, {
           number: _number - 1
         })
-      }).then(()=>{
+      }).then(() => {
         City.findById(_newCity).then(data => {
           let _number = data.number;
           return City.updateOne({
@@ -303,7 +303,7 @@ router.post('/store_update', (req, res)=>{
           }, {
             number: _number + 1
           })
-        }).then(()=>{
+        }).then(() => {
           Store.updateOne({
             _id: _id
           }, req.body).then(() => {
@@ -314,10 +314,10 @@ router.post('/store_update', (req, res)=>{
           })
         })
       })
-      
+
     }
   })
-  
+
 })
 // 修改服务网点
 router.post('/store_add', (req, res) => {
@@ -332,6 +332,56 @@ router.post('/store_add', (req, res) => {
         res.json({
           code: 200,
           msg: "添加成功"
+        })
+      })
+    })
+  })
+})
+//开启服务网点
+router.post('/store_on', (req, res) => {
+  Store.updateOne({
+    _id: req.body.id
+  }, {
+    status: true
+  }).then(() => {
+    res.json({
+      code: 200,
+      msg: '开启成功'
+    })
+  })
+})
+//关闭服务网点
+router.post('/store_off', (req, res) => {
+  Store.updateOne({
+    _id: req.body.id
+  }, {
+    status: false
+  }).then(() => {
+    res.json({
+      code: 200,
+      msg: '关闭成功'
+    })
+  })
+})
+// 删除服务网点
+router.post('/store_delete', (req, res) => {
+  let _id = req.body.id;
+  Store.findById(_id).then(data => {
+    let _city = data.city;
+    City.findById(_city).then(data => {
+      let _number = data.number;
+      City.updateOne({
+        _id: _city
+      }, {
+        number: _number - 1
+      }).then(() => {
+        Store.deleteOne({
+          _id: _id
+        }).then(() => {
+          res.json({
+            code: 200,
+            msg: "删除成功"
+          })
         })
       })
     })

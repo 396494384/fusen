@@ -74,5 +74,17 @@ router.get('/store_update', (req, res) => {
     })
   })
 })
+router.get('/store_detail', (req, res) => {
+  City.find().then(data => {
+    let _city = data;
+    Store.findById(req.query.id).populate(['city']).then(data => {
+      res.render('admin/store_detail', {
+        city: _city,
+        data: data
+      });
+    })
+  })
+})
+// 服务网点管理 end
 
 module.exports = router;

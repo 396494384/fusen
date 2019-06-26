@@ -3,22 +3,12 @@
 <div class="layui-card">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a href="strore">服务网点管理</a>
+    <a href="/admin/strore">服务网点管理</a>
     <a class="active">网点管理</a>
   </span>
 </div>
-<a href="store_add" class="layui-btn">添加网点</a>
+<a href="/admin/store_add" class="layui-btn">添加网点</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
-<script type="text/html" id="operation">
-  <!-- {{#  if( d.status ){ }} -->
-  <a class="layui-btn layui-btn-xs" lay-event="on">开启</a>
-  <!-- {{#  }else{ }} -->
-  <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a>
-  <!-- {{#  } }} -->
-  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-</script>
 <script>
   $(function () {
     var url = '/api/store_list';
@@ -60,7 +50,15 @@
             width: '25%',
             title: '操作',
             align: 'center',
-            toolbar: '#operation'
+            templet: function (item) {
+              var btns =
+                '<a class="layui-btn layui-btn-xs" lay-event="on">开启</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
+              if (item.status) {
+                btns =
+                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
+              }
+              return btns;
+            }
           }
         ]
       ],
@@ -71,12 +69,111 @@
       var table = layui.table;
       table.render(config)
 
-      table.on('tool(operation)', function(obj){
+      table.on('tool(operation)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
         var _id = data._id.toString();
-        if(layEvent == 'edit'){
-          location.href = 'store_update?id=' + _id;
+        if (layEvent == 'edit') {
+          window.location.href = '/admin/store_update?id=' + _id;
+        } else if (layEvent == 'detail') {
+          window.location.href = '/admin/store_detail?id=' + _id;
+        } else if (layEvent == 'delete') {
+          layer.open({
+            id: 1,
+            content: '确认要删除吗？',
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+              $.ajax({
+                type: 'POST',
+                url: '/api/store_delete',
+                data: {
+                  id: _id
+                },
+                beforeSend: function () {
+                  layer.load(2, {
+                    shade: [0.2, '#000']
+                  });
+                },
+                success: function (data) {
+                  layer.closeAll();
+                  layer.msg(data.msg, {
+                    time: 1000
+                  });
+                  if (data.code == 200) {
+                    setTimeout(function () {
+                      window.location.href = '/admin/store'
+                    }, 1000)
+                  }
+                },
+                error: function () {
+                  layer.closeAll();
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                },
+              });
+            }
+          })
+        } else if (layEvent == 'on') {
+          $.ajax({
+            type: 'POST',
+            url: '/api/store_on',
+            data: {
+              id: _id
+            },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              })
+              if (data.code == 200) {
+                setTimeout(function () {
+                  window.location.href = '/admin/store'
+                }, 1000);
+              }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        } else if (layEvent == 'off') {
+          $.ajax({
+            type: 'POST',
+            url: '/api/store_off',
+            data: {
+              id: _id
+            },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              })
+              if (data.code == 200) {
+                setTimeout(function () {
+                  window.location.href = '/admin/store'
+                }, 1000);
+              }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
         }
       })
     });

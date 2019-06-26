@@ -3,7 +3,7 @@
 <div class="layui-card">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a href="strore_city">服务网点管理</a>
+    <a href="/admin/strore_city">服务网点管理</a>
     <a class="active">城市管理</a>
   </span>
 </div>
@@ -75,13 +75,15 @@
                   if (data.code == 200) {
                     setTimeout(function () {
                       layer.closeAll();
-                      table.render(config)
+                      window.location.href = '/admin/store_city';
                     }, 1000)
                   }
                 },
                 error: function () {
-                  layer.msg("充值失败");
-                },
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                }
               });
             }
           }
@@ -120,13 +122,15 @@
                     if (data.code == 200) {
                       setTimeout(function () {
                         layer.closeAll();
-                        table.render(config)
+                        window.location.href = '/admin/store_city';
                       }, 1000)
                     }
                   },
                   error: function () {
-                    layer.msg("充值失败");
-                  },
+                    layer.msg("与服务器通信发生错误", {
+                      time: 1000
+                    });
+                  }
                 });
               }
             }
@@ -143,24 +147,30 @@
                 data: {
                   id: _id
                 },
+                beforeSend: function () {
+                  layer.load(2, {
+                    shade: [0.2, '#000']
+                  });
+                },
                 success: function (data) {
                   layer.closeAll();
                   layer.msg(data.msg, {
                     time: 1000
                   });
                   if (data.code == 200) {
-                    setTimeout(function(){
-                      table.render(config);
-                    },1000)
+                    setTimeout(function () {
+                      window.location.href = '/admin/store_city';
+                    }, 1000)
                   }
                 },
                 error: function () {
+                  layer.closeAll();
                   layer.msg("与服务器通信发生错误", {
                     time: 1000
                   });
-                },
+                }
               });
-            },
+            }
           })
         }
       })
