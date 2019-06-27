@@ -281,11 +281,41 @@ router.get('/store_list', (req, res) => {
     })
   })
 })
+// 添加服务网点
+router.post('/store_add', (req, res) => {
+  Store.findOne({
+    city: req.body.city,
+    name: req.body.name
+  }).then(data => {
+    if (data) {
+      res.json({
+        code: 0,
+        msg: "当前城市下已有该网点名称"
+      })
+    } else {
+      new Store(req.body).save().then(() => {
+        City.findById(req.body.city).then(data => {
+          let _number = data.number;
+          City.updateOne({
+            _id: req.body.city
+          }, {
+            number: _number + 1
+          }).then(() => {
+            res.json({
+              code: 200,
+              msg: "添加成功"
+            })
+          })
+        })
+      })
+    }
+  })
+})
 // 修改服务网点
 router.post('/store_update', (req, res) => {
   let _newCity = req.body.city;
   let _id = req.body.id;
-  Store.findById(req.body.id).then(data => {
+  Store.findById(_id).then(data => {
     let _oldCity = data.city;
     if (_newCity === _oldCity) { //没有修改城市
       Store.updateOne({
@@ -323,27 +353,7 @@ router.post('/store_update', (req, res) => {
           })
         })
       })
-
     }
-  })
-
-})
-// 修改服务网点
-router.post('/store_add', (req, res) => {
-  new Store(req.body).save().then(() => {
-    City.findById(req.body.city).then(data => {
-      let _number = data.number;
-      City.updateOne({
-        _id: req.body.city
-      }, {
-        number: _number + 1
-      }).then(() => {
-        res.json({
-          code: 200,
-          msg: "添加成功"
-        })
-      })
-    })
   })
 })
 //开启服务网点
