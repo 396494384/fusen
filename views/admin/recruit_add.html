@@ -66,37 +66,28 @@
     layui.use(['element', 'form'], function () {
       var element = layui.element;
       var form = layui.form;
-
-
       $('.add').click(function () {
-        var _type = $('select[name="type"] option:selected').val();
-        var _position = $('input[name="position"]').val();
-        var _address = $('input[name="address"]').val();
-        var _number = $('input[name="number"]').val();
-        var _content = ue.getContent();
-        var _status = $('input[name="status"]:checked').val();
-
         var _sendData = {
-          type: _type,
-          position: _position,
-          address: _address,
-          number: _number,
-          content: _content,
-          status: _status
+          type: $('select[name="type"] option:selected').val(),
+          position: $('input[name="position"]').val(),
+          address: $('input[name="address"]').val(),
+          number: $('input[name="number"]').val(),
+          content: ue.getContent(),
+          status: $('input[name="status"]:checked').val()
         }
-        if (_position == "") {
+        if (_sendData.position == "") {
           layer.msg('请输入招聘职位', {
             time: 1000
           })
-        } else if (_address == "") {
+        } else if (_sendData.address == "") {
           layer.msg('请输入工作地点', {
             time: 1000
           })
-        } else if (_number == "") {
+        } else if (_sendData.number == "") {
           layer.msg('请输入招聘人数', {
             time: 1000
           })
-        } else if (_content == "") {
+        } else if (_sendData.content == "") {
           layer.msg('请输入招聘内容', {
             time: 1000
           })

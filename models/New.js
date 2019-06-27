@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const NewSchema = new mongoose.Schema({
+  type:{
+    type: String,
+    required: true
+  },
   title:{
+    type: String,
+    required: true
+  },
+  img:{
     type: String,
     required: true
   },
@@ -11,7 +19,11 @@ const NewSchema = new mongoose.Schema({
   content:{
     type: String,
     required: true
+  },
+  status:{
+    type: Boolean,
+    required: true
   }
 })
 
-module.exports = mongoose.model('NewSchema', New)
+module.exports = mongoose.model('New', NewSchema)

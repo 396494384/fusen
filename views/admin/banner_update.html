@@ -68,10 +68,7 @@
       var $ = layui.jquery;
       var form = layui.form;
       var layer = layui.layer;
-
-      var _changeStrtus = false; //是否重新选择了banner
       $('#banner').change(function () {
-        _changeStrtus = true;
         var _file = $(this);
         var _fileObj = _file[0];
         var windowURL = window.URL || window.webkitURL;
@@ -102,14 +99,10 @@
           status: $('input[name="status"]:checked').val(),
           id: $('input[name="id"]').val()
         }
-        if (_changeStrtus) { //修改了图片
-          //上传图片的input
-          var file = document.getElementById("banner");
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-          //提交请求
+        if (_sendData.banner) { //修改了图片
+          var file = document.getElementById("banner");//上传图片的input
+          var formData = new FormData();//创建formdata对象
+          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
             url: '/api/upload',
             type: 'POST',
@@ -133,7 +126,6 @@
             }
           });
         } else {
-          delete _sendData.banner;
           bannerUpdate(_sendData)
         }
       })

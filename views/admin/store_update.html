@@ -90,29 +90,32 @@
       var element = layui.element;
       var form = layui.form;
       $('.update').click(function () {
-        var _city = $('select[name="city"]').find("option:selected").val();
-        var _name = $('input[name="name"]').val();
-        var _phone = $('input[name="phone"]').val();
-        var _position = $('input[name="position"]').val();
-        var _worktime = $('input[name="worktime"]').val();
-
-        if (_city == "" || !_city) {
+        var _sendData = {
+          city: $('select[name="city"]').find("option:selected").val(),
+          name: $('input[name="name"]').val(),
+          phone: $('input[name="phone"]').val(),
+          position: $('input[name="position"]').val(),
+          worktime: $('input[name="worktime"]').val(),
+          status: $('input[name="status"]:checked').val(),
+          id: $('input[name="id"]').val()
+        }
+        if (_sendData.city == "" || !_sendData.city) {
           layer.msg('请选择服务网点所在城市', {
             time: 1000
           });
-        } else if (_name == "") {
+        } else if (_sendData.name == "") {
           layer.msg('请输入网点名称', {
             time: 1000
           });
-        } else if (_phone == "") {
+        } else if (_sendData.phone == "") {
           layer.msg('请输入网点电话', {
             time: 1000
           });
-        } else if (_position == "") {
+        } else if (_sendData.position == "") {
           layer.msg('请输入网点地址', {
             time: 1000
           });
-        } else if (_worktime == "") {
+        } else if (_sendData.worktime == "") {
           layer.msg('网点服务时间', {
             time: 1000
           });
@@ -120,15 +123,7 @@
           $.ajax({
             type: 'POST',
             url: '/api/store_update',
-            data: {
-              city: _city,
-              name: _name,
-              phone: _phone,
-              position: _position,
-              worktime: _worktime,
-              status: $('input[name="status"]:checked').val(),
-              id: $('input[name="id"]').val()
-            },
+            data: _sendData,
             beforeSend: function () {
               layer.load(2, {
                 shade: [0.2, '#000']

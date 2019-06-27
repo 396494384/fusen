@@ -113,7 +113,6 @@
     layui.use(['element', 'form'], function () {
       var element = layui.element;
       var form = layui.form;
-
       $('#code').change(function () {
         var _file = $(this);
         var _fileObj = _file[0];
@@ -139,42 +138,23 @@
         }
       })
       $('.update').click(function () {
-        var _name = $('input[name="name"]').val();
-        var _address = $('input[name="address"]').val();
-        var _postalCode = $('input[name="postal_code"]').val();
-        var _email = $('input[name="email"]').val();
-        var _telephone = $('input[name="telephone"]').val();
-        var _joinPosition = $('input[name="join_position"]').val();
-        var _joinName = $('input[name="join_name"]').val();
-        var _joinEmail = $('input[name="join_email"]').val();
-        var _joinPhone = $('input[name="join_phone"]').val();
-        var _code = $('input[name="code"]').val();
-        var _id = $('input[name="id"]').val();  
-
         var _sendData = {
-          id: _id,
-          name: _name,
-          address: _address,
-          postal_code: _postalCode,
-          email: _email,
-          telephone: _telephone,
-          join_position: _joinPosition,
-          join_name: _joinName,
-          join_email: _joinEmail,
-          join_phone: _joinPhone,
-          code: _code
+          id: $('input[name="id"]').val(),
+          name: $('input[name="name"]').val(),
+          address: $('input[name="address"]').val(),
+          postal_code: $('input[name="postal_code"]').val(),
+          email: $('input[name="email"]').val(),
+          telephone: $('input[name="telephone"]').val(),
+          join_position: $('input[name="join_position"]').val(),
+          join_name: $('input[name="join_name"]').val(),
+          join_email: $('input[name="join_email"]').val(),
+          join_phone: $('input[name="join_phone"]').val(),
+          code: $('input[name="code"]').val()
         }
-        if (_code == "") { //没上传code
-          _sendData.code = "";
-          contactUpdate(_sendData)
-        } else {
-          //上传图片的input
-          var file = document.getElementById("code");
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-          //提交请求
+        if (_sendData.code) { //修改了code
+          var file = document.getElementById("code"); //上传图片的input
+          var formData = new FormData(); //创建formdata对象
+          formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
           $.ajax({
             url: '/api/upload',
             type: 'POST',
@@ -197,6 +177,8 @@
               });
             }
           });
+        } else {
+          contactUpdate(_sendData);
         }
       })
 

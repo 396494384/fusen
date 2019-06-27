@@ -53,10 +53,7 @@
   $(function () {
     layui.use(['element', 'jquery', 'form', "layer"], function () {
       var element = layui.element;
-      var $ = layui.jquery;
       var form = layui.form;
-      var layer = layui.layer;
-
       $('#banner').change(function () {
         var _file = $(this);
         var _fileObj = _file[0];
@@ -83,25 +80,18 @@
         }
       })
       $('.add').click(function () {
-        var _banner = $('input[name="banner"]').val();
-        var _status = $('input[name="status"]:checked').val();
         var _sendData = {
-          banner: _banner,
-          status: _status
+          banner: $('input[name="banner"]').val(),
+          status: $('input[name="status"]:checked').val()
         }
-
-        if (_banner == "") {
+        if (_sendData.banner == "") {
           layer.msg("请上传Banner", {
             time: 1000
           });
         } else {
-          //上传图片的input
-          var file = document.getElementById("banner");
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-          //提交请求
+          var file = document.getElementById("banner");//上传图片的input
+          var formData = new FormData();//创建formdata对象
+          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
             url: '/api/upload',
             type: 'POST',

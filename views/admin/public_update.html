@@ -86,7 +86,6 @@
     layui.use(['element', 'form'], function () {
       var element = layui.element;
       var form = layui.form;
-
       $('#logo').change(function () {
         var _file = $(this);
         var _fileObj = _file[0];
@@ -112,36 +111,20 @@
         }
       })
       $('.update').click(function () {
-        var _logo = $('input[name="logo"]').val();
-        var _keyword = $('input[name="keyword"]').val();
-        var _desc = $('textarea[name="desc"]').val();
-        var _hotline = $('input[name="hotline"]').val();
-        var _tmall = $('input[name="tmall"]').val();
-        var _en = $('input[name="en"]').val();
-        var _copyright = $('input[name="copyright"]').val();
-        var _id = $('input[name="id"]').val();
-
         var _sendData = {
-          id: _id,
-          keyword: _keyword,
-          desc: _desc,
-          hotline: _hotline,
-          tmall: _tmall,
-          en: _en,
-          copyright: _copyright
+          id: $('input[name="id"]').val(),
+          logo: $('input[name="logo"]').val(),
+          keyword: $('input[name="keyword"]').val(),
+          desc: $('textarea[name="desc"]').val(),
+          hotline: $('input[name="hotline"]').val(),
+          tmall: $('input[name="tmall"]').val(),
+          en: $('input[name="en"]').val(),
+          copyright: $('input[name="copyright"]').val()
         }
-
-        if (_logo == "") { //没上传LOGO
-          _sendData.logo = "";
-          publicUpdate(_sendData)
-        } else {
-          //上传图片的input
-          var file = document.getElementById("logo");
-          //创建formdata对象
-          var formData = new FormData();
-          //给formdata对象中放入数据(键值对的方式)
-          formData.append('file', file.files[0]);
-          //提交请求
+        if (_sendData.logo) { //修改了LOGO
+          var file = document.getElementById("logo");//上传图片的input
+          var formData = new FormData();//创建formdata对象
+          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
             url: '/api/upload',
             type: 'POST',
@@ -164,6 +147,8 @@
               });
             }
           });
+        } else {
+          publicUpdate(_sendData);
         }
       })
 

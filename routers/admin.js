@@ -6,6 +6,7 @@ const City = require('../models/City')
 const Store = require('../models/Store') 
 const Contact = require('../models/Contact');
 const Recruit = require('../models/Recruit');
+const New = require('../models/New');
 
 router.get('/', (req, res)=>{
   res.render('admin/index')
@@ -132,5 +133,28 @@ router.get('/recruit_detail', (req, res) => {
   })
 })
 // 招聘管理 end
+
+// 资讯管理
+router.get('/new', (req, res) => {
+  res.render('admin/new')
+})
+router.get('/new_add', (req, res) => {
+  res.render('admin/new_add')
+})
+router.get('/new_update', (req, res) => {
+  New.findById(req.query.id).then(data => {
+    res.render('admin/new_update', {
+      data: data
+    })
+  })
+})
+router.get('/new_detail', (req, res) => {
+  New.findById(req.query.id).then(data => {
+    res.render('admin/new_detail', {
+      data: data
+    })
+  })
+})
+// 资讯管理 end
 
 module.exports = router;
