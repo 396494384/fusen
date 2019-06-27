@@ -1,6 +1,6 @@
 {% extends './template/layout.html' %}
 {% block main %}
-<div class="layui-card">
+<div class="layui-bread">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
     <a href="/admin/contact">联系我们管理</a>
@@ -211,7 +211,6 @@
               time: 1000
             });
             if (data.code == 200) {
-              return;
               setTimeout(function () {
                 window.location.href = "/admin/contact";
               }, 1000)

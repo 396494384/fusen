@@ -24,7 +24,7 @@ $(function () {
   if (_key === '/' || _key === '') {
     _key = '/index'
   }
-  console.log(_key)
+  // console.log(_key)
   _asideItem.each(function(){
     var _currKey = $(this).attr('data-key');
     var _idx = $(this).index();

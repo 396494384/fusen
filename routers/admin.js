@@ -3,8 +3,9 @@ const router = express.Router();
 const Public = require('../models/Public')
 const Banner = require('../models/Banner')
 const City = require('../models/City')
-const Store = require('../models/Store')
+const Store = require('../models/Store') 
 const Contact = require('../models/Contact');
+const Recruit = require('../models/Recruit');
 
 router.get('/', (req, res)=>{
   res.render('admin/index')
@@ -108,5 +109,28 @@ router.get('/contact_update', (req, res) => {
   })
 })
 // 联系我们管理 end
+
+// 招聘管理
+router.get('/recruit', (req, res)=>{
+  res.render('admin/recruit')
+})
+router.get('/recruit_add', (req, res) => {
+  res.render('admin/recruit_add')
+})
+router.get('/recruit_update', (req, res) => {
+  Recruit.findById(req.query.id).then(data=>{
+    res.render('admin/recruit_update',{
+      data: data
+    })
+  })
+})
+router.get('/recruit_detail', (req, res) => {
+  Recruit.findById(req.query.id).then(data => {
+    res.render('admin/recruit_detail', {
+      data: data
+    })
+  })
+})
+// 招聘管理 end
 
 module.exports = router;

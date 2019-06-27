@@ -1,6 +1,6 @@
 {% extends './template/layout.html' %}
 {% block main %}
-<div class="layui-card">
+<div class="layui-bread">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
     <a href="/admin/public">网站信息</a>
@@ -149,7 +149,7 @@
         var _joinEmail = $('input[name="join_email"]').val();
         var _joinPhone = $('input[name="join_phone"]').val();
         var _code = $('input[name="code"]').val();
-        var _id = $('input[name="id"]').val(); 
+        var _id = $('input[name="id"]').val();  
 
         var _sendData = {
           id: _id,
