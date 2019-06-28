@@ -60,66 +60,67 @@ $(function () {
     })
 
     //修改密码
-    var pswdStr = '<div class="layui-form"><div class="layui-form-item" style="margin-top: 15px;"><label class="layui-form-label">当前密码</label><div class="layui-input-inline"><input type="password" class="layui-input old_pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">新密码</label><div class="layui-input-inline"><input type="password" class="layui-input pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">确认新密码</label><div class="layui-input-inline"><input type="password" class="layui-input re_pwd"></div></div><div class="layui-form-item"><div class="layui-input-block"><button class="layui-btn qr">确认修改</button></div></div></div>';
     $('.modify').click(function () {
       layer.open({
         type: 1,
         title: '修改密码',
-        content: pswdStr
-      })
-      $(".qr").on("click", function () {
-        var old_pwd = $(".old_pwd").val();
-        var pwd = $(".pwd").val();
-        var re_pwd = $(".re_pwd").val();
-        if (old_pwd == "") {
-          layer.msg("请输入当前密码", {
-            time: 1000
-          })
-        } else if (pwd == "") {
-          layer.msg("请输入新密码", {
-            time: 1000
-          })
-        } else if (re_pwd == "") {
-          layer.msg("请输入确认新密码", {
-            time: 1000
-          })
-        } else if (pwd != re_pwd) {
-          layer.msg("两次密码输入不一致", {
-            time: 1000
-          })
-        } else {
-          $.ajax({
-            type: "POST",
-            url: '/api/modify',
-            data: {
-              oldpwd: old_pwd,
-              newpwd: re_pwd
-            },
-            beforeSend: function () {
-              layer.load(2, {
-                shade: [0.2, '#000']
-              });
-            },
-            success: function (data) {
-              layer.closeAll();
-              layer.msg(data.msg, {
-                time: 1000
-              });
-              if (data.code == 200) {
-                setTimeout(function () {
-                  window.location.href = "/admin/login";
-                }, 1000)
+        closeBtn: 2,
+        btn: ['确认修改'],
+        content: '<div class="layui-form"><div class="layui-form-item" style="margin-top: 15px;"><label class="layui-form-label">当前密码</label><div class="layui-input-inline"><input type="password" class="layui-input old_pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">新密码</label><div class="layui-input-inline"><input type="password" class="layui-input pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">确认新密码</label><div class="layui-input-inline"><input type="password" class="layui-input re_pwd"></div></div></div>',
+        yes: function () {
+          var old_pwd = $(".old_pwd").val();
+          var pwd = $(".pwd").val();
+          var re_pwd = $(".re_pwd").val();
+          if (old_pwd == "") {
+            layer.msg("请输入当前密码", {
+              time: 1000
+            })
+          } else if (pwd == "") {
+            layer.msg("请输入新密码", {
+              time: 1000
+            })
+          } else if (re_pwd == "") {
+            layer.msg("请输入确认新密码", {
+              time: 1000
+            })
+          } else if (pwd != re_pwd) {
+            layer.msg("两次密码输入不一致", {
+              time: 1000
+            })
+          } else {
+            $.ajax({
+              type: "POST",
+              url: '/api/modify',
+              data: {
+                oldpwd: old_pwd,
+                newpwd: re_pwd
+              },
+              beforeSend: function () {
+                layer.load(2, {
+                  shade: [0.2, '#000']
+                });
+              },
+              success: function (data) {
+                layer.closeAll();
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+                if (data.code == 200) {
+                  setTimeout(function () {
+                    window.location.href = "/admin/login";
+                  }, 1000)
+                }
+              },
+              error: function () {
+                layer.closeAll();
+                layer.msg("与服务器通信发生错误", {
+                  time: 1000
+                });
               }
-            },
-            error: function () {
-              layer.closeAll();
-              layer.msg("与服务器通信发生错误", {
-                time: 1000
-              });
-            }
-          });
+            });
+          }
         }
-      });
+      })
     })
 
     // 退出
