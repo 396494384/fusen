@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(10);
 const Public = require('../models/Public');
 const Banner = require('../models/Banner');
 const City = require('../models/City');
@@ -10,7 +12,7 @@ const Contact = require('../models/Contact');
 const Recruit = require('../models/Recruit');
 const New = require('../models/New');
 const Partner = require('../models/Partner');
-
+const Admin = require('../models/Admin');
 // 自定义上传的文件名和文件路径
 const storage = multer.diskStorage({
   destination(req, res, cb) { //修改保存路径
@@ -40,6 +42,92 @@ router.post('/upload', upload.single('file'), (req, res) => {
     msg: "图片上传成功",
     data: `\\${req.file.path}`
     // data: `${req.headers.origin}\\`
+  })
+})
+
+
+// 登录
+router.post('/login', (req, res) => {
+  Admin.findOne({
+    username: req.body.username
+  }).then(data => {
+    if (data) {
+      let _state = bcrypt.compareSync(req.body.password, data.password);
+      if (_state) { // 登录成功 保存用户信息到cookies
+        req.cookies.set('userInfo', JSON.stringify({
+          id: data._id,
+          username: data.username
+        }));
+      }
+      res.json({
+        code: _state ? 200 : 0,
+        msg: _state ? "登录成功" : "密码错误"
+      })
+    } else {
+      res.json({
+        code: 0,
+        msg: "用户名不存在"
+      })
+    }
+  })
+})
+// 注册
+router.post('/register', (req, res) => {
+  Admin.findOne({
+    username: req.body.username
+  }).then(data => {
+    if (data) {
+      res.json({
+        code: 0,
+        msg: "用户名已存在"
+      })
+    } else {
+      new Admin({
+        username: req.body.username,
+        password: bcrypt.hashSync(req.body.password, salt)
+      }).save().then(() => {
+        res.json({
+          code: 200,
+          msg: "注册成功"
+        })
+      })
+    }
+  })
+})
+
+// 修改密码
+router.post('/modify', (req, res) => {
+  Admin.findOne({
+    username: req.userInfo.username
+  }).then(data => {
+    let _state = bcrypt.compareSync(req.body.oldpwd, data.password);
+    if (_state) { //原密码正确
+      Admin.updateOne({
+        username: req.userInfo.username
+      }, {
+        password: bcrypt.hashSync(req.body.newpwd, salt)
+      }).then(() => {
+        req.cookies.set('userInfo', null);
+        res.json({
+          code: 200,
+          msg: "密码修改成功,请重新登录"
+        })
+      })
+    } else {
+      res.json({
+        code: 0,
+        msg: "原密码错误"
+      })
+    }
+  })
+})
+
+// 退出用户
+router.get('/logout', (req, res, next) => {
+  req.cookies.set('userInfo', null);
+  res.json({
+    code: 200,
+    msg: "退出成功"
   })
 })
 

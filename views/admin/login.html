@@ -6,43 +6,78 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>后台管理系统</title>
-  <script src="./js/jquery.min.js"></script>
-  <script src="./layui/layui.js"></script>
-  <script src="./js/public.js"></script>
-  <link rel="stylesheet" href="./layui/css/layui.css">
-  <link rel="stylesheet" href="./css/login.css">
+  <script src="/backend/js/jquery.min.js"></script>
+  <script src="/backend/layui/layui.js"></script>
+  <link rel="stylesheet" href="/backend/layui/css/layui.css">
+  <link rel="stylesheet" href="/backend/css/login.css">
 </head>
 
 <body class="login-bg">
-
   <div class="login">
     <div class="message">管理员登录</div>
     <div id="darkbannerwrap"></div>
-    <form method="post" class="layui-form">
-      <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+    <form class="layui-form">
+      <input name="username" placeholder="请输入用户名" type="text" class="layui-input">
       <hr class="hr15">
-      <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+      <input name="password" placeholder="请输入密码" type="password" class="layui-input">
       <hr class="hr15">
-      <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+      <span class="layui-btn loginin" style="width: 100%; height: 50px; line-height: 50px; font-size: 16px;">登
+        录</span>
     </form>
   </div>
-
   <script type="text/javascript">
-    layui.extend({
-      admin: '{/}./js/admin'
-    });
-    layui.use(['form', 'admin'], function () {
-      var form = layui.form,
-        admin = layui.admin;
-
-      //监听提交
-      form.on('submit(login)', function (data) {
-        layer.msg(JSON.stringify(data.field), function () {
-          location.href = './index.html'
-        });
-        return false;
+    $(function () {
+      layui.use(['form'], function () {
+        var form = layui.form;
+        $('.loginin').click(function () {
+          var username = $('input[name="username"]').val();
+          var password = $('input[name="password"]').val();
+          if (username == "") {
+            layer.msg("请输入用户名", {
+              time: 1000,
+              width: 100
+            })
+          } else if (password == "") {
+            layer.msg("请输入密码", {
+              time: 1000,
+              width: 100
+            })
+          } else {
+            $.ajax({
+              type: 'POST',
+              url: '/api/login',
+              data: {
+                username: username,
+                password: password
+              },
+              beforeSend: function () {
+                layer.load(2, {
+                  shade: [0.2, '#000']
+                });
+              },
+              success: function (data) {
+                layer.closeAll();
+                layer.msg(data.msg, {
+                  time: 1000
+                });
+                if (data.code == 200) {
+                  // return;
+                  setTimeout(function () {
+                    window.location.href = "/admin";
+                  }, 1000)
+                }
+              },
+              error: function () {
+                layer.closeAll();
+                layer.msg("与服务器通信发生错误", {
+                  time: 1000
+                });
+              }
+            });
+          }
+        })
       });
-    });
+    })
   </script>
 </body>
 

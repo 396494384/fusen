@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const ueditor = require('ueditor')
 const mongoose = require("mongoose")
 const swig = require('swig')
+const cookies = require('cookies')
 const path = require('path')
 const app = express();
 
@@ -51,6 +52,19 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname), function (req, res, next) {
   }
 }));
 
+//设置cookies
+app.use((req, res, next) => {
+  req.cookies = new cookies(req, res);
+  req.userInfo = {};
+  if (req.cookies.get('userInfo')) {
+    try {
+      req.userInfo = JSON.parse(req.cookies.get('userInfo'))
+    } catch (e) {
+      next();
+    }
+  }
+  next()
+})
 
 app.use('/admin', require('./routers/admin'))
 app.use('/api', require('./routers/api'))

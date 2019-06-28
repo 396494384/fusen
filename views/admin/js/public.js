@@ -12,6 +12,7 @@ function getNowTime() { //时间显示
     "月" + dateFilter(_day) + "日 " + dateFilter(_hour) + ":" + dateFilter(_minute) + ":" + dateFilter(_second) + " " + _weeks
   setTimeout("getNowTime()", 1000)
 }
+
 function dateFilter(date) { //时间补0
   return ('0' + date).substr(-2, 2);
 }
@@ -25,25 +26,29 @@ $(function () {
     _key = '/index'
   }
   // console.log(_key)
-  _asideItem.each(function(){
+  _asideItem.each(function () {
     var _currKey = $(this).attr('data-key');
     var _idx = $(this).index();
     if (_key.indexOf(_currKey) != -1) {
       _asideItem.removeClass('layui-this').removeClass('layui-nav-itemed').eq(_idx).addClass('layui-this');
-      if ($(this).find('dd').size() > 0){
+      if ($(this).find('dd').size() > 0) {
         $(this).addClass('layui-nav-itemed');
       }
       return;
     }
   })
 
-  layui.use(['layer'], function(){
+  layui.use(['layer'], function () {
     var layer = layui.layer;
     //清除缓存
     $(".clear_cache").click(function () {
       window.sessionStorage.clear();
       window.localStorage.clear();
-      var clearing = layer.msg('清除缓存中，请稍候', { icon: 16, time: false, shade: [0.8, '#ffffff'] });
+      var clearing = layer.msg('清除缓存中，请稍候', {
+        icon: 16,
+        time: false,
+        shade: [0.8, '#ffffff']
+      });
       setTimeout(function () {
         layer.close(clearing);
         layer.msg("缓存清除成功！", {
@@ -53,7 +58,97 @@ $(function () {
         });
       }, 1000);
     })
-  })
 
-  
+    //修改密码
+    var pswdStr = '<div class="layui-form"><div class="layui-form-item" style="margin-top: 15px;"><label class="layui-form-label">当前密码</label><div class="layui-input-inline"><input type="password" class="layui-input old_pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">新密码</label><div class="layui-input-inline"><input type="password" class="layui-input pwd"></div></div><div class="layui-form-item"><label class="layui-form-label">确认新密码</label><div class="layui-input-inline"><input type="password" class="layui-input re_pwd"></div></div><div class="layui-form-item"><div class="layui-input-block"><button class="layui-btn qr">确认修改</button></div></div></div>';
+    $('.modify').click(function () {
+      layer.open({
+        type: 1,
+        title: '修改密码',
+        content: pswdStr
+      })
+      $(".qr").on("click", function () {
+        var old_pwd = $(".old_pwd").val();
+        var pwd = $(".pwd").val();
+        var re_pwd = $(".re_pwd").val();
+        if (old_pwd == "") {
+          layer.msg("请输入当前密码", {
+            time: 1000
+          })
+        } else if (pwd == "") {
+          layer.msg("请输入新密码", {
+            time: 1000
+          })
+        } else if (re_pwd == "") {
+          layer.msg("请输入确认新密码", {
+            time: 1000
+          })
+        } else if (pwd != re_pwd) {
+          layer.msg("两次密码输入不一致", {
+            time: 1000
+          })
+        } else {
+          $.ajax({
+            type: "POST",
+            url: '/api/modify',
+            data: {
+              oldpwd: old_pwd,
+              newpwd: re_pwd
+            },
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              });
+              if (data.code == 200) {
+                setTimeout(function () {
+                  window.location.href = "/admin/login";
+                }, 1000)
+              }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+      });
+    })
+
+    // 退出
+    $('.logout').click(function () {
+      $.ajax({
+        url: '/api/logout',
+        beforeSend: function () {
+          layer.load(2, {
+            shade: [0.2, '#000']
+          });
+        },
+        success: function (data) {
+          layer.closeAll();
+          layer.msg(data.msg, {
+            time: 1000
+          });
+          if (data.code == 200) {
+            setTimeout(function () {
+              window.location.href = "/admin/login";
+            }, 1000)
+          }
+        },
+        error: function () {
+          layer.closeAll();
+          layer.msg("与服务器通信发生错误", {
+            time: 1000
+          });
+        }
+      });
+    })
+  })
 })
