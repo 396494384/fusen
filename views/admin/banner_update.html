@@ -2,9 +2,9 @@
 {% block main %}
 <div class="layui-bread">
   <span class="layui-breadcrumb">
-    <a href="">后台管理系统</a>
-    <a href="">Banner管理</a>
-    <a class="active" href="">Banner修改</a>
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/banner">Banner管理</a>
+    <a class="active">Banner修改</a>
   </span>
 </div>
 <div class="layui-content">
@@ -15,29 +15,15 @@
       <div class="layui-input-block">
         <label>
           <input type="file" name="banner" id="banner" />
-          {% if data.banner %}
           <img class="banner_img" src="{{ data.banner }}" alt="" />
-          {% else %}
-          <span type="button" class="layui-btn banner_btn">
-            <i class="layui-icon">&#xe67c;</i>上传banner
-          </span>
-          {% endif %}
         </label>
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">是否开启</label>
       <div class="layui-input-block">
-        {% if data.status %}
-        <input type="radio" name="status" value="true" title="开启" checked>
-        {% else %}
-        <input type="radio" name="status" value="true" title="开启">
-        {% endif %}
-        {% if !data.status %}
-        <input type="radio" name="status" value="false" title="关闭" checked>
-        {% else %}
-        <input type="radio" name="status" value="false" title="关闭">
-        {% endif %}
+        <input type="radio" name="status" value="true" title="开启" {% if data.status %} checked {% else %}{% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %} checked {% else %}{% endif %}>
       </div>
     </div>
     <div class="layui-form-item">
@@ -57,7 +43,7 @@
   }
 
   .banner_img {
-    /* display: none; */
+    min-width: 100px;
     height: 100px;
   }
 </style>

@@ -9,6 +9,7 @@ const Store = require('../models/Store');
 const Contact = require('../models/Contact');
 const Recruit = require('../models/Recruit');
 const New = require('../models/New');
+const Partner = require('../models/Partner');
 
 // 自定义上传的文件名和文件路径
 const storage = multer.diskStorage({
@@ -101,11 +102,17 @@ router.post('/banner_add', (req, res) => {
 })
 // 获取Banner
 router.get('/banner_list', (req, res) => {
-  Banner.find().limit(parseInt(req.query.limit)).then(data => {
-    res.json({
-      code: 0,
-      data: data,
-      msg: "成功"
+  let _skip = (req.query.page - 1) * parseInt(req.query.limit);
+  Banner.countDocuments().then(count => {
+    Banner.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+      _id: -1
+    }).then(data => {
+      res.json({
+        code: 0,
+        count: count,
+        data: data,
+        msg: "获取成功"
+      })
     })
   })
 })
@@ -137,8 +144,10 @@ router.post('/banner_off', (req, res) => {
 })
 // 修改Banner
 router.post('/banner_update', (req, res) => {
-  if (req.body.banner) { //修改了banner
-    Banner.findById(req.body.id).then(data => {
+  let _update = req.body;
+  let _id = _update.id;
+  if (_update.banner) { //修改了banner
+    Banner.findById(_id).then(data => {
       let _path = data.banner;
       if (_path) {
         _path = _path.replace(/\\/g, "/");
@@ -148,12 +157,12 @@ router.post('/banner_update', (req, res) => {
         fs.unlinkSync(_path);
       }
     })
-  }else{
-    delete req.body.banner
+  } else {
+    delete _update.banner
   }
   Banner.updateOne({
-    _id: req.body.id
-  }, req.body).then(() => {
+    _id: _id
+  }, _update).then(() => {
     res.json({
       code: 200,
       msg: "修改成功"
@@ -188,7 +197,9 @@ router.post('/banner_delete', (req, res) => {
 router.get('/store_city_list', (req, res) => {
   var _skip = (req.query.page - 1) * req.query.limit;
   City.countDocuments().then(count => {
-    City.find().skip(_skip).limit(parseInt(req.query.limit)).then(data => {
+    City.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+      _id: -1
+    }).then(data => {
       res.json({
         code: 0,
         data: data,
@@ -271,7 +282,9 @@ router.post('/store_city_delete', (req, res) => {
 router.get('/store_list', (req, res) => {
   var _skip = (req.query.page - 1) * req.query.limit;
   Store.countDocuments().then(count => {
-    Store.find().skip(_skip).limit(parseInt(req.query.limit)).populate(['city']).then(data => {
+    Store.find().skip(_skip).limit(parseInt(req.query.limit)).populate(['city']).sort({
+      _id: -1
+    }).then(data => {
       res.json({
         code: 0,
         data: data,
@@ -458,7 +471,9 @@ router.post('/contact_update', (req, res) => {
 router.get('/recruit_list', (req, res) => {
   let _skip = (req.query.page - 1) * parseInt(req.query.limit);
   Recruit.countDocuments().then(count => {
-    Recruit.find().skip(_skip).limit(parseInt(req.query.limit)).then(data => {
+    Recruit.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+      _id: -1
+    }).then(data => {
       res.json({
         code: 0,
         count: count,
@@ -563,7 +578,9 @@ router.post('/recruit_delete', (req, res) => {
 router.get('/new_list', (req, res) => {
   let _skip = (req.query.page - 1) * parseInt(req.query.limit);
   New.countDocuments().then(count => {
-    New.find().skip(_skip).limit(parseInt(req.query.limit)).then(data => {
+    New.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+      _id: -1
+    }).then(data => {
       res.json({
         code: 0,
         count: count,
@@ -638,7 +655,7 @@ router.post('/new_update', (req, res) => {
         }).then(() => {
           newUpdate()
         })
-      }else{
+      } else {
         newUpdate()
       }
     })
@@ -699,13 +716,13 @@ router.post('/new_update', (req, res) => {
 router.post('/new_on', (req, res) => {
   let _id = req.body.id;
   New.findById(_id).then(data => {
-    if (data.type == "顶部显示"){
+    if (data.type == "顶部显示") {
       New.updateMany({
         type: "顶部显示",
         status: true
-      },{
+      }, {
         status: false
-      }).then(()=>{
+      }).then(() => {
         New.updateOne({
           _id: _id
         }, {
@@ -717,7 +734,7 @@ router.post('/new_on', (req, res) => {
           })
         })
       })
-    }else{
+    } else {
       New.updateOne({
         _id: _id
       }, {
@@ -764,6 +781,119 @@ router.post('/new_delete', (req, res) => {
         code: 200,
         msg: "删除成功"
       })
+    })
+  })
+})
+
+// 获取合作伙伴
+router.get('/partner_list', (req, res) => {
+  let _skip = (req.query.page - 1) * parseInt(req.query.limit);
+  Partner.countDocuments().then(count => {
+    Partner.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+      _id: -1
+    }).then(data => {
+      res.json({
+        code: 0,
+        count: count,
+        data: data,
+        msg: "获取成功"
+      })
+    })
+  })
+})
+// 添加合作伙伴
+router.post('/partner_add', (req, res) => {
+  Partner.findOne({
+    name: req.body.name
+  }).then(data => {
+    if (data) {
+      res.json({
+        code: 0,
+        msg: "合作伙伴名称重复"
+      })
+    } else {
+      new Partner(req.body).save().then(() => {
+        res.json({
+          code: 200,
+          msg: '添加成功'
+        })
+      })
+    }
+  })
+})
+// 修改合作伙伴
+router.post('/partner_update', (req, res) => {
+  let _update = req.body;
+  let _id = _update.id;
+  if (_update.img) {
+    Partner.findById(_id).then(data => {
+      let _path = data.img;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        if (_path.search(/\//) == 0) {
+          _path = _path.slice(1);
+        }
+        fs.unlinkSync(_path);
+      }
+    })
+  } else {
+    delete _update.img
+  }
+  Partner.updateOne({
+    _id: _id
+  }, _update).then(() => {
+    res.json({
+      code: 200,
+      msg: "修改成功"
+    })
+  })
+})
+// 删除合作伙伴
+router.post('/partner_delete', (req, res) => {
+  Partner.findById(req.body.id).then(data => {
+    let _path = data.img;
+    if (_path) {
+      _path = _path.replace(/\\/g, "/");
+      if (_path.search(/\//) == 0) {
+        _path = _path.slice(1);
+      }
+      fs.unlinkSync(_path);
+    }
+    return;
+  }).then(() => {
+    Partner.deleteOne({
+      _id: req.body.id
+    }).then(() => {
+      res.json({
+        code: 200,
+        msg: "删除成功"
+      })
+    })
+  })
+})
+// 开启合作伙伴
+router.post('/partner_on', (req, res) => {
+  Partner.updateOne({
+    _id: req.body.id
+  }, {
+    status: true
+  }).then(() => {
+    res.json({
+      code: 200,
+      msg: '开启成功'
+    })
+  })
+})
+// 关闭合作伙伴
+router.post('/partner_off', (req, res) => {
+  Partner.updateOne({
+    _id: req.body.id
+  }, {
+    status: false
+  }).then(() => {
+    res.json({
+      code: 200,
+      msg: '关闭成功'
     })
   })
 })

@@ -3,52 +3,61 @@
 <div class="layui-bread">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a href="/admin/strore">服务网点管理</a>
-    <a class="active">网点管理</a>
+    <a class="active">合作伙伴管理</a>
   </span>
 </div>
-<a href="/admin/store_add" class="layui-btn">添加网点</a>
+<a href="/admin/partner_add" class="layui-btn">添加合作伙伴</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
+<style>
+  .layui-table img.table_img {
+    display: block;
+    width: auto;
+    max-width: inherit;
+    height: 50px;
+    margin: 10px auto;
+  }
+
+  .layui-table-cell {
+    height: auto;
+  }
+</style>
 <script>
   $(function () {
-    var url = '/api/store_list';
+    var url = '/api/partner_list';
     var config = {
       elem: '#table',
       url: url,
       cols: [
         [ //表头
           {
-            width: "15%",
-            title: '城市',
+            width: "20%",
+            title: 'LOGO图片',
             align: "center",
-            field: 'city',
-            sort: true,
+            field: 'img',
             templet: function (item) {
-              return item.city.name
+              return "<img src=" + item.img + " class='table_img' />"
             }
           }, {
-            width: "30%",
-            title: '网点名称',
+            width: "24%",
+            title: '名称',
             align: "center",
             field: 'name'
-          },
-          {
-            width: '15%',
-            title: '网点电话',
-            align: 'center',
-            field: 'phone'
-          },
-          {
-            width: '15%',
+          }, {
+            width: "24%",
+            title: '链接',
+            align: "center",
+            field: 'url'
+          }, {
+            width: "12%",
             title: '状态',
-            align: 'center',
+            align: "center",
             field: 'status',
             templet: function (item) {
               return item.status ? "开启" : "关闭"
             }
           },
           {
-            width: '25%',
+            width: '20%',
             title: '操作',
             align: 'center',
             templet: function (item) {
@@ -56,7 +65,7 @@
                 '<a class="layui-btn layui-btn-xs" lay-event="on">开启</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
               if (item.status) {
                 btns =
-                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
+                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>'
               }
               return btns;
             }
@@ -68,17 +77,18 @@
     layui.use(['element', 'table'], function () {
       var element = layui.element;
       var table = layui.table;
-      table.render(config)
+      table.render(config);
 
+      //监听工具条
       table.on('tool(operation)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
         var _id = data._id.toString();
-        if (layEvent == 'edit') {
-          window.location.href = '/admin/store_update?id=' + _id;
-        } else if (layEvent == 'detail') {
-          window.location.href = '/admin/store_detail?id=' + _id;
-        } else if (layEvent == 'delete') {
+        if (layEvent === 'edit') {
+          window.location.href = 'partner_update?id=' + _id;
+        } else if (layEvent === 'detail') {
+          window.location.href = 'partner_detail?id=' + _id;
+        } else if (layEvent === 'delete') {
           layer.open({
             id: 1,
             content: '确认要删除吗？',
@@ -86,7 +96,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/api/store_delete',
+                url: '/api/partner_delete',
                 data: {
                   id: _id
                 },
@@ -102,7 +112,7 @@
                   });
                   if (data.code == 200) {
                     setTimeout(function () {
-                      window.location.href = '/admin/store'
+                      window.location.href = '/admin/partner'
                     }, 1000)
                   }
                 },
@@ -111,14 +121,14 @@
                   layer.msg("与服务器通信发生错误", {
                     time: 1000
                   });
-                },
+                }
               });
-            }
+            },
           })
-        } else if (layEvent == 'on') {
+        } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
-            url: '/api/store_on',
+            url: '/api/partner_on',
             data: {
               id: _id
             },
@@ -134,8 +144,8 @@
               })
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = '/admin/store'
-                }, 1000);
+                  window.location.href = '/admin/partner'
+                }, 1000)
               }
             },
             error: function () {
@@ -145,10 +155,10 @@
               });
             }
           });
-        } else if (layEvent == 'off') {
+        } else if (layEvent === 'off') {
           $.ajax({
             type: 'POST',
-            url: '/api/store_off',
+            url: '/api/partner_off',
             data: {
               id: _id
             },
@@ -164,8 +174,8 @@
               })
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = '/admin/store'
-                }, 1000);
+                  window.location.href = '/admin/partner'
+                }, 1000)
               }
             },
             error: function () {
@@ -176,7 +186,7 @@
             }
           });
         }
-      })
+      });
     });
   })
 </script>

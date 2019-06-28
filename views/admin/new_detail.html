@@ -33,12 +33,7 @@
       <div class="layui-input-block">
         <label>
           <input type="file" name="new_img" id="new_img" disabled />
-          <img class="show_new_img" src="{{ data.img }}" alt="" {% if data.img %} style="display: block" {% else %}
-            style="display: none" {% endif %} />
-          <span type="button" class="layui-btn new_img_btn" {% if !data.img %} style="display: inline-block" {% else %}
-            style="display: none" {% endif %}>
-            <i class="layui-icon">&#xe67c;</i>上传资讯图片
-          </span>
+          <img class="show_new_img" src="{{ data.img }}" alt="" />
         </label>
       </div>
     </div>
@@ -75,7 +70,7 @@
   }
 
   .show_new_img {
-    display: none;
+    min-width: 100px;
     height: 200px;
   }
 

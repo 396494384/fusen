@@ -3,66 +3,84 @@
 <div class="layui-bread">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a href="/admin/banner">Banner管理</a>
-    <a class="active">Banner添加</a>
+    <a href="/admin/partner">合作伙伴管理</a>
+    <a class="active">合作伙伴修改</a>
   </span>
 </div>
 <div class="layui-content">
   <form class="layui-form">
+    <input type="hidden" name="id" value="{{ data._id.toString() }}">
     <div class="layui-form-item">
-      <label class="layui-form-label">Banner图片</label>
+      <label class="layui-form-label">LOGO图片</label>
       <div class="layui-input-block">
         <label>
-          <input type="file" name="banner" id="banner" />
-          <span type="button" class="layui-btn banner_btn">
-            <i class="layui-icon">&#xe67c;</i>上传banner
-          </span>
-          <img class="banner_img" src="" alt="" />
+          <input type="file" name="partner" id="partner" />
+          <img class="partner_img" src="{{ data.img }}" alt="" />
         </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">合作伙伴名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入合作伙伴名称" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">合作伙伴链接</label>
+      <div class="layui-input-block">
+        <input type="text" name="url" placeholder="请输入合作伙伴链接" class="layui-input" value="{{ data.url }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">是否开启</label>
       <div class="layui-input-block">
-        <input type="radio" name="status" value="true" title="开启" checked>
-        <input type="radio" name="status" value="false" title="关闭">
+        <input type="radio" name="status" value="true" title="开启" {% if data.status %} checked {% else %}{% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %} checked {% else %}{% endif %}>
       </div>
     </div>
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <a class="layui-btn add">添加Banner</a>
+        <a class="layui-btn update">修改合作伙伴</a>
         <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
       </div>
     </div>
   </form>
 </div>
 <style>
-  #banner {
+  #partner {
     width: 0;
     height: 0;
     visibility: hidden;
     display: none;
   }
 
-  .banner_img {
-    display: none;
+  .partner_img {
+    min-width: 100px;
     height: 100px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
   }
 </style>
 <script>
   $(function () {
-    layui.use(['element', 'jquery', 'form', "layer"], function () {
+    layui.use(['element', 'form'], function () {
       var element = layui.element;
       var form = layui.form;
-      $('#banner').change(function () {
+      $('#partner').change(function () {
         var _file = $(this);
         var _fileObj = _file[0];
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
-        var img = $(".banner_img");
+        var img = $(".partner_img");
         if (_fileObj.files[0].type.indexOf('image') == -1) {
           _file.val("");
-          layer.msg("Banner只支持图片类型", {
+          layer.msg("只支持图片类型", {
             time: 1000
           });
           return;
@@ -70,7 +88,7 @@
         if (_fileObj && _fileObj.files && _fileObj.files[0]) {
           dataURL = windowURL.createObjectURL(_fileObj.files[0]);
           img.show().attr('src', dataURL);
-          $('.banner_btn').hide();
+          $('.partner_btn').hide();
         } else {
           dataURL = _file.val();
           var imgObj = img[0];
@@ -79,19 +97,18 @@
           imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
         }
       })
-      $('.add').click(function () {
+      $('.update').click(function () {
         var _sendData = {
-          banner: $('input[name="banner"]').val(),
-          status: $('input[name="status"]:checked').val()
+          img: $('input[name="partner"]').val(),
+          name: $('input[name="name"]').val(),
+          url: $('input[name="url"]').val(),
+          status: $('input[name="status"]:checked').val(),
+          id: $('input[name="id"]').val()
         }
-        if (_sendData.banner == "") {
-          layer.msg("请上传Banner", {
-            time: 1000
-          });
-        } else {
-          var file = document.getElementById("banner");//上传图片的input
-          var formData = new FormData();//创建formdata对象
-          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
+        if (_sendData.img) { //修改了图片
+          var file = document.getElementById("partner"); //上传图片的input
+          var formData = new FormData(); //创建formdata对象
+          formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
           $.ajax({
             url: '/api/upload',
             type: 'POST',
@@ -100,8 +117,8 @@
             processData: false,
             success: function (data) {
               if (data.code == 200) {
-                _sendData.banner = data.data;
-                bannerAdd(_sendData)
+                _sendData.img = data.data;
+                partnerUpdate(_sendData)
               } else {
                 layer.msg("图片上传失败", {
                   time: 1000
@@ -114,13 +131,15 @@
               });
             }
           });
+        } else {
+          partnerUpdate(_sendData)
         }
       })
 
-      function bannerAdd(data) {
+      function partnerUpdate(data) {
         $.ajax({
-          url: '/api/banner_add', //请求路径
           type: 'POST',
+          url: '/api/partner_update',
           data: data,
           beforeSend: function () {
             layer.load(2, {
@@ -134,7 +153,7 @@
             });
             if (data.code == 200) {
               setTimeout(function () {
-                window.location.href = "/admin/banner";
+                window.location.href = "/admin/partner";
               }, 1000)
             }
           },

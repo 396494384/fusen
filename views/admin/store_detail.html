@@ -53,16 +53,10 @@
     <div class="layui-form-item">
       <label class="layui-form-label">是否开启</label>
       <div class="layui-input-block">
-        {% if data.status %}
-        <input type="radio" name="status" value="true" title="开启" checked>
-        {% else %}
-        <input type="radio" name="status" value="true" title="开启" disabled>
-        {% endif %}
-        {% if !data.status %}
-        <input type="radio" name="status" value="false" title="关闭" checked>
-        {% else %}
-        <input type="radio" name="status" value="false" title="关闭" disabled>
-        {% endif %}
+        <input type="radio" name="status" value="true" title="开启" {% if data.status %} checked {% else %} disabled
+          {% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %} checked {% else %} disabled
+          {% endif %}>
       </div>
     </div>
     <div class="layui-form-item">

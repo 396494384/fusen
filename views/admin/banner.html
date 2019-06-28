@@ -2,11 +2,11 @@
 {% block main %}
 <div class="layui-bread">
   <span class="layui-breadcrumb">
-    <a href="">后台管理系统</a>
-    <a class="active" href="">Banner管理</a>
+    <a href="/admin">后台管理系统</a>
+    <a class="active">Banner管理</a>
   </span>
 </div>
-<a href="banner_add" class="layui-btn">添加Banner</a>
+<a href="/admin/banner_add" class="layui-btn">添加Banner</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <style>
   .layui-table img.table_img {
@@ -21,7 +21,6 @@
     height: auto;
   }
 </style>
-<!-- //JavaScript代码区域 -->
 <script>
   $(function () {
     var url = '/api/banner_list';
@@ -62,13 +61,12 @@
             }
           }
         ]
-      ]
+      ],
+      page: true
     };
     layui.use(['element', 'form', 'layer', 'jquery', 'table'], function () {
       var element = layui.element;
       var table = layui.table;
-      var layer = layui.layer;
-      var $ = layui.jquery;
       table.render(config);
 
       //监听工具条

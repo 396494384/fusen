@@ -7,6 +7,7 @@ const Store = require('../models/Store')
 const Contact = require('../models/Contact');
 const Recruit = require('../models/Recruit');
 const New = require('../models/New');
+const Partner = require('../models/Partner');
 
 router.get('/', (req, res)=>{
   res.render('admin/index')
@@ -151,6 +152,29 @@ router.get('/new_update', (req, res) => {
 router.get('/new_detail', (req, res) => {
   New.findById(req.query.id).then(data => {
     res.render('admin/new_detail', {
+      data: data
+    })
+  })
+})
+// 资讯管理 end
+
+// 资讯管理
+router.get('/partner', (req, res) => {
+  res.render('admin/partner')
+})
+router.get('/partner_add', (req, res) => {
+  res.render('admin/partner_add')
+})
+router.get('/partner_update', (req, res) => {
+  Partner.findById(req.query.id).then(data => {
+    res.render('admin/partner_update', {
+      data: data
+    })
+  })
+})
+router.get('/partner_detail', (req, res) => {
+  Partner.findById(req.query.id).then(data => {
+    res.render('admin/partner_detail', {
       data: data
     })
   })
