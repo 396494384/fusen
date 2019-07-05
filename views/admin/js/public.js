@@ -50,6 +50,7 @@ $(function () {
         shade: [0.8, '#ffffff']
       });
       setTimeout(function () {
+        $(".clear_cache").parents('li').removeClass('layui-this');
         layer.close(clearing);
         layer.msg("缓存清除成功！", {
           icon: 1,
