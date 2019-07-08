@@ -20,11 +20,11 @@
       <div class="layui-input-block">
         <select name="category" lay-verify="required" disabled>
           {% for item in category %}
-            {% if item._id.toString() == data.category._id.toString() %}
-            <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
-            {% else %}
-            <option value="{{ item._id.toString() }}">{{ item.name }}</option>
-            {% endif %}
+          {% if item._id.toString() == data.category._id.toString() %}
+          <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
+          {% else %}
+          <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+          {% endif %}
           {% endfor %}
         </select>
       </div>
@@ -50,7 +50,8 @@
     <div class="layui-form-item">
       <label class="layui-form-label">产品工作电压</label>
       <div class="layui-input-block">
-        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.voltage }}" disabled>
+        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.voltage }}"
+          disabled>
       </div>
     </div>
     <div class="layui-form-item">
@@ -68,7 +69,8 @@
     <div class="layui-form-item">
       <label class="layui-form-label">产品功能</label>
       <div class="layui-input-block">
-        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.function }}" disabled>
+        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.function }}"
+          disabled>
       </div>
     </div>
     <div class="layui-form-item">
@@ -82,6 +84,16 @@
       <label class="layui-form-label">产品购买链接</label>
       <div class="layui-input-block">
         <input type="text" name="url" placeholder="请输入产品购买链接" class="layui-input" value="{{ data.url }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品详细图片</label>
+      <div class="layui-input-block">
+        <div class="imgs">
+          {% for item in data.imgs %}
+          <span><img src="{{ item }}" alt=""></span>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div class="layui-form-item">
@@ -108,6 +120,26 @@
 
   .layui-input-block {
     margin-left: 130px;
+  }
+
+  .imgs {
+    font-size: 0;
+  }
+
+  .imgs span {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin: 10px 10px 0 0;
+  }
+
+  .imgs span img {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>
 <script>

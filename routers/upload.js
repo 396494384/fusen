@@ -35,4 +35,21 @@ router.post('/', upload.single('file'), (req, res) => {
   })
 })
 
+//删除上传的图片
+router.post('/delete_img', (req, res) => {
+  let _path = req.body.img;
+  if (_path) {
+    _path = _path.replace(/\\/g, "/");
+    if (_path.search(/\//) == 0) {
+      _path = _path.slice(1);
+    }
+    fs.unlink(_path, ()=>{
+      res.json({
+        code: 200,
+        msg: "图片删除成功"
+      })
+    });
+  }
+})
+
 module.exports = router;

@@ -86,6 +86,18 @@
       </div>
     </div>
     <div class="layui-form-item">
+      <label class="layui-form-label">产品详细图片</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="imgs" id="imgs" />
+          <span type="button" class="layui-btn imgs_btn">
+            <i class="layui-icon">&#xe67c;</i>上传产品详细图片
+          </span>
+        </label>
+        <div class="imgs"></div>
+      </div>
+    </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">是否开启</label>
       <div class="layui-input-block">
         <input type="radio" name="status" value="true" title="开启" checked>
@@ -101,7 +113,8 @@
   </form>
 </div>
 <style>
-  #product_img {
+  #product_img,
+  #imgs {
     width: 0;
     height: 0;
     visibility: hidden;
@@ -119,6 +132,42 @@
 
   .layui-input-block {
     margin-left: 130px;
+  }
+
+  .imgs {
+    font-size: 0;
+  }
+
+  .imgs span {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin: 10px 10px 0 0;
+  }
+
+  .imgs span img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .imgs span b {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #009688;
+    text-align: center;
+    line-height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 16px;
+    color: #009688;
+    cursor: pointer;
+    border-radius: 3px;
+    background: #fff;
   }
 </style>
 <script>
@@ -151,6 +200,77 @@
           imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
         }
       })
+
+      // 上传详细图片
+      $('#imgs').change(function () {
+        var file = document.getElementById("imgs"); //上传图片的input
+        var formData = new FormData(); //创建formdata对象
+        formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
+        $.ajax({
+          url: '/upload',
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            if (data.code == 200) {
+              layer.msg("图片上传成功", {
+                time: 1000
+              });
+              var imgStr = '<span><b class="detele layui-icon">&#x1006;</b><img src="' + data.data + '" alt=""></span>';
+              $('.imgs').append(imgStr);
+              deteleImg()
+            } else {
+              layer.msg("图片上传失败", {
+                time: 1000
+              });
+            }
+          },
+          error: function () {
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
+          }
+        });
+      })
+      //删除图片
+      function deteleImg() {
+        $('.imgs b.detele').unbind('click').click(function () {
+          var _this = $(this);
+          layer.open({
+            id: 1,
+            content: '确认要删除吗？',
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+              $.ajax({
+                url: '/upload/delete_img',
+                type: 'POST',
+                data: {
+                  img: _this.parents('span').find('img').attr('src')
+                },
+                success: function (data) {
+                  if (data.code == 200) {
+                    layer.msg("删除成功", {
+                      time: 1000
+                    });
+                    _this.parents('span').remove();
+                  } else {
+                    layer.msg("图片删除失败", {
+                      time: 1000
+                    });
+                  }
+                },
+                error: function () {
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                }
+              });
+            }
+          })
+        })
+      }
+
       $('.add').click(function () {
         var _sendData = {
           name: $('input[name="name"]').val(),
@@ -166,6 +286,11 @@
           url: $('input[name="url"]').val(),
           status: $('input[name="status"]:checked').val()
         }
+        var _imgs = [];
+        $('.imgs span').each(function(i){
+          _imgs.push($(this).find('img').attr('src'));
+        })
+        _sendData.imgs = _imgs;
         if (_sendData.name == "") {
           layer.msg("请输入产品名称", {
             time: 1000
