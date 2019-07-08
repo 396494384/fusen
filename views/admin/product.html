@@ -3,41 +3,65 @@
 <div class="layui-bread">
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
-    <a class="active">Banner管理</a>
+    <a class="active">产品管理</a>
   </span>
 </div>
-<a href="/admin/banner_add" class="layui-btn">添加Banner</a>
+<a href="/admin/product_add" class="layui-btn">添加产品</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <style>
   .layui-table img.table_img {
     display: block;
     width: auto;
     max-width: inherit;
-    height: 100px;
+    height: 50px;
     margin: 10px auto;
   }
-
   .layui-table-cell {
     height: auto;
   }
 </style>
 <script>
   $(function () {
-    var url = '/banner/banner_list';
+    var url = '/product/product_list';
     var config = {
       elem: '#table',
       url: url,
       cols: [
         [ //表头
           {
-            width: "40%",
-            title: 'Banner图片',
-            field: 'banner',
+            width: "15%",
+            title: '产品名称',
+            align: "center",
+            field: 'name'
+          }, {
+            width: "15%",
+            title: '产品图片',
+            align: "center",
+            field: 'product_img',
             templet: function (item) {
-              return "<img src=" + item.banner + " class='table_img' />"
+              return "<img src=" + item.product_img + " class='table_img' />"
             }
           }, {
-            width: "30%",
+            width: "13%",
+            title: '产品类型',
+            align: "center",
+            field: 'category',
+            sort: true,
+            templet: function (item) {
+              return item.category.name
+            }
+          }, {
+            width: "10%",
+            title: '产品价格',
+            align: "center",
+            field: 'price'
+          }, {
+            width: "15%",
+            title: '产品购买链接',
+            align: "center",
+            field: 'url'
+          }, {
+            width: "12%",
             title: '状态',
             align: "center",
             field: 'status',
@@ -46,16 +70,15 @@
             }
           },
           {
-            width: '30%',
+            width: '20%',
             title: '操作',
             align: 'center',
             templet: function (item) {
               var btns =
-                '<a class="layui-btn layui-btn-xs" lay-event="on">开启</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
-              console.log(item.status)
+                '<a class="layui-btn layui-btn-xs" lay-event="on">开启</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
               if (item.status) {
                 btns =
-                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>'
+                  '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="off">关闭</a><a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>'
               }
               return btns;
             }
@@ -64,7 +87,7 @@
       ],
       page: true
     };
-    layui.use(['element', 'form', 'layer', 'jquery', 'table'], function () {
+    layui.use(['element', 'table'], function () {
       var element = layui.element;
       var table = layui.table;
       table.render(config);
@@ -74,7 +97,11 @@
         var data = obj.data;
         var layEvent = obj.event;
         var _id = data._id.toString();
-        if (layEvent === 'delete') {
+        if (layEvent === 'edit') {
+          window.location.href = 'product_update?id=' + _id;
+        } else if (layEvent === 'detail') {
+          window.location.href = 'product_detail?id=' + _id;
+        } else if (layEvent === 'delete') {
           layer.open({
             id: 1,
             content: '确认要删除吗？',
@@ -82,7 +109,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/banner/banner_delete',
+                url: '/product/product_delete',
                 data: {
                   id: _id
                 },
@@ -98,7 +125,7 @@
                   });
                   if (data.code == 200) {
                     setTimeout(function () {
-                      window.location.href = '/admin/banner'
+                      window.location.href = '/admin/product'
                     }, 1000)
                   }
                 },
@@ -111,12 +138,10 @@
               });
             },
           })
-        } else if (layEvent === 'edit') {
-          window.location.href = 'banner_update?id=' + data._id.toString();
         } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
-            url: '/banner/banner_on',
+            url: '/product/product_on',
             data: {
               id: _id
             },
@@ -132,7 +157,7 @@
               })
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = '/admin/banner'
+                  window.location.href = '/admin/product'
                 }, 1000)
               }
             },
@@ -146,7 +171,7 @@
         } else if (layEvent === 'off') {
           $.ajax({
             type: 'POST',
-            url: '/banner/banner_off',
+            url: '/product/product_off',
             data: {
               id: _id
             },
@@ -162,7 +187,7 @@
               })
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = '/admin/banner'
+                  window.location.href = '/admin/product'
                 }, 1000)
               }
             },

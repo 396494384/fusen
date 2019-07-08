@@ -1,0 +1,253 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/product">产品管理</a>
+    <a class="active">产品修改</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <input type="hidden" name="id" value="{{ data._id.toString() }}">
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入产品名称" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品分类</label>
+      <div class="layui-input-block">
+        <select name="category" lay-verify="required">
+          {% for item in category %}
+          {% if item._id.toString() == data.category._id.toString() %}
+          <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
+          {% else %}
+          <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品展示图片</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="product_img" id="product_img" />
+          <img class="product_img" src="{{ data.product_img }}" alt="" />
+        </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品价格</label>
+      <div class="layui-input-block">
+        <input type="text" name="price" placeholder="请输入产品价格" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品型号</label>
+      <div class="layui-input-block">
+        <input type="text" name="type" placeholder="请输入产品型号" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品工作电压</label>
+      <div class="layui-input-block">
+        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品能耗</label>
+      <div class="layui-input-block">
+        <input type="text" name="energy" placeholder="请输入产品能耗" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品容积</label>
+      <div class="layui-input-block">
+        <input type="text" name="volume" placeholder="请输入产品容积" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品功能</label>
+      <div class="layui-input-block">
+        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品包装规格</label>
+      <div class="layui-input-block">
+        <input type="text" name="specifications" placeholder="请输入产品包装规格" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品购买链接</label>
+      <div class="layui-input-block">
+        <input type="text" name="url" placeholder="请输入产品购买链接" class="layui-input" value="{{ data.name }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        <input type="radio" name="status" value="true" title="开启" {% if data.status %}checked{% else %}{% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %}checked{% else %}{% endif %}>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn update">修改产品</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+  #product_img {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  .product_img {
+    min-width: 100px;
+    height: 100px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+      $('#product_img').change(function () {
+        var _file = $(this);
+        var _fileObj = _file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var img = $(".product_img");
+        if (_fileObj.files[0].type.indexOf('image') == -1) {
+          _file.val("");
+          layer.msg("只支持图片类型", {
+            time: 1000
+          });
+          return;
+        }
+        if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+          dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+          img.show().attr('src', dataURL);
+          $('.product_img_btn').hide();
+        } else {
+          dataURL = _file.val();
+          var imgObj = img[0];
+          imgObj.style.filter =
+            "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+      })
+      $('.update').click(function () {
+        var _sendData = {
+          name: $('input[name="name"]').val(),
+          category: $('select[name="category"] option:selected').val(),
+          product_img: $('input[name="product_img"]').val(),
+          price: $('input[name="price"]').val(),
+          type: $('input[name="type"]').val(),
+          voltage: $('input[name="voltage"]').val(),
+          energy: $('input[name="energy"]').val(),
+          volume: $('input[name="volume"]').val(),
+          function: $('input[name="function"]').val(),
+          specifications: $('input[name="specifications"]').val(),
+          url: $('input[name="url"]').val(),
+          status: $('input[name="status"]:checked').val(),
+          id: $('input[name="id"]').val()
+        }
+        if (_sendData.name == "") {
+          layer.msg("请输入产品名称", {
+            time: 1000
+          });
+        } else if (_sendData.price == "") {
+          layer.msg("请输入产品价格", {
+            time: 1000
+          });
+        } else if (_sendData.type == "") {
+          layer.msg("请输入产品型号", {
+            time: 1000
+          });
+        } else if (_sendData.url == "") {
+          layer.msg("请输入产品购买链接", {
+            time: 1000
+          });
+        } else {
+          if (_sendData.product_img) { //修改了图片
+            var file = document.getElementById("product_img"); //上传图片的input
+            var formData = new FormData(); //创建formdata对象
+            formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
+            $.ajax({
+              url: '/upload',
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                if (data.code == 200) {
+                  _sendData.product_img = data.data;
+                  partnerUpdate(_sendData)
+                } else {
+                  layer.msg("图片上传失败", {
+                    time: 1000
+                  });
+                }
+              },
+              error: function () {
+                layer.msg("与服务器通信发生错误", {
+                  time: 1000
+                });
+              }
+            });
+          } else {
+            partnerUpdate(_sendData)
+          }
+        }
+      })
+
+      function partnerUpdate(data) {
+        $.ajax({
+          type: 'POST',
+          url: '/product/product_update',
+          data: data,
+          beforeSend: function () {
+            layer.load(2, {
+              shade: [0.2, '#000']
+            });
+          },
+          success: function (data) {
+            layer.closeAll();
+            layer.msg(data.msg, {
+              time: 1000
+            });
+            if (data.code == 200) {
+              setTimeout(function () {
+                window.location.href = "/admin/product";
+              }, 1000)
+            }
+          },
+          error: function () {
+            layer.closeAll();
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
+          }
+        });
+      }
+    })
+  })
+</script>
+{% endblock %}

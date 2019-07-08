@@ -91,7 +91,7 @@ $(function () {
           } else {
             $.ajax({
               type: "POST",
-              url: '/api/modify',
+              url: '/backend_public/modify',
               data: {
                 oldpwd: old_pwd,
                 newpwd: re_pwd
@@ -127,7 +127,7 @@ $(function () {
     // 退出
     $('.logout').click(function () {
       $.ajax({
-        url: '/api/logout',
+        url: '/backend_public/logout',
         beforeSend: function () {
           layer.load(2, {
             shade: [0.2, '#000']

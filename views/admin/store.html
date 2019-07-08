@@ -11,7 +11,7 @@
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <script>
   $(function () {
-    var url = '/api/store_list';
+    var url = '/store/store_list';
     var config = {
       elem: '#table',
       url: url,
@@ -86,7 +86,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/api/store_delete',
+                url: '/store/store_delete',
                 data: {
                   id: _id
                 },
@@ -118,7 +118,7 @@
         } else if (layEvent == 'on') {
           $.ajax({
             type: 'POST',
-            url: '/api/store_on',
+            url: '/store/store_on',
             data: {
               id: _id
             },
@@ -148,7 +148,7 @@
         } else if (layEvent == 'off') {
           $.ajax({
             type: 'POST',
-            url: '/api/store_off',
+            url: '/store/store_off',
             data: {
               id: _id
             },

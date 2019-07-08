@@ -125,7 +125,7 @@
           var formData = new FormData(); //创建formdata对象
           formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
           $.ajax({
-            url: '/api/upload',
+            url: '/upload',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -153,7 +153,7 @@
 
       function publicAdd(data) {
         $.ajax({
-          url: '/api/public_add', //请求路径
+          url: '/backend_public/public_add',
           type: 'POST',
           data: data,
           beforeSend: function () {

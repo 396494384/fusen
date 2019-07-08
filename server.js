@@ -66,10 +66,19 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/admin', require('./routers/admin'))
-app.use('/api', require('./routers/api'))
+app.use('/admin', require('./routers/admin')) //后台管理页面路由
+// app.use('/api', require('./routers/api'))
+app.use('/upload', require('./routers/upload')) //图片上传
+app.use('/backend_public', require('./routers/backend_public')) //后台管理页面公共接口
+app.use('/product', require('./routers/product'))
+app.use('/banner', require('./routers/banner'))
+app.use('/new', require('./routers/new'))
+app.use('/contact', require('./routers/contact'))
+app.use('/partner', require('./routers/partner'))
+app.use('/recruit', require('./routers/recruit'))
+app.use('/store', require('./routers/store'))
 
-// 启动 mongodb://<dbuser>:<dbpassword>@ds139427.mlab.com:39427/fusen
+
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {
   useNewUrlParser: true
 }, err => {

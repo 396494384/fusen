@@ -1,0 +1,121 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/product">合作伙伴管理</a>
+    <a class="active">产品信息</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入产品名称" class="layui-input" value="{{ data.name }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品分类</label>
+      <div class="layui-input-block">
+        <select name="category" lay-verify="required" disabled>
+          {% for item in category %}
+            {% if item._id.toString() == data.category._id.toString() %}
+            <option value="{{ item._id.toString() }}" selected>{{ item.name }}</option>
+            {% else %}
+            <option value="{{ item._id.toString() }}">{{ item.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品展示图片</label>
+      <div class="layui-input-block">
+        <img class="product_img" src="{{ data.product_img }}" alt="" />
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品价格</label>
+      <div class="layui-input-block">
+        <input type="text" name="price" placeholder="请输入产品价格" class="layui-input" value="{{ data.price }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品型号</label>
+      <div class="layui-input-block">
+        <input type="text" name="type" placeholder="请输入产品型号" class="layui-input" value="{{ data.type }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品工作电压</label>
+      <div class="layui-input-block">
+        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.voltage }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品能耗</label>
+      <div class="layui-input-block">
+        <input type="text" name="energy" placeholder="请输入产品能耗" class="layui-input" value="{{ data.energy }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品容积</label>
+      <div class="layui-input-block">
+        <input type="text" name="volume" placeholder="请输入产品容积" class="layui-input" value="{{ data.volume }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品功能</label>
+      <div class="layui-input-block">
+        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.function }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品包装规格</label>
+      <div class="layui-input-block">
+        <input type="text" name="specifications" placeholder="请输入产品包装规格" class="layui-input"
+          value="{{ data.specifications }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品购买链接</label>
+      <div class="layui-input-block">
+        <input type="text" name="url" placeholder="请输入产品购买链接" class="layui-input" value="{{ data.url }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        <input type="radio" name="status" value="true" title="开启"
+          {% if data.status %}checked{% else %}disabled{% endif %}>
+        <input type="radio" name="status" value="false" title="关闭"
+          {% if !data.status %}checked{% else %}disabled{% endif %}>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn" href="/admin/product_update?id={{ data._id.toString() }}">去修改产品</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+    })
+  })
+</script>
+{% endblock %}

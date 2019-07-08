@@ -90,7 +90,7 @@
           var formData = new FormData();//创建formdata对象
           formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
-            url: '/api/upload',
+            url: '/upload',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -119,7 +119,7 @@
       function bannerUpdate(data) {
         $.ajax({
           type: 'POST',
-          url: '/api/banner_update',
+          url: '/banner/banner_update',
           data: data,
           beforeSend: function () {
             layer.load(2, {

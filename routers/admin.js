@@ -8,7 +8,8 @@ const Contact = require('../models/Contact');
 const Recruit = require('../models/Recruit');
 const New = require('../models/New');
 const Partner = require('../models/Partner');
-
+const Category = require('../models/Category');
+const Product = require('../models/Product');
 //判断登录状态
 router.use((req, res, next) => {
   if (!req.userInfo.id) {
@@ -16,7 +17,7 @@ router.use((req, res, next) => {
     return;
   }
   next()
-})
+}) 
 
 router.get('/login', (req, res) => {
   res.render('admin/login')
@@ -207,7 +208,7 @@ router.get('/new_detail', (req, res) => {
 })
 // 资讯管理 end
 
-// 资讯管理
+// 合作伙伴管理
 router.get('/partner', (req, res) => {
   res.render('admin/partner', {
     userInfo: req.userInfo
@@ -234,6 +235,56 @@ router.get('/partner_detail', (req, res) => {
     })
   })
 })
-// 资讯管理 end
+// 合作伙伴管理 end
+
+// 产品管理
+router.get('/product_category', (req, res) => {
+  res.render('admin/product_category', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/product', (req, res) => {
+  res.render('admin/product', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/product_add', (req, res) => {
+  Category.find().then(data=>{
+    res.render('admin/product_add', {
+      userInfo: req.userInfo,
+      category: data
+    })
+  })
+  
+})
+router.get('/product_update', (req, res) => {
+  Category.find().then(category=>{
+    Product.findById(req.query.id).then(data => {
+      res.render('admin/product_update', {
+        userInfo: req.userInfo,
+        category: category,
+        data: data
+      })
+    })
+  })
+})
+router.get('/product_detail', (req, res) => {
+  Category.find().then(category=>{
+    Product.findById(req.query.id).then(data => {
+      res.render('admin/product_detail', {
+        userInfo: req.userInfo,
+        category: category,
+        data: data
+      })
+    })
+  })
+})
+// 产品管理 end
+
+
+// 404
+router.get('*', (req, res) => {
+  res.render('admin/404')
+})
 
 module.exports = router;
