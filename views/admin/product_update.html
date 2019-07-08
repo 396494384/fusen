@@ -88,13 +88,6 @@
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">是否开启</label>
-      <div class="layui-input-block">
-        <input type="radio" name="status" value="true" title="开启" {% if data.status %}checked{% else %}{% endif %}>
-        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %}checked{% else %}{% endif %}>
-      </div>
-    </div>
-    <div class="layui-form-item">
       <label class="layui-form-label">产品详细图片</label>
       <div class="layui-input-block">
         <label>
@@ -110,6 +103,14 @@
         </div>
       </div>
     </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否开启</label>
+      <div class="layui-input-block">
+        <input type="radio" name="status" value="true" title="开启" {% if data.status %}checked{% else %}{% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.status %}checked{% else %}{% endif %}>
+      </div>
+    </div>
+
     <div class="layui-form-item">
       <div class="layui-input-block">
         <a class="layui-btn update">修改产品</a>
@@ -295,7 +296,7 @@
           id: $('input[name="id"]').val()
         }
         var _imgs = [];
-        $('.imgs span').each(function(i){
+        $('.imgs span').each(function (i) {
           _imgs.push($(this).find('img').attr('src'));
         })
         _sendData.imgs = _imgs;
