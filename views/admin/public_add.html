@@ -65,7 +65,6 @@
     </div>
   </form>
 </div>
-<!-- 页面样式 -->
 <style>
   #logo {
     width: 0;
@@ -75,11 +74,11 @@
   }
 
   .logo_img {
+    width: 250px;
     display: none;
-    height: 100px;
+    /* height: 100px; */
   }
 </style>
-<!-- //JavaScript代码区域 -->
 <script>
   $(function () {
     layui.use(['element', 'form'], function () {
@@ -125,7 +124,7 @@
           var formData = new FormData(); //创建formdata对象
           formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
           $.ajax({
-            url: '/upload',
+            url: '/api/upload',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -153,7 +152,7 @@
 
       function publicAdd(data) {
         $.ajax({
-          url: '/backend_public/public_add',
+          url: '/api/backend_public/public_add',
           type: 'POST',
           data: data,
           beforeSend: function () {

@@ -42,49 +42,49 @@
     <div class="layui-form-item">
       <label class="layui-form-label">产品价格</label>
       <div class="layui-input-block">
-        <input type="text" name="price" placeholder="请输入产品价格" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="price" placeholder="请输入产品价格" class="layui-input" value="{{ data.price }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品型号</label>
       <div class="layui-input-block">
-        <input type="text" name="type" placeholder="请输入产品型号" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="type" placeholder="请输入产品型号" class="layui-input" value="{{ data.type }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品工作电压</label>
       <div class="layui-input-block">
-        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="voltage" placeholder="请输入产品工作电压" class="layui-input" value="{{ data.voltage }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品能耗</label>
       <div class="layui-input-block">
-        <input type="text" name="energy" placeholder="请输入产品能耗" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="energy" placeholder="请输入产品能耗" class="layui-input" value="{{ data.energy }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品容积</label>
       <div class="layui-input-block">
-        <input type="text" name="volume" placeholder="请输入产品容积" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="volume" placeholder="请输入产品容积" class="layui-input" value="{{ data.volume }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品功能</label>
       <div class="layui-input-block">
-        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="function" placeholder="请输入产品功能" class="layui-input" value="{{ data.function }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品包装规格</label>
       <div class="layui-input-block">
-        <input type="text" name="specifications" placeholder="请输入产品包装规格" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="specifications" placeholder="请输入产品包装规格" class="layui-input" value="{{ data.specifications }}">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">产品购买链接</label>
       <div class="layui-input-block">
-        <input type="text" name="url" placeholder="请输入产品购买链接" class="layui-input" value="{{ data.name }}">
+        <input type="text" name="url" placeholder="请输入产品购买链接" class="layui-input" value="{{ data.url }}">
       </div>
     </div>
     <div class="layui-form-item">
@@ -213,7 +213,7 @@
         var formData = new FormData(); //创建formdata对象
         formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
         $.ajax({
-          url: '/upload',
+          url: '/api/upload',
           type: 'POST',
           data: formData,
           contentType: false,
@@ -250,7 +250,7 @@
             btn: ['确认', '取消'],
             btn1: function (index, layero) {
               $.ajax({
-                url: '/upload/delete_img',
+                url: '/api/upload/delete_img',
                 type: 'POST',
                 data: {
                   img: _this.parents('span').find('img').attr('src')
@@ -322,7 +322,7 @@
             var formData = new FormData(); //创建formdata对象
             formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
             $.ajax({
-              url: '/upload',
+              url: '/api/upload',
               type: 'POST',
               data: formData,
               contentType: false,
@@ -352,7 +352,7 @@
       function partnerUpdate(data) {
         $.ajax({
           type: 'POST',
-          url: '/product/product_update',
+          url: '/api/product/product_update',
           data: data,
           beforeSend: function () {
             layer.load(2, {

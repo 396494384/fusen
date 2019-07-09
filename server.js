@@ -68,15 +68,17 @@ app.use((req, res, next) => {
 
 app.use('/admin', require('./routers/admin')) //后台管理页面路由
 // app.use('/api', require('./routers/api'))
-app.use('/upload', require('./routers/upload')) //图片上传
-app.use('/backend_public', require('./routers/backend_public')) //后台管理页面公共接口
-app.use('/product', require('./routers/product'))
-app.use('/banner', require('./routers/banner'))
-app.use('/new', require('./routers/new'))
-app.use('/contact', require('./routers/contact'))
-app.use('/partner', require('./routers/partner'))
-app.use('/recruit', require('./routers/recruit'))
-app.use('/store', require('./routers/store'))
+
+// 加api是为了区分 前台页面和后台接口
+app.use('/api/upload', require('./routers/upload')) //图片上传
+app.use('/api/backend_public', require('./routers/backend_public')) //后台管理页面公共接口
+app.use('/api/product', require('./routers/product'))
+app.use('/api/banner', require('./routers/banner'))
+app.use('/api/new', require('./routers/new'))
+app.use('/api/contact', require('./routers/contact'))
+app.use('/api/partner', require('./routers/partner'))
+app.use('/api/recruit', require('./routers/recruit'))
+app.use('/api/store', require('./routers/store'))
 
 
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {

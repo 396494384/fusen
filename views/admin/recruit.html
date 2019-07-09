@@ -10,7 +10,7 @@
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <script>
   $(function () {
-    var url = '/recruit/recruit_list';
+    var url = '/api/recruit/recruit_list';
     var config = {
       elem: '#table',
       url: url,
@@ -97,7 +97,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/recruit/recruit_delete',
+                url: '/api/recruit/recruit_delete',
                 data: {
                   id: _id
                 },
@@ -129,7 +129,7 @@
         } else if (layEvent == 'on') {
           $.ajax({
             type: 'POST',
-            url: '/recruit/recruit_on',
+            url: '/api/recruit/recruit_on',
             data: {
               id: _id
             },
@@ -159,7 +159,7 @@
         } else if (layEvent == 'off') {
           $.ajax({
             type: 'POST',
-            url: '/recruit/recruit_off',
+            url: '/api/recruit/recruit_off',
             data: {
               id: _id
             },

@@ -23,7 +23,7 @@
 </style>
 <script>
   $(function () {
-    var url = '/partner/partner_list';
+    var url = '/api/partner/partner_list';
     var config = {
       elem: '#table',
       url: url,
@@ -96,7 +96,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/partner/partner_delete',
+                url: '/api/partner/partner_delete',
                 data: {
                   id: _id
                 },
@@ -128,7 +128,7 @@
         } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
-            url: '/partner/partner_on',
+            url: '/api/partner/partner_on',
             data: {
               id: _id
             },
@@ -158,7 +158,7 @@
         } else if (layEvent === 'off') {
           $.ajax({
             type: 'POST',
-            url: '/partner/partner_off',
+            url: '/api/partner/partner_off',
             data: {
               id: _id
             },

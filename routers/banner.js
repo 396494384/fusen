@@ -71,10 +71,18 @@ router.post('/banner_update', (req, res) => {
           fs.unlinkSync(_path);
         }
       } catch (e) { }
+      Banner.updateOne({
+        _id: _id
+      }, _update).then(() => {
+        res.json({
+          code: 200,
+          msg: "修改成功"
+        })
+      })
     })
-  } else {
-    delete _update.banner
+    return;
   }
+  delete _update.banner
   Banner.updateOne({
     _id: _id
   }, _update).then(() => {

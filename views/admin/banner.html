@@ -23,7 +23,7 @@
 </style>
 <script>
   $(function () {
-    var url = '/banner/banner_list';
+    var url = '/api/banner/banner_list';
     var config = {
       elem: '#table',
       url: url,
@@ -82,7 +82,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/banner/banner_delete',
+                url: '/api/banner/banner_delete',
                 data: {
                   id: _id
                 },
@@ -116,7 +116,7 @@
         } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
-            url: '/banner/banner_on',
+            url: '/api/banner/banner_on',
             data: {
               id: _id
             },
@@ -146,7 +146,7 @@
         } else if (layEvent === 'off') {
           $.ajax({
             type: 'POST',
-            url: '/banner/banner_off',
+            url: '/api/banner/banner_off',
             data: {
               id: _id
             },

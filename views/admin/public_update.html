@@ -4,7 +4,7 @@
   <span class="layui-breadcrumb">
     <a href="/admin">后台管理系统</a>
     <a href="/admin/public">网站信息</a>
-    <a class="active">添加网站信息</a>
+    <a class="active">修改网站信息</a>
   </span>
 </div>
 <div class="layui-content">
@@ -77,8 +77,9 @@
   }
 
   .logo_img {
+    width: 250px;
     display: block;
-    height: 100px;
+    /* height: 100px; */
   }
 </style>
 <script>
@@ -126,7 +127,7 @@
           var formData = new FormData();//创建formdata对象
           formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
-            url: '/upload',
+            url: '/api/upload',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -154,7 +155,7 @@
 
       function publicUpdate(data) {
         $.ajax({
-          url: '/backend_public/public_update',
+          url: '/api/backend_public/public_update',
           type: 'POST',
           data: data,
           beforeSend: function () {

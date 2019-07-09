@@ -45,7 +45,7 @@
           } else {
             $.ajax({
               type: 'POST',
-              url: '/backend_public/login',
+              url: '/api/backend_public/login',
               data: {
                 username: username,
                 password: password
@@ -61,7 +61,6 @@
                   time: 1000
                 });
                 if (data.code == 200) {
-                  // return;
                   setTimeout(function () {
                     window.location.href = "/admin";
                   }, 1000)

@@ -15,7 +15,7 @@
 </script>
 <script>
   $(function () {
-    var url = '/store/store_city_list';
+    var url = '/api/store/store_city_list';
     var config = {
       elem: '#table',
       url: url,
@@ -64,7 +64,7 @@
             } else {
               $.ajax({
                 type: 'POST',
-                url: '/store/store_city_add',
+                url: '/api/store/store_city_add',
                 data: {
                   city: city
                 },
@@ -110,7 +110,7 @@
               } else {
                 $.ajax({
                   type: 'POST',
-                  url: '/store/store_city_update',
+                  url: '/api/store/store_city_update',
                   data: {
                     city: city,
                     id: _id
@@ -143,7 +143,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/store/store_city_delete',
+                url: '/api/store/store_city_delete',
                 data: {
                   id: _id
                 },

@@ -22,7 +22,7 @@
 </style>
 <script>
   $(function () {
-    var url = '/product/product_list';
+    var url = '/api/product/product_list';
     var config = {
       elem: '#table',
       url: url,
@@ -109,7 +109,7 @@
             btn1: function (index, layero) {
               $.ajax({
                 type: 'POST',
-                url: '/product/product_delete',
+                url: '/api/product/product_delete',
                 data: {
                   id: _id
                 },
@@ -141,7 +141,7 @@
         } else if (layEvent === 'on') {
           $.ajax({
             type: 'POST',
-            url: '/product/product_on',
+            url: '/api/product/product_on',
             data: {
               id: _id
             },
@@ -171,7 +171,7 @@
         } else if (layEvent === 'off') {
           $.ajax({
             type: 'POST',
-            url: '/product/product_off',
+            url: '/api/product/product_off',
             data: {
               id: _id
             },

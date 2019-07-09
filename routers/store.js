@@ -151,31 +151,44 @@ router.post('/store_update', (req, res) => {
         })
       })
     } else { //修改了城市
-      City.findById(_oldCity).then(data => {
-        let _number = data.number;
-        return City.updateOne({
-          _id: _oldCity
-        }, {
-          number: _number - 1
-        })
-      }).then(() => {
-        City.findById(_newCity).then(data => {
-          let _number = data.number;
-          return City.updateOne({
-            _id: _newCity
-          }, {
-            number: _number + 1
+      Store.findOne({
+        city: _newCity,
+        name: req.body.name,
+        _id: { $ne: req.body.id }
+      }).then(data=>{
+        if(data){
+          res.json({
+            code: 0,
+            msg: "当前城市下已有该网点名称"
           })
-        }).then(() => {
-          Store.updateOne({
-            _id: _id
-          }, req.body).then(() => {
-            res.json({
-              code: 200,
-              msg: "修改成功"
+        }else{
+          City.findById(_oldCity).then(data => {
+            let _number = data.number;
+            return City.updateOne({
+              _id: _oldCity
+            }, {
+              number: _number - 1
+            })
+          }).then(() => {
+            City.findById(_newCity).then(data => {
+              let _number = data.number;
+              return City.updateOne({
+                _id: _newCity
+              }, {
+                number: _number + 1
+              })
+            }).then(() => {
+              Store.updateOne({
+                _id: _id
+              }, req.body).then(() => {
+                res.json({
+                  code: 200,
+                  msg: "修改成功"
+                })
+              })
             })
           })
-        })
+        }
       })
     }
   })

@@ -207,7 +207,7 @@
         var formData = new FormData(); //创建formdata对象
         formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
         $.ajax({
-          url: '/upload',
+          url: '/api/upload',
           type: 'POST',
           data: formData,
           contentType: false,
@@ -243,7 +243,7 @@
             btn: ['确认', '取消'],
             btn1: function (index, layero) {
               $.ajax({
-                url: '/upload/delete_img',
+                url: '/api/upload/delete_img',
                 type: 'POST',
                 data: {
                   img: _this.parents('span').find('img').attr('src')
@@ -316,7 +316,7 @@
           var formData = new FormData(); //创建formdata对象
           formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
           $.ajax({
-            url: '/upload',
+            url: '/api/upload',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -342,7 +342,7 @@
 
       function partnerAdd(data) {
         $.ajax({
-          url: '/product/product_add',
+          url: '/api/product/product_add',
           type: 'POST',
           data: data,
           beforeSend: function () {
