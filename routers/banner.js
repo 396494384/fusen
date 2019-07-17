@@ -61,28 +61,18 @@ router.post('/banner_update', (req, res) => {
   let _id = _update.id;
   if (_update.banner) { //修改了banner
     Banner.findById(_id).then(data => {
-      try {
-        let _path = data.banner;
-        if (_path) {
-          _path = _path.replace(/\\/g, "/");
-          if (_path.search(/\//) == 0) {
-            _path = _path.slice(1);
-          }
-          fs.unlinkSync(_path);
-        }
-      } catch (e) { }
-      Banner.updateOne({
-        _id: _id
-      }, _update).then(() => {
-        res.json({
-          code: 200,
-          msg: "修改成功"
+      let _path = data.banner;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        _path.search(/\//) == 0 && (_path = _path.slice(1));
+        fs.access(_path, err => {
+          err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
         })
-      })
+      }
     })
-    return;
+  } else {
+    delete _update.banner
   }
-  delete _update.banner
   Banner.updateOne({
     _id: _id
   }, _update).then(() => {
@@ -95,16 +85,14 @@ router.post('/banner_update', (req, res) => {
 // 删除Banner
 router.post('/banner_delete', (req, res) => {
   Banner.findById(req.body.id).then(data => {
-    try {
-      let _path = data.banner;
-      if (_path) {
-        _path = _path.replace(/\\/g, "/");
-        if (_path.search(/\//) == 0) {
-          _path = _path.slice(1);
-        }
-        fs.unlinkSync(_path);
-      }
-    } catch (e) { }
+    let _path = data.banner;
+    if (_path) {
+      _path = _path.replace(/\\/g, "/");
+      _path.search(/\//) == 0 && (_path = _path.slice(1));
+      fs.access(_path, err => {
+        err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+      })
+    }
     return;
   }).then(() => {
     Banner.deleteOne({

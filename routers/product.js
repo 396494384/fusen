@@ -122,16 +122,14 @@ router.post('/product_update', (req, res) => {
     let _oldCategory = data.category;
     if (_oldCategory == _newCategory) { //没有修改类型
       if (req.body.product_img) { //修改了图片
-        try{
-          let _path = _oldProductImg;
-          if (_path) {
-            _path = _path.replace(/\\/g, "/");
-            if (_path.search(/\//) == 0) {
-              _path = _path.slice(1);
-            }
-            fs.unlinkSync(_path);
-          }
-        }catch(e){}
+        let _path = _oldProductImg;
+        if (_path) {
+          _path = _path.replace(/\\/g, "/");
+          _path.search(/\//) == 0 && (_path = _path.slice(1));
+          fs.access(_path, err => {
+            err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+          })
+        }
         productUpdate(req.body)
       } else {
         delete req.body.product_img;
@@ -155,16 +153,14 @@ router.post('/product_update', (req, res) => {
             })
         }).then(() => {
           if (req.body.product_img) { //修改了图片
-            try{
-              let _path = _oldProductImg;
-              if (_path) {
-                _path = _path.replace(/\\/g, "/");
-                if (_path.search(/\//) == 0) {
-                  _path = _path.slice(1);
-                }
-                fs.unlinkSync(_path);
-              }
-            }catch(e){}
+            let _path = _oldProductImg;
+            if (_path) {
+              _path = _path.replace(/\\/g, "/");
+              _path.search(/\//) == 0 && (_path = _path.slice(1));
+              fs.access(_path, err => {
+                err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+              })
+            }
             productUpdate(req.body)
           } else {
             delete req.body.product_img;
@@ -186,18 +182,18 @@ router.post('/product_update', (req, res) => {
   }
 })
 // 删除产品
-router.post('/product_delete', (req, res)=>{
-  Product.findById(req.body.id).then(data=>{
+router.post('/product_delete', (req, res) => {
+  Product.findById(req.body.id).then(data => {
     let _category = data.category;
     let _path = data.product_img;
     if (_path) {
       _path = _path.replace(/\\/g, "/");
-      if (_path.search(/\//) == 0) {
-        _path = _path.slice(1);
-      }
-      fs.unlinkSync(_path);
+      _path.search(/\//) == 0 && (_path = _path.slice(1));
+      fs.access(_path, err => {
+        err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+      })
     }
-    return Category.findById(_category).then(data=>{
+    return Category.findById(_category).then(data => {
       let _number = data.number;
       return Category.updateOne({ _id: _category }, { number: _number - 1 });
     })
@@ -218,26 +214,26 @@ router.post('/product_on', (req, res) => {
   Product.updateOne({
     _id: req.body.id
   }, {
-    status: true
-  }).then(() => {
-    res.json({
-      code: 200,
-      msg: '开启成功'
+      status: true
+    }).then(() => {
+      res.json({
+        code: 200,
+        msg: '开启成功'
+      })
     })
-  })
 })
 //关闭产品
 router.post('/product_off', (req, res) => {
   Product.updateOne({
     _id: req.body.id
   }, {
-    status: false
-  }).then(() => {
-    res.json({
-      code: 200,
-      msg: '关闭成功'
+      status: false
+    }).then(() => {
+      res.json({
+        code: 200,
+        msg: '关闭成功'
+      })
     })
-  })
 })
 
 module.exports = router;

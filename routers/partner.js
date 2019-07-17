@@ -48,10 +48,10 @@ router.post('/partner_update', (req, res) => {
       let _path = data.img;
       if (_path) {
         _path = _path.replace(/\\/g, "/");
-        if (_path.search(/\//) == 0) {
-          _path = _path.slice(1);
-        }
-        fs.unlinkSync(_path);
+        _path.search(/\//) == 0 && (_path = _path.slice(1));
+        fs.access(_path, err => {
+          err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+        })
       }
     })
   } else {
@@ -72,10 +72,10 @@ router.post('/partner_delete', (req, res) => {
     let _path = data.img;
     if (_path) {
       _path = _path.replace(/\\/g, "/");
-      if (_path.search(/\//) == 0) {
-        _path = _path.slice(1);
-      }
-      fs.unlinkSync(_path);
+      _path.search(/\//) == 0 && (_path = _path.slice(1));
+      fs.access(_path, err => {
+        err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+      })
     }
     return;
   }).then(() => {

@@ -15,7 +15,7 @@
       <div class="layui-input-block">
         <label>
           <input type="file" name="logo" id="logo" />
-          <img class="logo_img" src="{{ data.logo }}" alt="" {% if data.logo %} style="display: block" {% else %}
+          <img class="logo_img" src="{{ data.logo }}" alt="{{ data.logo }}" {% if data.logo %} style="display: block" {% else %}
             style="display: none" {% endif %} />
           <span type="button" class="layui-btn logo_btn" {% if !data.logo %} style="display: inline-block" {% else %}
             style="display: none" {% endif %}>

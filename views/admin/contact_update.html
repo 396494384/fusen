@@ -70,7 +70,7 @@
       <div class="layui-input-block">
         <label>
           <input type="file" name="code" id="code" />
-          <img class="code_img" src="{{ data.code }}" alt="" {% if data.code %} style="display: block" {% else %}
+          <img class="code_img" src="{{ data.code }}" alt="{{ data.code }}" {% if data.code %} style="display: block" {% else %}
             style="display: none" {% endif %} />
           <span type="button" class="layui-btn code_btn" {% if !data.code %} style="display: inline-block" {% else %}
             style="display: none" {% endif %}>

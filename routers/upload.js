@@ -40,15 +40,19 @@ router.post('/delete_img', (req, res) => {
   let _path = req.body.img;
   if (_path) {
     _path = _path.replace(/\\/g, "/");
-    if (_path.search(/\//) == 0) {
-      _path = _path.slice(1);
-    }
-    fs.unlink(_path, ()=>{
-      res.json({
-        code: 200,
-        msg: "图片删除成功"
-      })
-    });
+    _path.search(/\//) == 0 && (_path = _path.slice(1));
+    fs.access(_path, err => {
+      if (err) {
+        console.log("文件和目录不存在")
+      } else {
+        fs.unlink(_path, () => {
+          res.json({
+            code: 200,
+            msg: "图片删除成功"
+          })
+        });
+      }
+    })
   }
 })
 

@@ -32,10 +32,10 @@ router.post('/new_add', (req, res) => {
           type: req.body.type,
           status: true
         }, {
-          status: false
-        }).then(() => {
-          newSave()
-        })
+            status: false
+          }).then(() => {
+            newSave()
+          })
       } else {
         newSave()
       }
@@ -80,10 +80,10 @@ router.post('/new_update', (req, res) => {
           type: req.body.type,
           status: true
         }, {
-          status: false
-        }).then(() => {
-          newUpdate()
-        })
+            status: false
+          }).then(() => {
+            newUpdate()
+          })
       } else {
         newUpdate()
       }
@@ -111,10 +111,10 @@ router.post('/new_update', (req, res) => {
             let _path = data.img;
             if (_path) {
               _path = _path.replace(/\\/g, "/");
-              if (_path.search(/\//) == 0) {
-                _path = _path.slice(1);
-              }
-              fs.unlinkSync(_path);
+              _path.search(/\//) == 0 && (_path = _path.slice(1));
+              fs.access(_path, err => {
+                err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+              })
             }
             return;
           }).then(() => {
@@ -150,11 +150,23 @@ router.post('/new_on', (req, res) => {
         type: "顶部显示",
         status: true
       }, {
-        status: false
-      }).then(() => {
-        New.updateOne({
-          _id: _id
-        }, {
+          status: false
+        }).then(() => {
+          New.updateOne({
+            _id: _id
+          }, {
+              status: true
+            }).then(() => {
+              res.json({
+                code: 200,
+                msg: '开启成功'
+              })
+            })
+        })
+    } else {
+      New.updateOne({
+        _id: _id
+      }, {
           status: true
         }).then(() => {
           res.json({
@@ -162,18 +174,6 @@ router.post('/new_on', (req, res) => {
             msg: '开启成功'
           })
         })
-      })
-    } else {
-      New.updateOne({
-        _id: _id
-      }, {
-        status: true
-      }).then(() => {
-        res.json({
-          code: 200,
-          msg: '开启成功'
-        })
-      })
     }
   })
 })
@@ -182,13 +182,13 @@ router.post('/new_off', (req, res) => {
   New.updateOne({
     _id: req.body.id
   }, {
-    status: false
-  }).then(() => {
-    res.json({
-      code: 200,
-      msg: '关闭成功'
+      status: false
+    }).then(() => {
+      res.json({
+        code: 200,
+        msg: '关闭成功'
+      })
     })
-  })
 })
 // 删除资讯
 router.post('/new_delete', (req, res) => {
@@ -196,10 +196,10 @@ router.post('/new_delete', (req, res) => {
     let _path = data.img;
     if (_path) {
       _path = _path.replace(/\\/g, "/");
-      if (_path.search(/\//) == 0) {
-        _path = _path.slice(1);
-      }
-      fs.unlinkSync(_path);
+      _path.search(/\//) == 0 && (_path = _path.slice(1));
+      fs.access(_path, err => {
+        err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+      })
     }
     return;
   }).then(() => {

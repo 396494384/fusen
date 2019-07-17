@@ -65,14 +65,14 @@ router.post('/modify', (req, res) => {
       Admin.updateOne({
         username: req.userInfo.username
       }, {
-        password: bcrypt.hashSync(req.body.newpwd, salt)
-      }).then(() => {
-        req.cookies.set('userInfo', null);
-        res.json({
-          code: 200,
-          msg: "密码修改成功,请重新登录"
+          password: bcrypt.hashSync(req.body.newpwd, salt)
+        }).then(() => {
+          req.cookies.set('userInfo', null);
+          res.json({
+            code: 200,
+            msg: "密码修改成功,请重新登录"
+          })
         })
-      })
     } else {
       res.json({
         code: 0,
@@ -116,16 +116,14 @@ router.post('/public_update', (req, res) => {
   let _id = _update.id;
   if (_update.logo) {
     Public.findById(_id).then((data) => {
-      try{
-        let _path = data.logo;
-        if (_path) {
-          _path = _path.replace(/\\/g, "/");
-          if (_path.search(/\//) == 0) {
-            _path = _path.slice(1);
-          }
-          fs.unlinkSync(_path);
-        }
-      }catch(e){}
+      let _path = data.logo;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        _path.search(/\//) == 0 && (_path = _path.slice(1));
+        fs.access(_path, err => {
+          err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+        })
+      }
     })
   } else {
     delete _update.logo
