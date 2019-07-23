@@ -12,10 +12,11 @@
 </div>
 <div class="recruit">
   <div class="clearFix recruit_type">
-    <a href="#" class="left active">社会招聘</a>
-    <a href="#" class="right">校园招聘</a>
+    <a href="recruit?type=1" class="left {{ type == 1 && 'active' }}">社会招聘</a>
+    <a href="recruit?type=2" class="right {{ type == 2 && 'active' }}">校园招聘</a>
   </div>
   <div class="recruit_list">
+    {% if recruit.length %}
     <dl>
       <dt class="clearFix">
         <span class="left name">职位名称</span>
@@ -26,81 +27,29 @@
       </dt>
       <dd>
         <ul>
+          {% for item in recruit %}
           <li>
             <div class="clearFix label">
-              <span class="left name">区域销售经理</span>
-              <span class="left site">重庆市 · 渝北区</span>
-              <span class="left number">5</span>
-              <span class="left date">2018-10-10</span>
+              <span class="left name">{{ item.position }}</span>
+              <span class="left site">{{ item.address }}</span>
+              <span class="left number">{{ item.number }}</span>
+              <span class="left date">{{ item.date }}</span>
               <span class="right detail">查看详情 +</span>
             </div>
             <div class="recruit_detail">
               <div class="text">
-                <b style="font-size: 18px; color: #333;">岗位职责</b><br>
-                1、协助进出口提供客户需要资料，以及协助进出口接待客户<br>
-                2、对发货产品每月开票处理及回笼跟踪<br>
-                3、月度和季度对账单发出和催收，客户投诉、退货处理<br>
-                4、报价管理，样品管理，订单管理；<br>
-                <br>
-                <b style="font-size: 18px; color: #333;">任职资格</b><br>
-                1、本科及以上学历；<br>
-                2、英语四级及以上，能够用英文邮件往来交流；<br>
-                3、工作认真、负责，具有较强的团队合作意识；
+                {{ item.content }}
               </div>
               <span class="apply">立刻申请</span>
             </div>
           </li>
-          <li>
-            <div class="clearFix label">
-              <span class="left name">区域销售经理</span>
-              <span class="left site">重庆市 · 渝北区</span>
-              <span class="left number">5</span>
-              <span class="left date">2018-10-10</span>
-              <span class="right detail">查看详情 +</span>
-            </div>
-            <div class="recruit_detail">
-              <div class="text">
-                <b style="font-size: 18px; color: #333;">岗位职责</b><br>
-                1、协助进出口提供客户需要资料，以及协助进出口接待客户<br>
-                2、对发货产品每月开票处理及回笼跟踪<br>
-                3、月度和季度对账单发出和催收，客户投诉、退货处理<br>
-                4、报价管理，样品管理，订单管理；<br>
-                <br>
-                <b style="font-size: 18px; color: #333;">任职资格</b><br>
-                1、本科及以上学历；<br>
-                2、英语四级及以上，能够用英文邮件往来交流；<br>
-                3、工作认真、负责，具有较强的团队合作意识；
-              </div>
-              <span class="apply">立刻申请</span>
-            </div>
-          </li>
-          <li>
-            <div class="clearFix label">
-              <span class="left name">区域销售经理</span>
-              <span class="left site">重庆市 · 渝北区</span>
-              <span class="left number">5</span>
-              <span class="left date">2018-10-10</span>
-              <span class="right detail">查看详情 +</span>
-            </div>
-            <div class="recruit_detail">
-              <div class="text">
-                <b style="font-size: 18px; color: #333;">岗位职责</b><br>
-                1、协助进出口提供客户需要资料，以及协助进出口接待客户<br>
-                2、对发货产品每月开票处理及回笼跟踪<br>
-                3、月度和季度对账单发出和催收，客户投诉、退货处理<br>
-                4、报价管理，样品管理，订单管理；<br>
-                <br>
-                <b style="font-size: 18px; color: #333;">任职资格</b><br>
-                1、本科及以上学历；<br>
-                2、英语四级及以上，能够用英文邮件往来交流；<br>
-                3、工作认真、负责，具有较强的团队合作意识；
-              </div>
-              <span class="apply">立刻申请</span>
-            </div>
-          </li>
+          {% endfor %}
         </ul>
       </dd>
     </dl>
+    {% else %}
+    <p class="not">没有数据</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
