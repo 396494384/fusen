@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const PublicSchema = new mongoose.Schema({
+  name: {
+    type: String
+  },
   logo: {
     type: String
   },

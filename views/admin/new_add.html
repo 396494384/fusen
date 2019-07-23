@@ -40,6 +40,12 @@
       </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">资讯摘要</label>
+        <div class="layui-input-block">
+          <input type="text" name="abstract" placeholder="请输入资讯摘要" class="layui-input">
+        </div>
+      </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">资讯内容</label>
       <div class="layui-input-block">
         <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
@@ -119,6 +125,7 @@
           type: $('select[name="type"] option:selected').val(),
           title: $('input[name="title"]').val(),
           img: $('input[name="new_img"]').val(),
+          abstract: $('input[name="abstract"]').val(),
           content: ue.getContent(),
           status: $('input[name="status"]:checked').val()
         }

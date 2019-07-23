@@ -1,366 +1,153 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends './template/layout.html' %}
+{% block main %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <title>首页</title>
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/public.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/animation.css">
-  <link rel="stylesheet" href="./css/sacle.css">
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="./js/script.js"></script>
-</head>
-
-<body>
-  <header>
-    <div class="header">
-      <h1 class="left logo">
-        <a href="index.html"><img src="./images/logo.png" alt="logo"></a>
-      </h1>
-      <div class="right clearFix right_link">
-        <a class="left" href="#"><img src="./images/icon_shopingcar.png" alt="">天猫商城</a>
-        <a class="left" href="#"><img src="./images/icon_net.png" alt="">EN</a>
-        <a class="left search_btn">
-          <img class="icon_search" src="./images/icon_search1.png" alt="">
-          <img class="icon_close_search" src="./images/icon_close_search.jpg" alt="">
-        </a>
-      </div>
-      <ul class="clearFix nav">
-        <li class="left active">
-          <a href="index.html"><span class="nav_title">首页</span></a>
-        </li>
-        <li class="left">
-          <a href="javascript:"><span class="nav_title">核心竞争</span></a>
-        </li>
-        <li class="left product_nav">
-          <span class="nav_title">复升事业<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <ul class="clearFix">
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav10.png" alt="">
-                  <strong>新零售<sup>Pro</sup>事业</strong>
-                  <span>专注移动冷鲜领域，冷暖自由切换</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav11.png" alt="">
-                  <strong>生物医药<sup>Pro</sup>事业</strong>
-                  <span>品质保温箱，医疗运输更安全</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav12.png" alt="">
-                  <strong>冷链物流<sup>Pro</sup>事业</strong>
-                  <span>高效保温材料，解决长途运输保温困境</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="left">
-          <a href="news.html"><span class="nav_title">资讯</span></a>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">探索复升<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav1.jpg" alt=""></span>
-                    <strong>复升品牌</strong>
-                    <span class="text">成就移动冷柜事业典范</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav2.jpg" alt=""></span>
-                    <strong>品牌实力</strong>
-                    <span class="text">研发与生产实力并存，铸就未来</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav3.jpg" alt=""></span>
-                    <strong>企业文化</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_join1.png" alt="">
-                  <img class="img2" src="./images/icon_join2.png" alt="">
-                  <span>加入我们</span>
-                </a>
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_cooperation1.png" alt="">
-                  <img class="img2" src="./images/icon_cooperation2.png" alt="">
-                  <span>合作伙伴</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">服务与支持<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="">
-                    <span class="img"><img src="./images/img_nav4.jpg" alt=""></span>
-                    <strong>服务政策</strong>
-                    <span class="text">用心关怀，诚心服务</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="branch.html">
-                    <span class="img"><img src="./images/img_nav5.jpg" alt=""></span>
-                    <strong>服务网点</strong>
-                    <span class="text">立足重庆，服务全国多个省市</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="contact.html">
-                    <span class="img"><img src="./images/img7.jpg" alt=""></span>
-                    <strong>联系我们</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="#">
-                  <img class="img1" src="./images/icon_explain1.png" alt="">
-                  <img class="img2" src="./images/icon_explain2.png" alt="">
-                  <span>产品说明书</span>
-                </a>
-                <a href="message.html">
-                  <img class="img1" src="./images/icon_msg1.png" alt="">
-                  <img class="img2" src="./images/icon_msg2.png" alt="">
-                  <span>投诉或建议</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="search">
-        <div class="clearFix">
-          <input class="left" type="text" placeholder="请输入您要搜索的内容" />
-          <span class="right">确认搜索</span>
+<div class="banner">
+  <div class="bx-wrapper">
+    <div class="bx-viewport">
+      <div class="slider">
+        <div class="slide">
+          <a style="background: url(./images/banner.jpg) no-repeat center center; background-size: cover;"></a>
         </div>
-      </div>
-    </div>
-  </header>
-  <div class="banner">
-    <div class="bx-wrapper">
-      <div class="bx-viewport">
-        <div class="slider">
-          <div class="slide">
-            <a style="background: url(./images/banner.jpg) no-repeat center center; background-size: cover;"></a>
-          </div>
-          <div class="slide">
-            <a style="background: url(./images/banner.jpg) no-repeat center center; background-size: cover;"></a>
-          </div>
+        <div class="slide">
+          <a style="background: url(./images/banner.jpg) no-repeat center center; background-size: cover;"></a>
         </div>
       </div>
     </div>
   </div>
-  <div class="clearFix index_module1">
-    <a href="#" class="img">
-      <img src="./images/img.jpg" alt="">
+</div>
+<div class="clearFix index_module1">
+  <a href="#" class="img">
+    <img src="./images/img.jpg" alt="">
+  </a>
+  <div class="right content">
+    <strong>尖端技术<br>铸就更高品质</strong>
+    <p>依托再升科技核心部件的研发能力和技术优势<br>成就享誉行业的领先科技与过硬品质</p>
+    <a href="">
+      <b></b>
+      <span>探索更多 &gt;</span>
     </a>
-    <div class="right content">
-      <strong>尖端技术<br>铸就更高品质</strong>
-      <p>依托再升科技核心部件的研发能力和技术优势<br>成就享誉行业的领先科技与过硬品质</p>
-      <a href="">
+  </div>
+</div>
+<div class="index_module2">
+  <div class="imgs">
+    <div class="img1" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
+    <div class="img2" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
+    <div class="img3" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
+  </div>
+  <div class="texts">
+    <div class="text1">
+      <strong>新零售事业1</strong>
+      <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
+      <a href="product.html">
         <b></b>
-        <span>探索更多 &gt;</span>
+        <span>了解更多 &gt;</span>
+      </a>
+    </div>
+    <div class="text2">
+      <strong>新零售事业2</strong>
+      <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
+      <a href="product.html">
+        <b></b>
+        <span>了解更多 &gt;</span>
+      </a>
+    </div>
+    <div class="text3">
+      <strong>新零售事业3</strong>
+      <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
+      <a href="product.html">
+        <b></b>
+        <span>了解更多 &gt;</span>
       </a>
     </div>
   </div>
-  <div class="index_module2">
-    <div class="imgs">
-      <div class="img1" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
-      <div class="img2" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
-      <div class="img3" style="background: url(./images/img2.jpg) no-repeat center center;"></div>
-    </div>
-    <div class="texts">
-      <div class="text1">
-        <strong>新零售事业1</strong>
-        <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
-        <a href="product.html">
-          <b></b>
-          <span>了解更多 &gt;</span>
-        </a>
-      </div>
-      <div class="text2">
-        <strong>新零售事业2</strong>
-        <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
-        <a href="product.html">
-          <b></b>
-          <span>了解更多 &gt;</span>
-        </a>
-      </div>
-      <div class="text3">
-        <strong>新零售事业3</strong>
-        <p>专注家用移动冷鲜零售应用领域，激情冰爽尽在掌握</p>
-        <a href="product.html">
-          <b></b>
-          <span>了解更多 &gt;</span>
-        </a>
+  <div class="clearFix btns">
+    <div class="left active">
+      <div class="box">
+        <img src="./images/icon_ice1.png" alt="">
+        <span>新零售事业</span>
       </div>
     </div>
-    <div class="clearFix btns">
-      <div class="left active">
-        <div class="box">
-          <img src="./images/icon_ice1.png" alt="">
-          <span>新零售事业</span>
-        </div>
+    <div class="left">
+      <div class="box">
+        <img src="./images/icon_ice2.png" alt="">
+        <span>生物医药事业</span>
       </div>
-      <div class="left">
-        <div class="box">
-          <img src="./images/icon_ice2.png" alt="">
-          <span>生物医药事业</span>
-        </div>
-      </div>
-      <div class="left">
-        <div class="box">
-          <img src="./images/icon_ice3.png" alt="">
-          <span>冷链物流事业</span>
-        </div>
+    </div>
+    <div class="left">
+      <div class="box">
+        <img src="./images/icon_ice3.png" alt="">
+        <span>冷链物流事业</span>
       </div>
     </div>
   </div>
-  <div class="index_module3">
-    <strong class="module_title">系列产品</strong>
-    <ul class="clearFix">
-      <li class="left">
-        <a href="product_detail.html">
-          <span class="img">
-            <img src="./images/img3.jpg" alt="">
-          </span>
-          <p>
-            <span class="type">FOSEN-X01</span>
-            <strong>智能车载冰箱</strong>
-            <span class="line"></span>
-            <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
-            <span class="link">了解详情 &gt;</span>
-          </p>
-        </a>
-      </li>
-      <li class="left">
-        <a href="product_detail.html">
-          <span class="img">
-            <img src="./images/img4.jpg" alt="">
-          </span>
-          <p>
-            <span class="type">FOSEN-X02</span>
-            <strong>智能车载冰箱 PRO</strong>
-            <span class="line"></span>
-            <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
-            <span class="link">了解详情 &gt;</span>
-          </p>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="index_module4">
-    <span class="title">发现更多</span>
-    <ul class="clearFix">
-      <li class="left">
-        <a href="about.html">
-          <span class="img">
-            <img src="./images/img5.jpg" alt="">
-          </span>
-          <strong>关于我们</strong>
-          <p>复升专注于做冷鲜事业领域产品，依托再升科技核心研发技术与实力，<br>成就产品核心竞争力，产品卓越优势。</p>
-          <span class="link">&gt; 了解更多</span>
-        </a>
-      </li>
-      <li class="left">
-        <a href="news.html">
-          <span class="img">
-            <img src="./images/img6.jpg" alt="">
-            <b>最新动态</b>
-          </span>
-          <strong>复升新闻</strong>
-          <p>你可以从这里了解到关于复升品牌相关资讯讯息，<br>及其最新企业动态。</p>
-          <span class="link">&gt; 了解更多</span>
-        </a>
-      </li>
-      <li class="left">
-        <a href="contact.html">
-          <span class="img">
-            <img src="./images/img7.jpg" alt="">
-          </span>
-          <strong>品牌服务</strong>
-          <p>当你需要帮助时，你尽可联系我们，<br>我们很高兴为你提供帮助，也将为你竭尽解决所需。</p>
-          <span class="link">&gt; 了解更多</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <footer>
-    <div class="footer">
-      <div class="footer_link">
-        <a href="#">关于我们</a>
-        <a href="#">新零售事业</a>
-        <a href="#">生物医药事业</a>
-        <a href="#">冷链物流事业</a>
-        <a href="#">人才招聘</a>
-        <a href="#">联系我们</a>
-      </div>
-      <div class="hot_line">
-        <span>全国服务热线 400-8888-666</span>
-        <span>关注我们</span>
-        <a href="#" class="tmall">
-          <img src="./images/icon_tmall.png" alt="">
-        </a>
-        <a href="#" class="wechat">
-          <img src="./images/icon_wechat.png" alt="">
-        </a>
-      </div>
-      <p class="copyright">版权所有 © 2019重庆复升冷鲜香科技有限公司 | 渝ICP备19005474号 </p>
-    </div>
-  </footer>
-  <div class="float">
-    <a class="clearFix">
-      <span class="left">服务热线 023-65552122</span>
-      <img class="right" src="./images/icon_service.png" alt="">
-    </a>
-    <a class="clearFix">
-      <span class="left">在线咨询</span>
-      <img class="right" src="./images/icon_msg.png" alt="">
-    </a>
-    <a class="clearFix back_top">
-      <span class="left">向上</span>
-      <img class="right" src="./images/icon_back_top.png" alt="">
-    </a>
-  </div>
-</body>
-
-</html>
+</div>
+<div class="index_module3">
+  <strong class="module_title">系列产品</strong>
+  <ul class="clearFix">
+    <li class="left">
+      <a href="product_detail.html">
+        <span class="img">
+          <img src="./images/img3.jpg" alt="">
+        </span>
+        <p>
+          <span class="type">FOSEN-X01</span>
+          <strong>智能车载冰箱</strong>
+          <span class="line"></span>
+          <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
+          <span class="link">了解详情 &gt;</span>
+        </p>
+      </a>
+    </li>
+    <li class="left">
+      <a href="product_detail.html">
+        <span class="img">
+          <img src="./images/img4.jpg" alt="">
+        </span>
+        <p>
+          <span class="type">FOSEN-X02</span>
+          <strong>智能车载冰箱 PRO</strong>
+          <span class="line"></span>
+          <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
+          <span class="link">了解详情 &gt;</span>
+        </p>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="index_module4">
+  <span class="title">发现更多</span>
+  <ul class="clearFix">
+    <li class="left">
+      <a href="about.html">
+        <span class="img">
+          <img src="./images/img5.jpg" alt="">
+        </span>
+        <strong>关于我们</strong>
+        <p>复升专注于做冷鲜事业领域产品，依托再升科技核心研发技术与实力，<br>成就产品核心竞争力，产品卓越优势。</p>
+        <span class="link">&gt; 了解更多</span>
+      </a>
+    </li>
+    <li class="left">
+      <a href="news.html">
+        <span class="img">
+          <img src="./images/img6.jpg" alt="">
+          <b>最新动态</b>
+        </span>
+        <strong>复升新闻</strong>
+        <p>你可以从这里了解到关于复升品牌相关资讯讯息，<br>及其最新企业动态。</p>
+        <span class="link">&gt; 了解更多</span>
+      </a>
+    </li>
+    <li class="left">
+      <a href="contact.html">
+        <span class="img">
+          <img src="./images/img7.jpg" alt="">
+        </span>
+        <strong>品牌服务</strong>
+        <p>当你需要帮助时，你尽可联系我们，<br>我们很高兴为你提供帮助，也将为你竭尽解决所需。</p>
+        <span class="link">&gt; 了解更多</span>
+      </a>
+    </li>
+  </ul>
+</div>
+{% endblock %}

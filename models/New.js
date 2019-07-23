@@ -16,6 +16,10 @@ const NewSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  abstract:{
+    type: String,
+    required: true
+  },
   content:{
     type: String,
     required: true

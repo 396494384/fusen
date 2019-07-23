@@ -10,7 +10,12 @@ const app = express();
 // 设置静态文件托管
 app.use('/public', express.static(__dirname + '/public'))
 app.use('/ueditor', express.static(__dirname + '/ueditor'))
-app.use('/backend', express.static(__dirname + '/views/admin'))
+app.use('/frontend/css', express.static(__dirname + '/views/css'))//前端页面静态文件
+app.use('/frontend/js', express.static(__dirname + '/views/js'))//前端页面静态文件
+app.use('/frontend/images', express.static(__dirname + '/views/images')) //css背景图片
+app.use('/images', express.static(__dirname + '/views/images'))//前端页面静态文件
+app.use('/backend', express.static(__dirname + '/views/admin')) //后台页面静态文件
+
 // app.use('/views/public', express.static(__dirname + '/views/public'))
 
 // 定义模板引擎
@@ -66,6 +71,8 @@ app.use((req, res, next) => {
   next()
 })
 
+
+app.use('/', require('./routers/web'))
 app.use('/admin', require('./routers/admin')) //后台管理页面路由
 // app.use('/api', require('./routers/api'))
 

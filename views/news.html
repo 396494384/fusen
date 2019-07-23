@@ -1,324 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends './template/layout.html' %}
+{% block main %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <title>资讯动态</title>
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/public.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/animation.css">
-  <link rel="stylesheet" href="./css/sacle.css">
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="./js/script.js"></script>
-</head>
-
-<body>
-  <header>
-    <div class="header">
-      <h1 class="left logo">
-        <a href="index.html"><img src="./images/logo.png" alt="logo"></a>
-      </h1>
-      <div class="right clearFix right_link">
-        <a class="left" href="#"><img src="./images/icon_shopingcar.png" alt="">天猫商城</a>
-        <a class="left" href="#"><img src="./images/icon_net.png" alt="">EN</a>
-        <a class="left search_btn">
-          <img class="icon_search" src="./images/icon_search1.png" alt="">
-          <img class="icon_close_search" src="./images/icon_close_search.jpg" alt="">
-        </a>
-      </div>
-      <ul class="clearFix nav">
-        <li class="left">
-          <a href="index.html"><span class="nav_title">首页</span></a>
-        </li>
-        <li class="left">
-          <a href="javascript:"><span class="nav_title">核心竞争</span></a>
-        </li>
-        <li class="left product_nav">
-          <span class="nav_title">复升事业<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <ul class="clearFix">
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav10.png" alt="">
-                  <strong>新零售<sup>Pro</sup>事业</strong>
-                  <span>专注移动冷鲜领域，冷暖自由切换</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav11.png" alt="">
-                  <strong>生物医药<sup>Pro</sup>事业</strong>
-                  <span>品质保温箱，医疗运输更安全</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav12.png" alt="">
-                  <strong>冷链物流<sup>Pro</sup>事业</strong>
-                  <span>高效保温材料，解决长途运输保温困境</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="left active">
-          <a href="news.html"><span class="nav_title">资讯</span></a>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">探索复升<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav1.jpg" alt=""></span>
-                    <strong>复升品牌</strong>
-                    <span class="text">成就移动冷柜事业典范</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav2.jpg" alt=""></span>
-                    <strong>品牌实力</strong>
-                    <span class="text">研发与生产实力并存，铸就未来</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav3.jpg" alt=""></span>
-                    <strong>企业文化</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_join1.png" alt="">
-                  <img class="img2" src="./images/icon_join2.png" alt="">
-                  <span>加入我们</span>
-                </a>
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_cooperation1.png" alt="">
-                  <img class="img2" src="./images/icon_cooperation2.png" alt="">
-                  <span>合作伙伴</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">服务与支持<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="">
-                    <span class="img"><img src="./images/img_nav4.jpg" alt=""></span>
-                    <strong>服务政策</strong>
-                    <span class="text">用心关怀，诚心服务</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="branch.html">
-                    <span class="img"><img src="./images/img_nav5.jpg" alt=""></span>
-                    <strong>服务网点</strong>
-                    <span class="text">立足重庆，服务全国多个省市</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="contact.html">
-                    <span class="img"><img src="./images/img7.jpg" alt=""></span>
-                    <strong>联系我们</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="#">
-                  <img class="img1" src="./images/icon_explain1.png" alt="">
-                  <img class="img2" src="./images/icon_explain2.png" alt="">
-                  <span>产品说明书</span>
-                </a>
-                <a href="message.html">
-                  <img class="img1" src="./images/icon_msg1.png" alt="">
-                  <img class="img2" src="./images/icon_msg2.png" alt="">
-                  <span>投诉或建议</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="search">
-        <div class="clearFix">
-          <input class="left" type="text" placeholder="请输入您要搜索的内容" />
-          <span class="right">确认搜索</span>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="head_diagram">
-    <img src="./images/server.jpg" alt="">
-    <div class="row1"><strong>复升资讯</strong></div>
-  </div>
-  <div class="news">
-    <div class="news_big_box">
+<div class="head_diagram">
+  <img src="./images/server.jpg" alt="">
+  <div class="row1"><strong>复升资讯</strong></div>
+</div>
+<div class="news">
+  
+  <div class="news_big_box">
       <div class="title">
         <strong>头条新闻</strong>
         <p>从这里，你能实时了解复升品牌的最新资讯新闻</p>
       </div>
+      {% if big %}
       <div class="clearFix news_big">
         <a href="javascript:" class="left img">
-          <img src="./images/img6.jpg" alt="">
+          <img src="{{ big.img }}" alt="">
         </a>
         <a href="javascript:" class="right text">
-          <strong class="txt_hide">车载冰箱，制冷能到多少度？</strong>
-          <b class="date">2019-1-1</b>
-          <p>简单来说：制冷温度最低的是压缩机车载冰箱，温度范围是-18℃-10℃。半导体车载冰箱大部分人都接触过，最好的功能在于可冷可热，但是制冷最多只能低于环境温度20℃。 <br>
-            车载冰箱制冷温度能到多少，要从不同分类来看；车载冰箱大致有3类，3种的性能不同价格也相差甚远，仅功能和作用就存在很大区别。</p>
+          <strong class="txt_hide">{{ big.title }}</strong>
+          <b class="date">{{ big.date }}</b>
+          <p>{{ big.abstract.substring(0, 100) }}</p>
           <span class="link">
             <em></em>
             <i>&gt; 了解更多</i>
           </span>
         </a>
       </div>
+      {% endif %}
     </div>
-    <div class="news_list">
-      <ul class="clearFix">
-        <li class="left">
-          <a href="javascript:">
-            <span class="img">
-              <img src="./images/img6.jpg" alt="">
-            </span>
-            <strong>新品T28，10分钟可至0℃</strong>
-            <b class="date">2018-12-25</b>
-            <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-            <span class="link"><i>&gt;</i> 了解更多</span>
-          </a>
-        </li>
-        <li class="left">
-          <a href="javascript:">
-            <span class="img">
-              <img src="./images/img6.jpg" alt="">
-            </span>
-            <strong>新品T28，10分钟可至0℃</strong>
-            <b class="date">2018-12-25</b>
-            <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-            <span class="link"><i>&gt;</i> 了解更多</span>
-          </a>
-        </li>
-        <li class="left">
-          <a href="javascript:">
-            <span class="img">
-              <img src="./images/img6.jpg" alt="">
-            </span>
-            <strong>新品T28，10分钟可至0℃</strong>
-            <b class="date">2018-12-25</b>
-            <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-            <span class="link"><i>&gt;</i> 了解更多</span>
-          </a>
-        </li>
-        <li class="left">
-          <a href="javascript:">
-            <span class="img">
-              <img src="./images/img6.jpg" alt="">
-            </span>
-            <strong>新品T28，10分钟可至0℃</strong>
-            <b class="date">2018-12-25</b>
-            <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-            <span class="link"><i>&gt;</i> 了解更多</span>
-          </a>
-        </li>
-      </ul>
+  
+  
+  <div class="news_list">
+    <ul class="clearFix">
+      {% for item in news %}
+      <li class="left">
+        <a href="javascript:">
+          <span class="img">
+            <img src="{{ item.img }}" alt="">
+          </span>
+          <strong>{{ item.title }}</strong>
+          <b class="date">{{ item.date }}</b>
+          <p>{{ item.abstract.substring(0, 60) }}...</p>
+          <span class="link"><i>&gt;</i> 了解更多</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="clearFix page">
+      <a href="#" class="left prev">&lt; 上一页</a>
+      <div class="left number">
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+      </div>
+      <a href="#" class="right next">下一页 &gt;</a>
+    </div>
+  </div>
+</div>
+<div class="news_details">
+  <div class="content">
+    <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
+    <div class="text_box">
+      <strong class="title">自驾出行前，你需要为爱车做什么准备？</strong>
+      <span class="date">
+        <b>新闻</b> 2018-12-25
+      </span>
+      <div class="text">
+        自驾出行是很自由的旅游方式，方向盘握在自己手中，可以灵活调整旅程安排。沿途所过之处，多得是名不见经传的美丽风光。
+        我国幅员辽阔，若是长途自驾旅行，可能气候差异变化会比较大，相较于其它旅游方式，而自驾车却能满足多样的物品携带需求，不管是衣物，还是饮用水，食品，药物等各种所需之物都可以带足，使旅途变得非常舒适愉快。还可以带上餐具、帐篷等，来一场原生态的野炊。
+        <img src="./images/news.jpg" alt="">
+      </div>
       <div class="clearFix page">
-        <a href="#" class="left prev">&lt; 上一页</a>
-        <div class="left number">
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
-        </div>
-        <a href="#" class="right next">下一页 &gt;</a>
+        <a href="#" class="left prev">&lt; 上一篇</a>
+        <a href="javascript:" class="back">返回</a>
+        <a href="#" class="right next">下一篇 &gt;</a>
       </div>
     </div>
   </div>
-  <div class="news_details">
-    <div class="content">
-      <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
-      <div class="text_box">
-        <strong class="title">自驾出行前，你需要为爱车做什么准备？</strong>
-        <span class="date">
-          <b>新闻</b> 2018-12-25
-        </span>
-        <div class="text">
-          自驾出行是很自由的旅游方式，方向盘握在自己手中，可以灵活调整旅程安排。沿途所过之处，多得是名不见经传的美丽风光。
-          我国幅员辽阔，若是长途自驾旅行，可能气候差异变化会比较大，相较于其它旅游方式，而自驾车却能满足多样的物品携带需求，不管是衣物，还是饮用水，食品，药物等各种所需之物都可以带足，使旅途变得非常舒适愉快。还可以带上餐具、帐篷等，来一场原生态的野炊。
-          <img src="./images/news.jpg" alt="">
-        </div>
-        <div class="clearFix page">
-          <a href="#" class="left prev">&lt; 上一篇</a>
-          <a href="javascript:" class="back">返回</a>
-          <a href="#" class="right next">下一篇 &gt;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <div class="footer">
-      <div class="footer_link">
-        <a href="#">关于我们</a>
-        <a href="#">新零售事业</a>
-        <a href="#">生物医药事业</a>
-        <a href="#">冷链物流事业</a>
-        <a href="#">人才招聘</a>
-        <a href="#">联系我们</a>
-      </div>
-      <div class="hot_line">
-        <span>全国服务热线 400-8888-666</span>
-        <span>关注我们</span>
-        <a href="#" class="tmall">
-          <img src="./images/icon_tmall.png" alt="">
-        </a>
-        <a href="#" class="wechat">
-          <img src="./images/icon_wechat.png" alt="">
-        </a>
-      </div>
-      <p class="copyright">版权所有 © 2019重庆复升冷鲜香科技有限公司 | 渝ICP备19005474号 </p>
-    </div>
-  </footer>
-  <div class="float">
-    <a class="clearFix">
-      <span class="left">服务热线  023-65552122</span>
-      <img class="right" src="./images/icon_service.png" alt="">
-    </a>
-    <a class="clearFix">
-      <span class="left">在线咨询</span>
-      <img class="right" src="./images/icon_msg.png" alt="">
-    </a>
-    <a class="clearFix back_top">
-      <span class="left">向上</span>
-      <img class="right" src="./images/icon_back_top.png" alt="">
-    </a>
-  </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

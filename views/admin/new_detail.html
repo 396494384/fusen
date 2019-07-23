@@ -38,6 +38,14 @@
       </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">资讯摘要</label>
+        <div class="layui-input-block">
+          <!-- <input type="textarea" name="abstract" placeholder="请输入资讯摘要" class="layui-input" > -->
+          <!-- <input type="text"> -->
+          <textarea name="abstract" placeholder="请输入资讯摘要" class="layui-textarea" disabled>{{ data.abstract }}</textarea>
+        </div>
+      </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">资讯内容</label>
       <div class="layui-input-block">
         <input type="hidden" name="content" value="{{ data.content }}">

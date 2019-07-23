@@ -11,6 +11,12 @@
   <form class="layui-form">
     <input type="hidden" name="id" value="{{ data._id.toString() }}">
     <div class="layui-form-item">
+        <label class="layui-form-label">网站名称</label>
+        <div class="layui-input-block">
+          <input type="text" name="name" placeholder="请输入网站名称" class="layui-input" value="{{ data.name }}">
+        </div>
+      </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">网站LOGO</label>
       <div class="layui-input-block">
         <label>
