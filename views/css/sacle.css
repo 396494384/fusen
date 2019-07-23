@@ -1,0 +1,13 @@
+.index_module1 .img, .about_module1 .about_module_content div.right, .about_module2 .about_module_content .img, .about_module3 li .img, .about_module3 .join div.left, .about_module4 li, .head_diagram, .product_details>div.right .slide, .cause_list .list li .img {
+  overflow: hidden;
+}
+
+.index_module1 .img img, .about_module1 .about_module_content div.right img, .about_module2 .about_module_content .img img, .about_module3 li .img img, .about_module3 .join div.left img, .about_module4 li img, .head_diagram img, .product_details>div.right .slide img, .cause_list .list li .img img {
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.index_module1 .img:hover img, .about_module1 .about_module_content div.right:hover img, .about_module2 .about_module_content .img:hover img, .about_module3 li .img:hover img, .about_module3 .join div.left:hover img, .about_module4 li a:hover img, .head_diagram:hover img, .product_details>div.right .slide:hover img, .cause_list .list li:hover .img img {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
