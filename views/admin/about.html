@@ -1,0 +1,62 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a class="active">关于我们</a>
+  </span>
+</div>
+{% if data %}
+<a href="/admin/public_update" class="layui-btn to_update">修改网站信息</a>
+<table class="layui-table" lay-size="lg">
+  <colgroup>
+    <col width="200">
+    <col>
+  </colgroup>
+  <tr>
+    <td>网站名称</td>
+    <td>{{ data.content }}</td>
+  </tr>
+  <tr>
+    <td>网站LOGO</td>
+    <td>
+      {% if data.logo %}
+      <img src="{{ data.img }}" alt="">
+      {% endif %}
+    </td>
+  </tr>
+</table>
+{% else %}
+<blockquote class="layui-elem-quote">还没有添加关于我们 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/admin/about_add"
+    class="layui-btn">去添加1</a>
+</blockquote>
+{% endif %}
+<style>
+  #new_img {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  .show_new_img {
+    display: none;
+    height: 200px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element'], function () {
+      var element = layui.element;
+    });
+  })
+</script>
+{% endblock %}

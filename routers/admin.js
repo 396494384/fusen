@@ -10,6 +10,7 @@ const New = require('../models/New');
 const Partner = require('../models/Partner');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const About = require('../models/About');
 //判断登录状态
 router.use((req, res, next) => {
   if (!req.userInfo.id) {
@@ -302,6 +303,34 @@ router.get('/product_detail', (req, res) => {
 })
 // 产品管理 end
 
+
+// 关于我们
+router.get('/about', (req, res) => {
+  About.find().then(data=>{
+    if(data){
+      res.render('admin/about', {
+        userInfo: req.userInfo,
+        data: data[0]
+      })
+    } 
+  })
+})
+router.get('/about_add', (req, res) => {
+  res.render('admin/about_add', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/about_update', (req, res) => {
+  // About.findById().then(data=>{
+  //   if(data){
+  //     res.render('admin/about_update', {
+  //       userInfo: req.userInfo,
+  //       data: data[0]
+  //     })
+  //   } 
+  // })
+})
+// 关于我们 end
 
 // 404
 router.get('*', (req, res) => {

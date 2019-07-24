@@ -86,6 +86,7 @@ app.use('/api/contact', require('./routers/contact'))
 app.use('/api/partner', require('./routers/partner'))
 app.use('/api/recruit', require('./routers/recruit'))
 app.use('/api/store', require('./routers/store'))
+app.use('/api/about', require('./routers/about'))
 
 
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {

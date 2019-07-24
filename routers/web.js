@@ -55,27 +55,23 @@ router.get('/index', (req, res) => {
 
 // 产品
 router.get('/product', (req, res) => {
-  Category.find().then(data => {
-    let _categorys = data;
-    let _item = data[0];
-    if (req.query.category) {
-      _item = _categorys.filter(i => i._id == req.query.category)[0];
-    }
-    Product.find({
-      category: _item._id.toString(),
-      status: true
-    }).then(data => {
-      res.render('product', {
-        public: public,
-        title: "产品",
-        categorys: _categorys,
-        category: _item,
-        product: data
-      })
+  let _item = public.categorys[0];
+  if (req.query.category) {
+    _item = public.categorys.filter(i => i._id == req.query.category)[0];
+  }
+  Product.find({
+    category: _item._id.toString(),
+    status: true
+  }).then(data => {
+    res.render('product', {
+      public: public,
+      title: "产品",
+      category: _item,
+      product: data
     })
   })
 })
-// 产品
+// 产品详情
 router.get('/product_detail', (req, res) => {
   Product.findById(req.query.id).then(data => {
     res.render('product_detail', {
