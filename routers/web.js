@@ -20,24 +20,75 @@ router.use((req, res, next) => {
 })
 
 // 首页
-router.get('/', (req, res) => {
-  res.render('index', {
-    public: public,
-    title: public.name
+function getIndex(res) {
+  Banner.find({
+    status: true
+  }).then(data => {
+    let _banner = data;
+    _banner.forEach(i => {
+      i.banner = i.banner.replace(/\\/g, "/");
+    })
+    Category.find().then(data => {
+      let _category = data;
+      _category.forEach((val, idx) => {
+        val.img = val.img.replace(/\\/g, "/");
+        val.idx = idx + 1;
+      })
+      res.render('index', {
+        public: public,
+        title: public.name,
+        banner: _banner,
+        category: _category
+      })
+    })
   })
+}
+router.get('/', (req, res) => {
+  getIndex(res)
 })
 router.get('/index', (req, res) => {
-  res.render('index', {
-    public: public,
-    title: public.name
+  getIndex(res)
+})
+
+// 产品
+router.get('/product', (req, res) => {
+  Category.find().then(data => {
+    let _categorys = data;
+    let _item = data[0];
+    if (req.query.category) {
+      _item = _categorys.filter(i => i._id == req.query.category)[0];
+    }
+    Product.find({
+      category: _item._id.toString(),
+      status: true
+    }).then(data => {
+      res.render('product', {
+        public: public,
+        title: "产品",
+        categorys: _categorys,
+        category: _item,
+        product: data
+      })
+    })
   })
 })
+// 产品
+router.get('/product_detail', (req, res) => {
+  Product.findById(req.query.id).then(data => {
+    res.render('product_detail', {
+      public: public,
+      title: data.name,
+      product: data
+    })
+  })
+})
+
 
 // 关于复升
 router.get('/about', (req, res) => {
   Partner.find({
     status: true
-  }).then(data=>{
+  }).then(data => {
     let _partner = data;
     res.render('about', {
       public: public,
@@ -162,6 +213,14 @@ router.get('/branch', (req, res) => {
         title: "服务网点"
       })
     })
+  })
+})
+
+// 搜索结果
+router.get("/result", (req, res) => {
+  res.render("result", {
+    public: public,
+    title: "搜索结果"
   })
 })
 

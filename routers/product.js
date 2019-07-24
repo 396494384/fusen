@@ -6,7 +6,7 @@ const Product = require('../models/Product');
 
 // 获取产品分类
 router.get('/category_list', (req, res) => {
-  Category.find().then(data => {
+  Category.find().sort({_id: -1}).then(data => {
     res.json({
       code: 0,
       data: data

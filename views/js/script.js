@@ -15,6 +15,14 @@ $(function () {
       $(this).addClass('active')
     }
   })
+  $(".search .confirm").click(function(){
+    var _searchKey = $(".search_key").val();
+    if(_searchKey == ""){
+      alert("请输入搜索关键字")
+    }else{
+      window.location.href = "result?search="+_searchKey;
+    }
+  })
 
   // nav
   $('.nav>li').hover(function () {
@@ -86,7 +94,7 @@ $(function () {
       }
       var _index = $(this).index();
       indexModule2.find('.btns div.left').removeClass('active').eq(_index).addClass('active');
-      indexModule2.find('.imgs img').hide().eq(_index).show();
+      indexModule2.find('.imgs div').hide().eq(_index).show();
       indexModule2.find('.texts div').hide().eq(_index).show();
     })
   } catch (e) { }
@@ -200,6 +208,8 @@ $(function () {
         $(this).find('.text').height($(this).outerHeight(true))
       })
     }, 200);
+    $('.product_details div.right .idx span').first().addClass("active");
+    $('.product_details div.right img').first().addClass("show");
     $('.product_details div.right .idx span').click(function () {
       if ($(this).hasClass('active')) {
         return;
