@@ -18,6 +18,13 @@ router.use((req, res, next) => {
     next();
   })
 })
+// let categorys = null;
+router.use((req, res, next) => {
+  Category.find().then(data => {
+    public.categorys = data;
+    next();
+  })
+})
 
 // 首页
 function getIndex(res) {
@@ -28,18 +35,14 @@ function getIndex(res) {
     _banner.forEach(i => {
       i.banner = i.banner.replace(/\\/g, "/");
     })
-    Category.find().then(data => {
-      let _category = data;
-      _category.forEach((val, idx) => {
-        val.img = val.img.replace(/\\/g, "/");
-        val.idx = idx + 1;
-      })
-      res.render('index', {
-        public: public,
-        title: public.name,
-        banner: _banner,
-        category: _category
-      })
+    public.categorys.forEach((val, idx) => {
+      val.img = val.img.replace(/\\/g, "/");
+      val.idx = idx + 1;
+    })
+    res.render('index', {
+      public: public,
+      title: public.name,
+      banner: _banner
     })
   })
 }

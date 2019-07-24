@@ -30,12 +30,12 @@
 </div>
 <div class="index_module2">
   <div class="imgs">
-    {% for item in category %}
+    {% for item in public.categorys %}
     <div class="img{{ item.idx }}" style="background: url('{{ item.img }}') no-repeat center center;"></div>
     {% endfor %}
   </div>
   <div class="texts">
-    {% for item in category %}
+    {% for item in public.categorys %}
     <div class="text{{ item.idx }}">
       <strong>{{ item.title }}</strong>
       <p>{{ item.text }}</p>
@@ -47,7 +47,7 @@
     {% endfor %}
   </div>
   <div class="clearFix btns">
-    {% for item in category %}
+    {% for item in public.categorys %}
     <div class="left {{ item.idx == 1 && 'active' }}">
       <div class="box">
         <img src="./images/icon_ice{{ item.idx }}.png" alt="">
