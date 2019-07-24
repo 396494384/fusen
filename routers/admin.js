@@ -243,6 +243,27 @@ router.get('/product_category', (req, res) => {
     userInfo: req.userInfo
   })
 })
+router.get('/product_category_add', (req, res) => {
+  res.render('admin/product_category_add', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/product_category_update', (req, res) => {
+  Category.findById(req.query.id).then(data=>{
+    res.render('admin/product_category_update', {
+      userInfo: req.userInfo,
+      data: data
+    })
+  })
+})
+router.get('/product_category_detail', (req, res) => {
+  Category.findById(req.query.id).then(data=>{
+    res.render('admin/product_category_detail', {
+      userInfo: req.userInfo,
+      data: data
+    })
+  })
+})
 router.get('/product', (req, res) => {
   res.render('admin/product', {
     userInfo: req.userInfo

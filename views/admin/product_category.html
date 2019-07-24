@@ -7,10 +7,11 @@
     <a class="active">产品分类管理</a>
   </span>
 </div>
-<a class="layui-btn add">添加分类</a>
+<a href="/admin/product_category_add" class="layui-btn add">添加分类</a>
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <script type="text/html" id="operation">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
 </script>
 <script>
@@ -48,93 +49,96 @@
       var form = layui.form;
       table.render(config)
       // 添加
-      $('.add').click(function () {
-        layer.open({
-          type: 1,
-          title: "添加分类",
-          closeBtn: 2,
-          btn: ['添加'],
-          content: '<div class="layui-item" style="padding: 20px 20px 0;">分类名称: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入分类名称" name="category" /></div></div>',
-          yes: function () {
-            var category = $('input[name="category"]').val();
-            if (category == "") {
-              layer.msg("请输入分类名称", {
-                time: 1000
-              });
-            } else {
-              $.ajax({
-                type: 'POST',
-                url: '/api/product/category_add',
-                data: {
-                  name: category
-                },
-                success: function (data) {
-                  layer.msg(data.msg, {
-                    time: 1000
-                  });
-                  if (data.code == 200) {
-                    setTimeout(function () {
-                      layer.closeAll();
-                      window.location.href = '/admin/product_category';
-                    }, 1000)
-                  }
-                },
-                error: function () {
-                  layer.msg("与服务器通信发生错误", {
-                    time: 1000
-                  });
-                }
-              });
-            }
-          }
-        })
-      });
+      // $('.add').click(function () {
+      //   layer.open({
+      //     type: 1,
+      //     title: "添加分类",
+      //     closeBtn: 2,
+      //     btn: ['添加'],
+      //     content: '<div class="layui-item" style="padding: 20px 20px 0;">分类名称: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入分类名称" name="category" /></div></div>',
+      //     yes: function () {
+      //       var category = $('input[name="category"]').val();
+      //       if (category == "") {
+      //         layer.msg("请输入分类名称", {
+      //           time: 1000
+      //         });
+      //       } else {
+      //         $.ajax({
+      //           type: 'POST',
+      //           url: '/api/product/category_add',
+      //           data: {
+      //             name: category
+      //           },
+      //           success: function (data) {
+      //             layer.msg(data.msg, {
+      //               time: 1000
+      //             });
+      //             if (data.code == 200) {
+      //               setTimeout(function () {
+      //                 layer.closeAll();
+      //                 window.location.href = '/admin/product_category';
+      //               }, 1000)
+      //             }
+      //           },
+      //           error: function () {
+      //             layer.msg("与服务器通信发生错误", {
+      //               time: 1000
+      //             });
+      //           }
+      //         });
+      //       }
+      //     }
+      //   })
+      // });
       table.on('tool(operation)', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
         var _id = data._id.toString();
         if (layEvent === "edit") {
-          layer.open({
-            type: 1,
-            title: "修改分类",
-            closeBtn: 2,
-            btn: ['修改'],
-            content: '<div class="layui-item" style="padding: 20px 20px 0;">城市: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入分类名称" name="category" value="' +
-              data.name + '" /></div></div>',
-            yes: function () {
-              var category = $('input[name="category"]').val();
-              if (category == "") {
-                layer.msg("请输入城市", {
-                  time: 1000
-                });
-              } else {
-                $.ajax({
-                  type: 'POST',
-                  url: '/api/product/category_update',
-                  data: {
-                    name: category,
-                    id: _id
-                  },
-                  success: function (data) {
-                    layer.msg(data.msg, {
-                      time: 1000
-                    });
-                    if (data.code == 200) {
-                      setTimeout(function () {
-                        layer.closeAll();
-                        window.location.href = '/admin/product_category';
-                      }, 1000)
-                    }
-                  },
-                  error: function () {
-                    layer.msg("与服务器通信发生错误", {
-                      time: 1000
-                    });
-                  }
-                });
-              }
-            }
-          })
+          window.location.href = '/admin/product_category_update?id=' + _id;
+          // layer.open({
+          //   type: 1,
+          //   title: "修改分类",
+          //   closeBtn: 2,
+          //   btn: ['修改'],
+          //   content: '<div class="layui-item" style="padding: 20px 20px 0;">城市: <div class="layui-input-inline"><input type="text" class="layui-input" placeholder="请输入分类名称" name="category" value="' +
+          //     data.name + '" /></div></div>',
+          //   yes: function () {
+          //     var category = $('input[name="category"]').val();
+          //     if (category == "") {
+          //       layer.msg("请输入城市", {
+          //         time: 1000
+          //       });
+          //     } else {
+          //       $.ajax({
+          //         type: 'POST',
+          //         url: '/api/product/category_update',
+          //         data: {
+          //           name: category,
+          //           id: _id
+          //         },
+          //         success: function (data) {
+          //           layer.msg(data.msg, {
+          //             time: 1000
+          //           });
+          //           if (data.code == 200) {
+          //             setTimeout(function () {
+          //               layer.closeAll();
+          //               window.location.href = '/admin/product_category';
+          //             }, 1000)
+          //           }
+          //         },
+          //         error: function () {
+          //           layer.msg("与服务器通信发生错误", {
+          //             time: 1000
+          //           });
+          //         }
+          //       });
+          //     }
+          //   }
+          // })
+        }else if(layEvent === "detail"){
+          window.location.href = '/admin/product_category_detail?id=' + _id;
         } else if (layEvent === "delete") {
           layer.open({
             id: 1,

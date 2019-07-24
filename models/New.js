@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const NewSchema = new mongoose.Schema({
-  type:{
+  title:{
     type: String,
     required: true
   },
-  title:{
+  abstract:{ //摘要
     type: String,
     required: true
   },
@@ -13,10 +13,6 @@ const NewSchema = new mongoose.Schema({
     required: true
   },
   date:{
-    type: String,
-    required: true
-  },
-  abstract:{
     type: String,
     required: true
   },

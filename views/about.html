@@ -1,364 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <title>关于复升</title>
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/public.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/animation.css">
-  <link rel="stylesheet" href="./css/sacle.css">
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="./js/script.js"></script>
-</head>
-
-<body>
-  <header>
-    <div class="header">
-      <h1 class="left logo">
-        <a href="index.html"><img src="./images/logo.png" alt="logo"></a>
-      </h1>
-      <div class="right clearFix right_link">
-        <a class="left" href="#"><img src="./images/icon_shopingcar.png" alt="">天猫商城</a>
-        <a class="left" href="#"><img src="./images/icon_net.png" alt="">EN</a>
-        <a class="left search_btn">
-          <img class="icon_search" src="./images/icon_search1.png" alt="">
-          <img class="icon_close_search" src="./images/icon_close_search.jpg" alt="">
-        </a>
-      </div>
-      <ul class="clearFix nav">
-        <li class="left">
-          <a href="index.html"><span class="nav_title">首页</span></a>
-        </li>
-        <li class="left">
-          <a href="javascript:"><span class="nav_title">核心竞争</span></a>
-        </li>
-        <li class="left product_nav">
-          <span class="nav_title">复升事业<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <ul class="clearFix">
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav10.png" alt="">
-                  <strong>新零售<sup>Pro</sup>事业</strong>
-                  <span>专注移动冷鲜领域，冷暖自由切换</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav11.png" alt="">
-                  <strong>生物医药<sup>Pro</sup>事业</strong>
-                  <span>品质保温箱，医疗运输更安全</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-              <li class="left">
-                <a href="product.html">
-                  <img src="./images/img_nav12.png" alt="">
-                  <strong>冷链物流<sup>Pro</sup>事业</strong>
-                  <span>高效保温材料，解决长途运输保温困境</span>
-                  <b>探索该系列 &gt;</b>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="left">
-          <a href="news.html"><span class="nav_title">资讯</span></a>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">探索复升<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav1.jpg" alt=""></span>
-                    <strong>复升品牌</strong>
-                    <span class="text">成就移动冷柜事业典范</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav2.jpg" alt=""></span>
-                    <strong>品牌实力</strong>
-                    <span class="text">研发与生产实力并存，铸就未来</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="about.html">
-                    <span class="img"><img src="./images/img_nav3.jpg" alt=""></span>
-                    <strong>企业文化</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_join1.png" alt="">
-                  <img class="img2" src="./images/icon_join2.png" alt="">
-                  <span>加入我们</span>
-                </a>
-                <a href="about.html">
-                  <img class="img1" src="./images/icon_cooperation1.png" alt="">
-                  <img class="img2" src="./images/icon_cooperation2.png" alt="">
-                  <span>合作伙伴</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="left public_nav">
-          <span class="nav_title">服务与支持<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
-              src="./images/icon_up.png" alt=""></span>
-          <div class="nav_item">
-            <div>
-              <ul class="clearFix left">
-                <li class="left">
-                  <a href="">
-                    <span class="img"><img src="./images/img_nav4.jpg" alt=""></span>
-                    <strong>服务政策</strong>
-                    <span class="text">用心关怀，诚心服务</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="branch.html">
-                    <span class="img"><img src="./images/img_nav5.jpg" alt=""></span>
-                    <strong>服务网点</strong>
-                    <span class="text">立足重庆，服务全国多个省市</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-                <li class="left">
-                  <a href="contact.html">
-                    <span class="img"><img src="./images/img7.jpg" alt=""></span>
-                    <strong>联系我们</strong>
-                    <span class="text">如需帮助，您尽可与我们联系</span>
-                    <img class="icon" src="./images/icon_right1.png" alt="">
-                  </a>
-                </li>
-              </ul>
-              <div class="right">
-                <a href="#">
-                  <img class="img1" src="./images/icon_explain1.png" alt="">
-                  <img class="img2" src="./images/icon_explain2.png" alt="">
-                  <span>产品说明书</span>
-                </a>
-                <a href="message.html">
-                  <img class="img1" src="./images/icon_msg1.png" alt="">
-                  <img class="img2" src="./images/icon_msg2.png" alt="">
-                  <span>投诉或建议</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="search">
-        <div class="clearFix">
-          <input class="left" type="text" placeholder="请输入您要搜索的内容" />
-          <span class="right">确认搜索</span>
-        </div>
-      </div>
+{% extends "./template/layout.html" %}
+{% block main %}
+<div class="head_diagram">
+  <img src="./images/img_about1.jpg" alt="">
+  <div class="row1"><strong>探索复升</strong></div>
+</div>
+<div class="about">
+  <div class="about_module about_module1">
+    <div class="about_module_title">
+      <strong>复升品牌</strong>
+      <p>
+        在此，您可以尽情探索和了解我们，以及我们能为您提供的服务。 <br>
+        我们的服务全面周到、细致入微，复升不断创新、进取与突破是复升不变的追求。
+      </p>
     </div>
-  </header>
-  <div class="head_diagram">
-    <img src="./images/img_about1.jpg" alt="">
-    <div class="row1"><strong>探索复升</strong></div>
-  </div>
-  <div class="about">
-    <div class="about_module about_module1">
-      <div class="about_module_title">
-        <strong>复升品牌</strong>
+    <div class="clearFix about_module_content">
+      <div class="left text">
+        <strong>
+          复升冷鲜箱， <br>
+          成就移动冷柜事业典范
+        </strong>
         <p>
-          在此，您可以尽情探索和了解我们，以及我们能为您提供的服务。 <br>
-          我们的服务全面周到、细致入微，复升不断创新、进取与突破是复升不变的追求。
+          重庆复升冷鲜香科技有限公司是重庆再升科技（股票代码：603601）子品牌，公司主营超节能VIP真空绝热板&压缩机车载冰箱和移动冷柜，复升上下整合优质的配套商和专业的设计师团队，打造移动冷柜产业互联网，通过选用最高端的微型车载压缩机、最有效的VIP真空绝热板断热材、最环保的保护型外壳材料、最时尚的外观设计，为用户开启节能环保的智能移动新风尚！
         </p>
       </div>
-      <div class="clearFix about_module_content">
-        <div class="left text">
-          <strong>
-            复升冷鲜箱， <br>
-            成就移动冷柜事业典范
-          </strong>
-          <p>
-            重庆复升冷鲜香科技有限公司是重庆再升科技（股票代码：603601）子品牌，公司主营超节能VIP真空绝热板&压缩机车载冰箱和移动冷柜，复升上下整合优质的配套商和专业的设计师团队，打造移动冷柜产业互联网，通过选用最高端的微型车载压缩机、最有效的VIP真空绝热板断热材、最环保的保护型外壳材料、最时尚的外观设计，为用户开启节能环保的智能移动新风尚！
-          </p>
+      <div class="right">
+        <img src="./images/img_about2.jpg" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="about_module about_module2">
+    <div class="about_module_title">
+      <strong>品牌实力</strong>
+      <p>复升集研发，生产于一体的专注冷鲜事业应用领域企业</p>
+    </div>
+    <div class="clearFix about_module_content">
+      <div class="left">
+        <a href="#">
+          <span class="img"><img src="./images/img_about3.jpg" alt=""></span>
+          <strong>上市公司全资子公司</strong>
+          <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
+          <b>了解更多 &gt;</b>
+        </a>
+      </div>
+      <div class="left">
+        <a href="#">
+          <span class="img"><img src="./images/img_about10.jpg" alt=""></span>
+          <strong>精工制造</strong>
+          <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
+          <b>了解更多 &gt;</b>
+        </a>
+      </div>
+      <div class="left">
+        <a href="#">
+          <span class="img"><img src="./images/img_about11.jpg" alt=""></span>
+          <strong>技术研发</strong>
+          <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
+          <b>了解更多 &gt;</b>
+        </a>
+      </div>
+      <div class="left">
+        <a href="#">
+          <span class="img"><img src="./images/img_about12.jpg" alt=""></span>
+          <strong>检测能力</strong>
+          <p class="txt_hide">
+            复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
+          <b>了解更多 &gt;</b>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="about_module about_module3">
+    <div class="about_module_title">
+      <strong>企业文化</strong>
+      <p>复升集研发，生产于一体的专注冷鲜事业应用领域企业</p>
+    </div>
+    <div class="about_module_content">
+      <ul class="clearFix">
+        <li class="left">
+          <span class="img"><img src="./images/img_about5.jpg" alt=""></span>
+          <strong>企业愿景</strong>
+          <p class="txt_hide">为消费者提供高品质保温产品与服务,让生活更便捷，创造幸福生活。</p>
+        </li>
+        <li class="left">
+          <span class="img"><img src="./images/img_about6.jpg" alt=""></span>
+          <strong>企业理念</strong>
+          <p class="txt_hide">专注品质、勇于创新、绿色环保、服务至上。</p>
+        </li>
+        <li class="left">
+          <span class="img"><img src="./images/img_about7.jpg" alt=""></span>
+          <strong>核心价值观</strong>
+          <p class="txt_hide">坚持更高端品牌战略，以消费者为中心，诚信、敬业、责任、开放、创新。</p>
+        </li>
+      </ul>
+      <div class="clearFix join" style="display: none;">
+        <div class="left">
+          <img src="./images/img_about8.jpg" alt="">
         </div>
         <div class="right">
-          <img src="./images/img_about2.jpg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="about_module about_module2">
-      <div class="about_module_title">
-        <strong>品牌实力</strong>
-        <p>复升集研发，生产于一体的专注冷鲜事业应用领域企业</p>
-      </div>
-      <div class="clearFix about_module_content">
-        <div class="left">
-          <a href="#">
-            <span class="img"><img src="./images/img_about3.jpg" alt=""></span>
-            <strong>上市公司全资子公司</strong>
-            <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
-            <b>了解更多 &gt;</b>
+          <strong>加入我们</strong>
+          <p>复升始终秉持“以人为本”的人才理念，注重员工知识、技能的培训，更重视员工能力和价值观的培养，为人才提供成长平台，使人才成为企业持续发展的有力支撑，实现企业和人才共同成长、共同发展。</p>
+          <a href="recruit">
+            查看招聘职位
+            <!-- <img src="./images/icon_about1.png" alt=""> -->
           </a>
         </div>
-        <div class="left">
-          <a href="#">
-            <span class="img"><img src="./images/img_about10.jpg" alt=""></span>
-            <strong>精工制造</strong>
-            <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
-            <b>了解更多 &gt;</b>
-          </a>
-        </div>
-        <div class="left">
-          <a href="#">
-            <span class="img"><img src="./images/img_about11.jpg" alt=""></span>
-            <strong>技术研发</strong>
-            <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
-            <b>了解更多 &gt;</b>
-          </a>
-        </div>
-        <div class="left">
-          <a href="#">
-            <span class="img"><img src="./images/img_about12.jpg" alt=""></span>
-            <strong>检测能力</strong>
-            <p class="txt_hide">复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。复升是再升科技全资子公司，依托再升科技拥有强大的研发团队和科研实力。让我们保存产品的品质竞争力。</p>
-            <b>了解更多 &gt;</b>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="about_module about_module3">
-      <div class="about_module_title">
-        <strong>企业文化</strong>
-        <p>复升集研发，生产于一体的专注冷鲜事业应用领域企业</p>
-      </div>
-      <div class="about_module_content">
-        <ul class="clearFix">
-          <li class="left">
-            <span class="img"><img src="./images/img_about5.jpg" alt=""></span>
-            <strong>企业愿景</strong>
-            <p class="txt_hide">为消费者提供高品质保温产品与服务,让生活更便捷，创造幸福生活。</p>
-          </li>
-          <li class="left">
-            <span class="img"><img src="./images/img_about6.jpg" alt=""></span>
-            <strong>企业理念</strong>
-            <p class="txt_hide">专注品质、勇于创新、绿色环保、服务至上。</p>
-          </li>
-          <li class="left">
-            <span class="img"><img src="./images/img_about7.jpg" alt=""></span>
-            <strong>核心价值观</strong>
-            <p class="txt_hide">坚持更高端品牌战略，以消费者为中心，诚信、敬业、责任、开放、创新。</p>
-          </li>
-        </ul>
-        <div class="clearFix join" style="display: none;">
-          <div class="left">
-            <img src="./images/img_about8.jpg" alt="">
-          </div>
-          <div class="right">
-            <strong>加入我们</strong>
-            <p>复升始终秉持“以人为本”的人才理念，注重员工知识、技能的培训，更重视员工能力和价值观的培养，为人才提供成长平台，使人才成为企业持续发展的有力支撑，实现企业和人才共同成长、共同发展。</p>
-            <a href="">
-              查看招聘职位
-              <!-- <img src="./images/icon_about1.png" alt=""> -->
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="about_module about_module4">
-      <div class="about_module_title">
-        <strong>合作伙伴</strong>
-        <p>复升与其合作伙伴有共同的理念：合作、学习、双赢。 通过在前沿技术领域的合作，创造未来。</p>
-      </div>
-      <div class="about_module_content">
-        <ul class="clearFix">
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-          <li class="left">
-            <a href="#">
-              <img src="./images/img_about9.png" alt="">
-            </a>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
-  <footer>
-    <div class="footer">
-      <div class="footer_link">
-        <a href="#">关于我们</a>
-        <a href="#">新零售事业</a>
-        <a href="#">生物医药事业</a>
-        <a href="#">冷链物流事业</a>
-        <a href="#">人才招聘</a>
-        <a href="#">联系我们</a>
-      </div>
-      <div class="hot_line">
-        <span>全国服务热线 400-8888-666</span>
-        <span>关注我们</span>
-        <a href="#" class="tmall">
-          <img src="./images/icon_tmall.png" alt="">
-        </a>
-        <a href="#" class="wechat">
-          <img src="./images/icon_wechat.png" alt="">
-        </a>
-      </div>
-      <p class="copyright">版权所有 © 2019重庆复升冷鲜香科技有限公司 | 渝ICP备19005474号 </p>
+  <div class="about_module about_module4">
+    <div class="about_module_title">
+      <strong>合作伙伴</strong>
+      <p>复升与其合作伙伴有共同的理念：合作、学习、双赢。 通过在前沿技术领域的合作，创造未来。</p>
     </div>
-  </footer>
-  <div class="float">
-    <a class="clearFix">
-      <span class="left">服务热线  023-65552122</span>
-      <img class="right" src="./images/icon_service.png" alt="">
-    </a>
-    <a class="clearFix">
-      <span class="left">在线咨询</span>
-      <img class="right" src="./images/icon_msg.png" alt="">
-    </a>
-    <a class="clearFix back_top">
-      <span class="left">向上</span>
-      <img class="right" src="./images/icon_back_top.png" alt="">
-    </a>
+    <div class="about_module_content">
+      <ul class="clearFix">
+        {% for item in partner %}
+        <li class="left">
+          <a target="_blank" href="{{ item.url }}" title="{{ item.name }}">
+            <img src="{{ item.img }}" alt="{{ item.name }}">
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

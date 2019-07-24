@@ -24,10 +24,8 @@ router.post('/category_add', (req, res) => {
         msg: "分类名称已存在"
       })
     } else {
-      new Category({
-        name: req.body.name,
-        number: 0
-      }).save().then(() => {
+      req.body.number = 0;
+      new Category(req.body).save().then(() => {
         res.json({
           code: 200,
           msg: '添加成功'
@@ -48,14 +46,33 @@ router.post('/category_update', (req, res) => {
         msg: "分类名称已存在"
       })
     } else {
-      Category.updateOne({
-        _id: req.body.id
-      }, { name: req.body.name }).then(() => {
-        res.json({
-          code: 200,
-          msg: '修改成功'
-        })
+      Category.findById(req.body.id).then(data => {
+        req.body.number = data.number;
+        if (req.body.img) { //修改了图片
+          let _path = data.img;
+          if (_path) {
+            _path = _path.replace(/\\/g, "/");
+            _path.search(/\//) == 0 && (_path = _path.slice(1));
+            fs.access(_path, err => {
+              err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+            })
+          }
+          productUpdate(req.body)
+        } else {
+          delete req.body.img;
+          productUpdate(req.body)
+        }
       })
+      function productUpdate() {
+        Category.updateOne({
+          _id: req.body.id
+        }, req.body).then(() => {
+          res.json({
+            code: 200,
+            msg: '修改成功'
+          })
+        })
+      }
     }
   })
 })
@@ -69,6 +86,14 @@ router.post('/category_delete', (req, res) => {
         msg: "删除失败, 当前分类下还有产品"
       })
     } else {
+      let _path = data.img;
+      if (_path) {
+        _path = _path.replace(/\\/g, "/");
+        _path.search(/\//) == 0 && (_path = _path.slice(1));
+        fs.access(_path, err => {
+          err ? console.log("文件和目录不存在") : fs.unlinkSync(_path);
+        })
+      }
       Category.deleteOne({
         _id: req.body.id
       }).then(() => {

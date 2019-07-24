@@ -13,15 +13,6 @@
   <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
   <form class="layui-form">
     <div class="layui-form-item">
-      <label class="layui-form-label">资讯显示类型</label>
-      <div class="layui-input-block">
-        <select name="type" lay-verify="required">
-          <option value="列表显示">列表显示</option>
-          <option value="顶部显示">顶部显示</option>
-        </select>
-      </div>
-    </div>
-    <div class="layui-form-item">
       <label class="layui-form-label">资讯标题</label>
       <div class="layui-input-block">
         <input type="text" name="title" placeholder="请输入资讯标题" class="layui-input">
@@ -42,7 +33,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">资讯摘要</label>
         <div class="layui-input-block">
-          <input type="text" name="abstract" placeholder="请输入资讯摘要" class="layui-input">
+          <textarea name="abstract" placeholder="请输入资讯摘要" class="layui-textarea"></textarea>
         </div>
       </div>
     <div class="layui-form-item">
@@ -122,10 +113,9 @@
 
       $('.add').click(function () {
         var _sendData = {
-          type: $('select[name="type"] option:selected').val(),
           title: $('input[name="title"]').val(),
           img: $('input[name="new_img"]').val(),
-          abstract: $('input[name="abstract"]').val(),
+          abstract: $('textarea[name="abstract"]').val(),
           content: ue.getContent(),
           status: $('input[name="status"]:checked').val()
         }

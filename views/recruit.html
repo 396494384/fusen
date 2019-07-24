@@ -37,10 +37,9 @@
               <span class="right detail">查看详情 +</span>
             </div>
             <div class="recruit_detail">
-              <div class="text">
-                {{ item.content }}
-              </div>
-              <span class="apply">立刻申请</span>
+              <input type="hidden" name="content" value='{{ item.content }}'>
+              <div class="text"></div>
+              <span class="apply" id="{{ item._id.toString() }}">立刻申请</span>
             </div>
           </li>
           {% endfor %}

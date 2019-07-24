@@ -1,0 +1,65 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/product">产品管理</a>
+    <a class="active">产品分类详情</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入分类名称" class="layui-input" value="{{ data.name }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类展示背景图</label>
+      <label>
+        <img class="category_img" src="{{ data.img }}" alt="{{ data.img }}" />
+      </label>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类文案标题</label>
+      <div class="layui-input-block">
+        <input type="text" name="title" placeholder="请输入分类文案标题" class="layui-input" value="{{ data.title }}" disabled>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类文案文本</label>
+      <div class="layui-input-block">
+        <textarea name="text" class="layui-textarea" placeholder="请输入分类文案文本" disabled>{{ data.text }}</textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn" href="/admin/product_category_update?id={{ data._id.toString() }}">去修改分类</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+  .category_img {
+    display: block;
+    width: auto;
+    height: 200px;
+  }
+  .layui-form-label {
+    width: 100px;
+  }
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+    })
+  })
+</script>
+{% endblock %}

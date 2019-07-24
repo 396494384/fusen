@@ -30,7 +30,7 @@
       cols: [
         [ //表头
           {
-            width: "40%",
+            width: "35%",
             title: 'Banner图片',
             field: 'banner',
             templet: function (item) {
@@ -38,6 +38,11 @@
             }
           }, {
             width: "30%",
+            title: '跳转链接',
+            align: "center",
+            field: 'url'
+          }, {
+            width: "15%",
             title: '状态',
             align: "center",
             field: 'status',
@@ -46,7 +51,7 @@
             }
           },
           {
-            width: '30%',
+            width: '20%',
             title: '操作',
             align: 'center',
             templet: function (item) {

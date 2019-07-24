@@ -22,6 +22,12 @@
       </div>
     </div>
     <div class="layui-form-item">
+      <label class="layui-form-label">Banner跳转链接</label>
+      <div class="layui-input-block">
+        <input type="text" name="url" placeholder="请输入Banner跳转链接" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">是否开启</label>
       <div class="layui-input-block">
         <input type="radio" name="status" value="true" title="开启" checked>
@@ -47,6 +53,14 @@
   .banner_img {
     display: none;
     height: 100px;
+  }
+
+  .layui-form-label {
+    width: 110px;
+  }
+
+  .layui-input-block {
+    margin-left: 140px;
   }
 </style>
 <script>
@@ -82,6 +96,7 @@
       $('.add').click(function () {
         var _sendData = {
           banner: $('input[name="banner"]').val(),
+          url: $('input[name="url"]').val(),
           status: $('input[name="status"]:checked').val()
         }
         if (_sendData.banner == "") {

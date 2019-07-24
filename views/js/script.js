@@ -90,18 +90,35 @@ $(function () {
       indexModule2.find('.texts div').hide().eq(_index).show();
     })
   } catch (e) { }
-
-
-
+  
   // news
   try {
+    function showDetail(id){
+      $.ajax({
+        type: "POST",
+        url:"/news_detail",
+        data:{
+          id: id
+        },
+        success:function(data){
+          console.log(data)
+          if(data.code == 200){
+            $('body').css('overflow', "hidden");
+            $('.news_details').find("strong.title").html(data.data.title)
+            $('.news_details').find("span.date span").html(data.data.date)
+            $('.news_details').find("div.text").html(data.data.content)
+            $('.news_details').fadeIn();
+          }
+        }
+      })
+    }
     $('.news_list li a').click(function () {
-      $('body').css('overflow', "hidden");
-      $('.news_details').fadeIn();
+      var _id = $(this).attr("id");
+      showDetail(_id)
     })
     $('.news_big a').click(function () {
-      $('body').css('overflow', "hidden");
-      $('.news_details').fadeIn();
+      var _id = $(this).attr("id");
+      showDetail(_id)
     })
     $('.news_details span.close').click(function () {
       $('.news_details').fadeOut();
@@ -115,14 +132,69 @@ $(function () {
         $('body').css('overflow', "auto");
       }, 500)
     })
-  } catch (e) { }
 
+    var news_big = $('.news_big');
+    var news_bigTop = news_big.offset().top;
+    var news_list = $('.news_list');
+    var news_listTop = news_list.offset().top;
+    var scrollTop = $(window).scrollTop();
+    $(window).scroll(function () {
+      try {
+        scrollTop = $(window).scrollTop();
+        news_bigTop = news_big.offset().top;
+        if (scrollTop + $(window).height() - 250 > news_bigTop) {
+          news_big.addClass("show")
+        }
+        if (scrollTop + $(window).height() - 250 > news_listTop) {
+          news_list.addClass("show")
+        }
+      } catch (e) { }
+    })
+    if (scrollTop + $(window).height() - 250 > news_bigTop) {
+      news_big.addClass("show")
+    }
+    if (scrollTop + $(window).height() - 250 > news_listTop) {
+      news_list.addClass("show")
+    }
+  } catch (e) { }
+  
   // product
   try {
+    var cause_top = $('.cause_top');
+    var cause_topTop = cause_top.offset().top;
+    var cause_list = $('.cause_list');
+    var cause_listTop = cause_list.offset().top;
+    var cause_more = $('.cause_more');
+    var cause_moreTop = cause_more.offset().top;
+    var scrollTop = $(window).scrollTop();
+    $(window).scroll(function () {
+      try {
+        scrollTop = $(window).scrollTop();
+        cause_topTop = cause_top.offset().top;
+        if (scrollTop + $(window).height() - 250 > cause_topTop) {
+          cause_top.addClass("show")
+        }
+        if (scrollTop + $(window).height() - 250 > cause_listTop) {
+          cause_list.addClass("show")
+        }
+        if (scrollTop + $(window).height() - 250 > cause_moreTop) {
+          cause_more.addClass("show")
+        }
+      } catch (e) { }
+    })
+    if (scrollTop + $(window).height() - 250 > cause_topTop) {
+      cause_top.addClass("show")
+    }
+    if (scrollTop + $(window).height() - 250 > cause_listTop) {
+      cause_list.addClass("show")
+    }
+    if (scrollTop + $(window).height() - 250 > cause_moreTop) {
+      cause_more.addClass("show")
+    }
+  } catch (e) { }
 
-
-
-
+  // product details
+  try {
     setTimeout(function () {
       $('.product_imgs > div').each(function () {
         $(this).find('.text').height($(this).outerHeight(true))
@@ -135,9 +207,6 @@ $(function () {
       $('.product_details div.right .idx span').removeClass('active').eq($(this).index()).addClass('active');
       $('.product_details div.right img').hide().eq($(this).index()).show()
     })
-
-
-
     var img1 = $('.product_imgs .img1');
     var img1Top = img1.offset().top;
     var img2 = $('.product_imgs .img2');
@@ -211,8 +280,6 @@ $(function () {
       more.addClass("show")
     }
 
-
-
     $('.overview').click(function () {
       $(".back_top").click();
     })
@@ -268,12 +335,13 @@ $(function () {
     if (scrollTop + $(window).height() - 250 > aboutModule4Top) {
       aboutModule4.addClass("show")
     }
-  } catch (e) { }
-
-
+  } catch (e) { } 
 
   // recruit
   try {
+    $.each($('.recruit_list li'), function(i){
+      $(this).find(".recruit_detail .text").html($(this).find('.recruit_detail input[name=content]').val())
+    })
     $('.recruit_list li .detail').click(function () {
       var _thisli = $(this).parents('li');
       if (_thisli.hasClass('show')) {

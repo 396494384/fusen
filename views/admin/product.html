@@ -98,9 +98,9 @@
         var layEvent = obj.event;
         var _id = data._id.toString();
         if (layEvent === 'edit') {
-          window.location.href = 'product_update?id=' + _id;
+          window.location.href = '/admin/product_update?id=' + _id;
         } else if (layEvent === 'detail') {
-          window.location.href = 'product_detail?id=' + _id;
+          window.location.href = '/admin/product_detail?id=' + _id;
         } else if (layEvent === 'delete') {
           layer.open({
             id: 1,

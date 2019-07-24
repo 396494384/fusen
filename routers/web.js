@@ -22,86 +22,82 @@ router.use((req, res, next) => {
 // 首页
 router.get('/', (req, res) => {
   res.render('index', {
-    public: public
+    public: public,
+    title: public.name
   })
 })
 router.get('/index', (req, res) => {
   res.render('index', {
-    public: public
+    public: public,
+    title: public.name
+  })
+})
+
+// 关于复升
+router.get('/about', (req, res) => {
+  Partner.find({
+    status: true
+  }).then(data=>{
+    let _partner = data;
+    res.render('about', {
+      public: public,
+      title: "关于复升",
+      partner: _partner
+    })
   })
 })
 
 
 // 新闻
 router.get('/news', (req, res) => {
-  New.findOne({
-    type: "顶部显示",
-    status: true
-  }).then(data => {
-    let _big = null;
-    if (data) {
-      _big = data;
+  let page = req.query.page || 1;
+  let pageSize = 3;
+  let _skip = ((page - 1) * pageSize) + 1;
+  New.countDocuments().then(count => {
+    let _recodes = [];
+    let num = Math.ceil((count - 1) / pageSize);
+    for (let i = 1; i <= num; i++) {
+      _recodes.push(i);
     }
-    New.find({
-      type: "列表显示",
-      status: true
-    }).then(data => {
-      res.render('news', {
-        public: public,
-        big: _big,
-        news: data
-      })
-    })
-  })
-})
-
-
-// 服务网点
-router.get('/branch', (req, res) => {
-  let _branch = [];
-  City.find().then(data => {
-    if (data.length > 0) {
-      let _citys = data;
-      Store.find({
-        status: true
-      }).then(data => {
-        if (data.length > 0) {
-          _citys.forEach(i => {
-            if (i.number > 0) {
-              _branch.push({
-                city: i.name,
-                cityId: i.id,
-                items: []
-              })
-            }
-          })
-          _branch.forEach(i => {
-            data.forEach(j => {
-              if (j.city == i.cityId) {
-                i.items.push(j)
-              }
+    if (count > 0) {
+      New.find({ status: true }).limit(1).sort({ _id: -1 }).then(data => {
+        if (data.length > 0) { //新闻大于等于1条
+          let _big = data[0];
+          New.find({ status: true }).limit(pageSize).skip(_skip).sort({ _id: -1 }).then(data => {
+            res.render('news', {
+              public: public,
+              big: _big,
+              news: data,
+              count: count,
+              currPage: page,
+              recodes: _recodes,
+              title: "新闻资讯"
             })
-          })
-          res.render('branch', {
-            public: public,
-            branch: _branch
-          })
-        } else {
-          res.render('branch', {
-            public: public,
-            branch: _branch
           })
         }
       })
     } else {
-      res.render('branch', {
+      res.render('news', {
         public: public,
-        branch: _branch
+        big: _big,
+        news: data,
+        count: count,
+        currPage: page,
+        count: _recodes,
+        title: "新闻资讯"
       })
     }
   })
 })
-
+// 新闻详情
+router.post("/news_detail", (req, res) => {
+  New.findById(req.body.id).then(data => {
+    res.json({
+      code: 200,
+      data: data
+    })
+  })
+})
 
 // 招聘
 router.get('/recruit', (req, res) => {
@@ -113,7 +109,58 @@ router.get('/recruit', (req, res) => {
     res.render('recruit', {
       public: public,
       recruit: data,
-      type: _type
+      type: _type,
+      title: "人才招聘 - " + (_type == 1 ? "社会招聘" : "校园招聘")
+    })
+  })
+})
+
+// 联系我们
+router.get("/contact", (req, res) => {
+  Contact.find().then(data => {
+    res.render("contact", {
+      public: public,
+      data: data[0],
+      title: "联系我们"
+    })
+  })
+})
+// 投诉或建议
+router.get("/message", (req, res) => {
+  res.render("message", {
+    public: public,
+    title: "投诉或建议"
+  })
+})
+// 服务网点
+router.get('/branch', (req, res) => {
+  let _branch = [];
+  City.find().then(data => {
+    let _citys = data;
+    Store.find({
+      status: true
+    }).then(data => {
+      _citys.forEach(i => {
+        if (i.number > 0) {
+          _branch.push({
+            city: i.name,
+            cityId: i.id,
+            items: []
+          })
+        }
+      })
+      _branch.forEach(i => {
+        data.forEach(j => {
+          if (j.city == i.cityId) {
+            i.items.push(j)
+          }
+        })
+      })
+      res.render('branch', {
+        public: public,
+        branch: _branch,
+        title: "服务网点"
+      })
     })
   })
 })

@@ -6,7 +6,6 @@
   <div class="row1"><strong>复升资讯</strong></div>
 </div>
 <div class="news">
-  
   <div class="news_big_box">
       <div class="title">
         <strong>头条新闻</strong>
@@ -14,10 +13,10 @@
       </div>
       {% if big %}
       <div class="clearFix news_big">
-        <a href="javascript:" class="left img">
-          <img src="{{ big.img }}" alt="">
+        <a href="javascript:" class="left img" id="{{ big._id.toString() }}">
+          <img src="{{ big.img }}" alt="{{ big.img }}">
         </a>
-        <a href="javascript:" class="right text">
+        <a href="javascript:" class="right text" id="{{ big._id.toString() }}">
           <strong class="txt_hide">{{ big.title }}</strong>
           <b class="date">{{ big.date }}</b>
           <p>{{ big.abstract.substring(0, 100) }}</p>
@@ -29,15 +28,13 @@
       </div>
       {% endif %}
     </div>
-  
-  
   <div class="news_list">
     <ul class="clearFix">
       {% for item in news %}
       <li class="left">
-        <a href="javascript:">
+        <a href="javascript:" id="{{ item._id.toString() }}">
           <span class="img">
-            <img src="{{ item.img }}" alt="">
+            <img src="{{ item.img }}" alt="{{ item.img }}">
           </span>
           <strong>{{ item.title }}</strong>
           <b class="date">{{ item.date }}</b>
@@ -48,15 +45,21 @@
       {% endfor %}
     </ul>
     <div class="clearFix page">
-      <a href="#" class="left prev">&lt; 上一页</a>
+      {% if currPage == 1 %}
+      <a class="left prev">&lt; 上一页</a>
+      {% else %}
+      <a href="news?page={{ currPage - 1 }}" class="left prev">&lt; 上一页</a>
+      {% endif %}
       <div class="left number">
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
+        {% for item in recodes %}
+        <a href="news?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
+        {% endfor %}
       </div>
-      <a href="#" class="right next">下一页 &gt;</a>
+      {% if currPage == recodes.length %}
+      <a class="right next">下一页 &gt;</a>
+      {% else %}
+      <a href="news?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -64,15 +67,11 @@
   <div class="content">
     <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
     <div class="text_box">
-      <strong class="title">自驾出行前，你需要为爱车做什么准备？</strong>
+      <strong class="title"></strong>
       <span class="date">
-        <b>新闻</b> 2018-12-25
+        <b>新闻</b> <span></span>
       </span>
-      <div class="text">
-        自驾出行是很自由的旅游方式，方向盘握在自己手中，可以灵活调整旅程安排。沿途所过之处，多得是名不见经传的美丽风光。
-        我国幅员辽阔，若是长途自驾旅行，可能气候差异变化会比较大，相较于其它旅游方式，而自驾车却能满足多样的物品携带需求，不管是衣物，还是饮用水，食品，药物等各种所需之物都可以带足，使旅途变得非常舒适愉快。还可以带上餐具、帐篷等，来一场原生态的野炊。
-        <img src="./images/news.jpg" alt="">
-      </div>
+      <div class="text"></div>
       <div class="clearFix page">
         <a href="#" class="left prev">&lt; 上一篇</a>
         <a href="javascript:" class="back">返回</a>
