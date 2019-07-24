@@ -93,37 +93,20 @@
 <div class="index_module4">
   <span class="title">发现更多</span>
   <ul class="clearFix">
+    {% for item in find %}
     <li class="left">
-      <a href="about.html">
+      <a {% if item.type == "关于我们" %} href="about" {% endif %} 
+      {% if item.type == "复升新闻" %} href="news" {% endif %}
+      {% if item.type == "品牌服务" %} href="contact" {% endif %} >
         <span class="img">
-          <img src="./images/img5.jpg" alt="">
+          <img src="{{ item.img }}" alt="">
         </span>
-        <strong>关于我们</strong>
-        <p>复升专注于做冷鲜事业领域产品，依托再升科技核心研发技术与实力，<br>成就产品核心竞争力，产品卓越优势。</p>
+        <strong>{{ item.title }}</strong>
+        <p>{{ item.text }}</p>
         <span class="link">&gt; 了解更多</span>
       </a>
     </li>
-    <li class="left">
-      <a href="news.html">
-        <span class="img">
-          <img src="./images/img6.jpg" alt="">
-          <b>最新动态</b>
-        </span>
-        <strong>复升新闻</strong>
-        <p>你可以从这里了解到关于复升品牌相关资讯讯息，<br>及其最新企业动态。</p>
-        <span class="link">&gt; 了解更多</span>
-      </a>
-    </li>
-    <li class="left">
-      <a href="contact.html">
-        <span class="img">
-          <img src="./images/img7.jpg" alt="">
-        </span>
-        <strong>品牌服务</strong>
-        <p>当你需要帮助时，你尽可联系我们，<br>我们很高兴为你提供帮助，也将为你竭尽解决所需。</p>
-        <span class="link">&gt; 了解更多</span>
-      </a>
-    </li>
+    {% endfor %}
   </ul>
 </div>
 {% endblock %}

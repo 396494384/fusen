@@ -11,6 +11,7 @@ const Partner = require('../models/Partner');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 const About = require('../models/About');
+const Find = require('../models/Find');
 //判断登录状态
 router.use((req, res, next) => {
   if (!req.userInfo.id) {
@@ -18,7 +19,7 @@ router.use((req, res, next) => {
     return;
   }
   next()
-}) 
+})
 
 router.get('/login', (req, res) => {
   res.render('admin/login')
@@ -250,7 +251,7 @@ router.get('/product_category_add', (req, res) => {
   })
 })
 router.get('/product_category_update', (req, res) => {
-  Category.findById(req.query.id).then(data=>{
+  Category.findById(req.query.id).then(data => {
     res.render('admin/product_category_update', {
       userInfo: req.userInfo,
       data: data
@@ -258,7 +259,7 @@ router.get('/product_category_update', (req, res) => {
   })
 })
 router.get('/product_category_detail', (req, res) => {
-  Category.findById(req.query.id).then(data=>{
+  Category.findById(req.query.id).then(data => {
     res.render('admin/product_category_detail', {
       userInfo: req.userInfo,
       data: data
@@ -271,16 +272,16 @@ router.get('/product', (req, res) => {
   })
 })
 router.get('/product_add', (req, res) => {
-  Category.find().then(data=>{
+  Category.find().then(data => {
     res.render('admin/product_add', {
       userInfo: req.userInfo,
       category: data
     })
   })
-  
+
 })
 router.get('/product_update', (req, res) => {
-  Category.find().then(category=>{
+  Category.find().then(category => {
     Product.findById(req.query.id).then(data => {
       res.render('admin/product_update', {
         userInfo: req.userInfo,
@@ -291,7 +292,7 @@ router.get('/product_update', (req, res) => {
   })
 })
 router.get('/product_detail', (req, res) => {
-  Category.find().then(category=>{
+  Category.find().then(category => {
     Product.findById(req.query.id).then(data => {
       res.render('admin/product_detail', {
         userInfo: req.userInfo,
@@ -303,16 +304,41 @@ router.get('/product_detail', (req, res) => {
 })
 // 产品管理 end
 
+// 发现更多
+router.get('/find', (req, res) => {
+  res.render('admin/find')
+})
+router.get('/find_add', (req, res) => {
+  res.render('admin/find_add')
+})
+router.get('/find_update', (req, res) => {
+  Find.findById(req.query.id).then(data => {
+    res.render('admin/find_update', {
+      userInfo: req.userInfo,
+      data: data
+    })
+  })
+})
+router.get('/find_detail', (req, res) => {
+  Find.findById(req.query.id).then(data => {
+    res.render('admin/find_detail', {
+      userInfo: req.userInfo,
+      data: data
+    })
+  })
+})
+// 发现更多 end
+
 
 // 关于我们
 router.get('/about', (req, res) => {
-  About.find().then(data=>{
-    if(data){
+  About.find().then(data => {
+    if (data) {
       res.render('admin/about', {
         userInfo: req.userInfo,
         data: data[0]
       })
-    } 
+    }
   })
 })
 router.get('/about_add', (req, res) => {
@@ -321,16 +347,18 @@ router.get('/about_add', (req, res) => {
   })
 })
 router.get('/about_update', (req, res) => {
-  // About.findById().then(data=>{
-  //   if(data){
-  //     res.render('admin/about_update', {
-  //       userInfo: req.userInfo,
-  //       data: data[0]
-  //     })
-  //   } 
-  // })
+  About.find().then(data => {
+    if (data) {
+      res.render('admin/about_update', {
+        userInfo: req.userInfo,
+        data: data[0]
+      })
+    }
+  })
 })
 // 关于我们 end
+
+
 
 // 404
 router.get('*', (req, res) => {

@@ -12,22 +12,21 @@
   <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
   <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
   <form class="layui-form">
-  
     <div class="layui-form-item">
-      <label class="layui-form-label">资讯图片</label>
+      <label class="layui-form-label">展示图片</label>
       <div class="layui-input-block">
         <label>
-          <input type="file" name="new_img" id="new_img" />
-          <span type="button" class="layui-btn new_img_btn">
-            <i class="layui-icon">&#xe67c;</i>上传资讯图片
+          <input type="file" name="show_img" id="show_img" />
+          <span type="button" class="layui-btn show_img_btn">
+            <i class="layui-icon">&#xe67c;</i>上传展示图片
           </span>
-          <img class="show_new_img" src="" alt="" />
+          <img class="show_img" src="" alt="" />
         </label>
       </div>
     </div>
     
     <div class="layui-form-item">
-      <label class="layui-form-label">资讯内容</label>
+      <label class="layui-form-label">展示内容</label>
       <div class="layui-input-block">
         <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
       </div>
@@ -42,14 +41,14 @@
   </form>
 </div>
 <style>
-  #new_img {
+  #show_img {
     width: 0;
     height: 0;
     visibility: hidden;
     display: none;
   }
 
-  .show_new_img {
+  .show_img {
     display: none;
     height: 200px;
   }
@@ -69,12 +68,12 @@
       var element = layui.element;
       var form = layui.form;
 
-      $('#new_img').change(function () {
+      $('#show_img').change(function () {
         var _file = $(this);
         var _fileObj = _file[0];
         var windowURL = window.URL || window.webkitURL;
         var dataURL;
-        var img = $(".show_new_img");
+        var img = $(".show_img");
         if (_fileObj.files[0].type.indexOf('image') == -1) {
           _file.val("");
           layer.msg("资讯图片只支持图片类型", {
@@ -85,7 +84,7 @@
         if (_fileObj && _fileObj.files && _fileObj.files[0]) {
           dataURL = windowURL.createObjectURL(_fileObj.files[0]);
           img.show().attr('src', dataURL);
-          $('.new_img_btn').hide();
+          $('.show_img_btn').hide();
         } else {
           dataURL = _file.val();
           var imgObj = img[0];
@@ -97,18 +96,11 @@
 
       $('.add').click(function () {
         var _sendData = {
-          title: $('input[name="title"]').val(),
-          img: $('input[name="new_img"]').val(),
-          abstract: $('textarea[name="abstract"]').val(),
-          content: ue.getContent(),
-          status: $('input[name="status"]:checked').val()
+          img: $('input[name="show_img"]').val(),
+          content: ue.getContent()
         }
-        if (_sendData.title == "") {
-          layer.msg('请输入资讯标题', {
-            time: 1000
-          })
-        } else if (_sendData.img == "") {
-          layer.msg('请上传资讯图片', {
+        if (_sendData.img == "") {
+          layer.msg('请上传展示图片', {
             time: 1000
           })
         } else if (_sendData.content == "") {
@@ -116,7 +108,7 @@
             time: 1000
           })
         } else {
-          var file = document.getElementById("new_img");//上传图片的input
+          var file = document.getElementById("show_img");//上传图片的input
           var formData = new FormData();//创建formdata对象
           formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
           $.ajax({
@@ -128,7 +120,7 @@
             success: function (data) {
               if (data.code == 200) {
                 _sendData.img = data.data;
-                newAdd(_sendData)
+                aboutAdd(_sendData)
               } else {
                 layer.msg("图片上传失败", {
                   time: 1000
@@ -143,9 +135,9 @@
           });
         }
 
-        function newAdd(data) {
+        function aboutAdd(data) {
           $.ajax({
-            url: '/api/new/new_add',
+            url: '/api/about/about_add',
             type: 'POST',
             data: _sendData,
             beforeSend: function () {
@@ -160,7 +152,7 @@
               });
               if (data.code == 200) {
                 setTimeout(function () {
-                  window.location.href = "/admin/new";
+                  window.location.href = "/admin/about";
                 }, 1000)
               }
             },

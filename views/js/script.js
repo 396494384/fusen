@@ -15,12 +15,12 @@ $(function () {
       $(this).addClass('active')
     }
   })
-  $(".search .confirm").click(function(){
+  $(".search .confirm").click(function () {
     var _searchKey = $(".search_key").val();
-    if(_searchKey == ""){
+    if (_searchKey == "") {
       alert("请输入搜索关键字")
-    }else{
-      window.location.href = "result?search="+_searchKey;
+    } else {
+      window.location.href = "result?search=" + _searchKey;
     }
   })
 
@@ -98,19 +98,19 @@ $(function () {
       indexModule2.find('.texts div').hide().eq(_index).show();
     })
   } catch (e) { }
-  
+
   // news
   try {
-    function showDetail(id){
+    function showDetail(id) {
       $.ajax({
         type: "POST",
-        url:"/news_detail",
-        data:{
+        url: "/news_detail",
+        data: {
           id: id
         },
-        success:function(data){
+        success: function (data) {
           console.log(data)
-          if(data.code == 200){
+          if (data.code == 200) {
             $('body').css('overflow', "hidden");
             $('.news_details').find("strong.title").html(data.data.title)
             $('.news_details').find("span.date span").html(data.data.date)
@@ -165,7 +165,7 @@ $(function () {
       news_list.addClass("show")
     }
   } catch (e) { }
-  
+
   // product
   try {
     var cause_top = $('.cause_top');
@@ -303,6 +303,10 @@ $(function () {
 
   // about 
   try {
+
+    $(".about_module_content .text").html($(".about_module_content input[name='content']").val());
+
+
     var aboutModule1 = $('.about .about_module1');
     var aboutModule1Top = aboutModule1.offset().top;
     var aboutModule2 = $('.about .about_module2');
@@ -345,11 +349,11 @@ $(function () {
     if (scrollTop + $(window).height() - 250 > aboutModule4Top) {
       aboutModule4.addClass("show")
     }
-  } catch (e) { } 
+  } catch (e) { }
 
   // recruit
   try {
-    $.each($('.recruit_list li'), function(i){
+    $.each($('.recruit_list li'), function (i) {
       $(this).find(".recruit_detail .text").html($(this).find('.recruit_detail input[name=content]').val())
     })
     $('.recruit_list li .detail').click(function () {

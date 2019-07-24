@@ -7,23 +7,23 @@
   </span>
 </div>
 {% if data %}
-<a href="/admin/public_update" class="layui-btn to_update">修改网站信息</a>
+<a href="/admin/about_update" class="layui-btn to_update">修改关于我们</a>
 <table class="layui-table" lay-size="lg">
   <colgroup>
     <col width="200">
     <col>
   </colgroup>
   <tr>
-    <td>网站名称</td>
-    <td>{{ data.content }}</td>
-  </tr>
-  <tr>
-    <td>网站LOGO</td>
+    <td>展示图片</td>
     <td>
-      {% if data.logo %}
+      {% if data.img %}
       <img src="{{ data.img }}" alt="">
       {% endif %}
     </td>
+  </tr>
+  <tr>
+    <td>展示内容 <input type="hidden" name="content" value='{{ data.content }}'></td>
+    <td class="content"></td>
   </tr>
 </table>
 {% else %}
@@ -32,30 +32,17 @@
 </blockquote>
 {% endif %}
 <style>
-  #new_img {
-    width: 0;
-    height: 0;
-    visibility: hidden;
-    display: none;
-  }
-
-  .show_new_img {
-    display: none;
+  .layui-table img{
+    display: block;
+    max-width: inherit;
     height: 200px;
-  }
-
-  .layui-form-label {
-    width: 100px;
-  }
-
-  .layui-input-block {
-    margin-left: 130px;
   }
 </style>
 <script>
   $(function () {
     layui.use(['element'], function () {
       var element = layui.element;
+      $(".content").html($("input[name='content']").val())
     });
   })
 </script>

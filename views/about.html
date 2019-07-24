@@ -5,6 +5,7 @@
   <div class="row1"><strong>探索复升</strong></div>
 </div>
 <div class="about">
+  {% if about %}
   <div class="about_module about_module1">
     <div class="about_module_title">
       <strong>复升品牌</strong>
@@ -14,20 +15,14 @@
       </p>
     </div>
     <div class="clearFix about_module_content">
-      <div class="left text">
-        <strong>
-          复升冷鲜箱， <br>
-          成就移动冷柜事业典范
-        </strong>
-        <p>
-          重庆复升冷鲜香科技有限公司是重庆再升科技（股票代码：603601）子品牌，公司主营超节能VIP真空绝热板&压缩机车载冰箱和移动冷柜，复升上下整合优质的配套商和专业的设计师团队，打造移动冷柜产业互联网，通过选用最高端的微型车载压缩机、最有效的VIP真空绝热板断热材、最环保的保护型外壳材料、最时尚的外观设计，为用户开启节能环保的智能移动新风尚！
-        </p>
-      </div>
+      <input type="hidden" name="content" value='{{ about.content }}'>
+      <div class="left text"></div>
       <div class="right">
-        <img src="./images/img_about2.jpg" alt="">
+        <img src="{{ about.img }}" alt="">
       </div>
     </div>
   </div>
+  {% endif %}
   <div class="about_module about_module2">
     <div class="about_module_title">
       <strong>品牌实力</strong>

@@ -10,6 +10,8 @@ const New = require('../models/New');
 const Partner = require('../models/Partner');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const About = require('../models/About');
+const Find = require('../models/Find');
 
 let public = null;
 router.use((req, res, next) => {
@@ -18,7 +20,6 @@ router.use((req, res, next) => {
     next();
   })
 })
-// let categorys = null;
 router.use((req, res, next) => {
   Category.find().then(data => {
     public.categorys = data;
@@ -39,10 +40,14 @@ function getIndex(res) {
       val.img = val.img.replace(/\\/g, "/");
       val.idx = idx + 1;
     })
-    res.render('index', {
-      public: public,
-      title: public.name,
-      banner: _banner
+    Find.find().then(data=>{
+      let _find = data;
+      res.render('index', {
+        public: public,
+        title: public.name,
+        banner: _banner,
+        find: _find
+      })
     })
   })
 }
@@ -89,10 +94,14 @@ router.get('/about', (req, res) => {
     status: true
   }).then(data => {
     let _partner = data;
-    res.render('about', {
-      public: public,
-      title: "关于复升",
-      partner: _partner
+    About.find().then(data => {
+      let _about = data[0];
+      res.render('about', {
+        public: public,
+        title: "关于复升",
+        about: _about,
+        partner: _partner
+      })
     })
   })
 })

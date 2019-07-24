@@ -1,0 +1,188 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/find">发现更多管理</a>
+    <a class="active">发现更多添加</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <input type="hidden" name="id" value="{{ data._id.toString() }}">
+    <div class="layui-form-item">
+      <label class="layui-form-label">图片</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="img" id="img" />
+          <!-- <span type="button" class="layui-btn img_btn">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+          </span> -->
+          <img class="show_img" src="{{ data.img }}" alt="{{ data.img }}" />
+        </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">标题</label>
+      <div class="layui-input-block">
+        <input type="text" name="title" placeholder="请输入标题" class="layui-input" value="{{ data.title }}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">摘要</label>
+      <div class="layui-input-block">
+        <textarea name="text" placeholder="请输入摘要" class="layui-textarea">{{ data.text }}</textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类</label>
+      <div class="layui-input-block">
+        <select name="type" lay-verify="required">
+          <option value="关于我们" {% if data.type == "关于我们" %} selected {% else %}{% endif %}>关于我们</option>
+          <option value="复升新闻" {% if data.type == "复升新闻" %} selected {% else %}{% endif %}>复升新闻</option>
+          <option value="品牌服务" {% if data.type == "品牌服务" %} selected {% else %}{% endif %}>品牌服务</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn update">修改发现更多</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+  #img {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  .show_img {
+    display: block;
+    height: 150px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    layui.use(['element', 'jquery', 'form', "layer"], function () {
+      var element = layui.element;
+      var form = layui.form;
+      $('#img').change(function () {
+        var _file = $(this);
+        var _fileObj = _file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var img = $(".show_img");
+        if (_fileObj.files[0].type.indexOf('image') == -1) {
+          _file.val("");
+          layer.msg("只支持图片类型", {
+            time: 1000
+          });
+          return;
+        }
+        if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+          dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+          img.show().attr('src', dataURL);
+          $('.img_btn').hide();
+        } else {
+          dataURL = _file.val();
+          var imgObj = img[0];
+          imgObj.style.filter =
+            "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+      })
+      $('.update').click(function () {
+        var _sendData = {
+          img: $('input[name="img"]').val(),
+          title: $('input[name="title"]').val(),
+          text: $('textarea[name="text"]').val(),
+          type: $('select[name="type"] option:selected').val(),
+          id: $('input[name="id"]').val()
+        }
+        if (_sendData.title == "") {
+          layer.msg("请输入标题", {
+            time: 1000
+          });
+        } else if (_sendData.text == "") {
+          layer.msg("请输入摘要", {
+            time: 1000
+          });
+        } else {
+          if (_sendData.img) {
+            var file = document.getElementById("img"); //上传图片的input
+            var formData = new FormData(); //创建formdata对象
+            formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
+            $.ajax({
+              url: '/api/upload',
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                if (data.code == 200) {
+                  _sendData.img = data.data;
+                  findUpdate(_sendData)
+                } else {
+                  layer.msg("图片上传失败", {
+                    time: 1000
+                  });
+                }
+              },
+              error: function () {
+                layer.msg("与服务器通信发生错误", {
+                  time: 1000
+                });
+              }
+            });
+          } else {
+            findUpdate(_sendData)
+          }
+        }
+      })
+
+      function findUpdate(data) {
+        $.ajax({
+          url: '/api/find/find_update',
+          type: 'POST',
+          data: data,
+          beforeSend: function () {
+            layer.load(2, {
+              shade: [0.2, '#000']
+            });
+          },
+          success: function (data) {
+            layer.closeAll();
+            layer.msg(data.msg, {
+              time: 1000
+            });
+            if (data.code == 200) {
+              setTimeout(function () {
+                window.location.href = "/admin/find";
+              }, 1000)
+            }
+          },
+          error: function () {
+            layer.closeAll();
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
+          }
+        });
+      }
+    })
+  })
+</script>
+{% endblock %}

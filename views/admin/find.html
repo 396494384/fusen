@@ -1,0 +1,125 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a class="active">发现更多管理</a>
+  </span>
+</div>
+<a href="/admin/find_add" class="layui-btn">添加发现更多</a>
+<table class="layui-table" id="table" lay-filter="operation"></table>
+<style>
+  .layui-table img.table_img {
+    display: block;
+    width: auto;
+    max-width: inherit;
+    height: 80px;
+    margin: 10px auto;
+  }
+
+  .layui-table-cell {
+    height: auto;
+  }
+</style>
+<script>
+  $(function () {
+    var url = '/api/find/find_list';
+    var config = {
+      elem: '#table',
+      url: url,
+      cols: [
+        [ //表头
+          {
+            width: "20%",
+            title: '图片',
+            align: "center",
+            field: 'img',
+            templet: function (item) {
+              return "<img src=" + item.img + " class='table_img' />"
+            }
+          }, {
+            width: "20%",
+            title: '标题',
+            align: "center",
+            field: 'title'
+          }, {
+            width: "30%",
+            title: '摘要',
+            align: "center",
+            field: 'text'
+          }, {
+            width: "15%",
+            title: '分类',
+            align: "center",
+            field: 'type'
+          },
+          {
+            width: '15%',
+            title: '操作',
+            align: 'center',
+            templet: function (item) {
+              var btns =
+                '<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>';
+              return btns;
+            }
+          }
+        ]
+      ]
+    };
+    layui.use(['element', 'table'], function () {
+      var element = layui.element;
+      var table = layui.table;
+      table.render(config);
+
+      //监听工具条
+      table.on('tool(operation)', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        var _id = data._id.toString();
+        if (layEvent === 'edit') {
+          window.location.href = 'find_update?id=' + _id;
+        } else if (layEvent === 'detail') {
+          window.location.href = 'find_detail?id=' + _id;
+        } else if (layEvent === 'delete') {
+          layer.open({
+            id: 1,
+            content: '确认要删除吗？',
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+              $.ajax({
+                type: 'POST',
+                url: '/api/find/find_delete',
+                data: {
+                  id: _id
+                },
+                beforeSend: function () {
+                  layer.load(2, {
+                    shade: [0.2, '#000']
+                  });
+                },
+                success: function (data) {
+                  layer.closeAll();
+                  layer.msg(data.msg, {
+                    time: 1000
+                  });
+                  if (data.code == 200) {
+                    setTimeout(function () {
+                      window.location.href = '/admin/find'
+                    }, 1000)
+                  }
+                },
+                error: function () {
+                  layer.closeAll();
+                  layer.msg("与服务器通信发生错误", {
+                    time: 1000
+                  });
+                }
+              });
+            },
+          })
+        }
+      });
+    });
+  })
+</script>
+{% endblock %}
