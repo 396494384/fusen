@@ -16,8 +16,12 @@
   </div>
 </div>
 <div class="clearFix index_module1">
-  <a href="#" class="img">
-    <img src="./images/img.jpg" alt="">
+  <a href="javascript:" class="img">
+    {% if public.video && public.video_status %}
+    <video src="{{ public.video }}" controls poster="{{ public.video_img }}"></video>
+    {% else %}
+    <img src="{{ public.video_img }}" alt="{{ public.video_img }}">
+    {% endif %}
   </a>
   <div class="right content">
     <strong>尖端技术<br>铸就更高品质</strong>
