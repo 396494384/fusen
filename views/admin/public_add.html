@@ -9,12 +9,12 @@
 </div>
 <div class="layui-content">
   <form class="layui-form">
-      <div class="layui-form-item">
-          <label class="layui-form-label">网站名称</label>
-          <div class="layui-input-block">
-            <input type="text" name="name" placeholder="请输入网站名称" class="layui-input">
-          </div>
-        </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网站名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" placeholder="请输入网站名称" class="layui-input">
+      </div>
+    </div>
     <div class="layui-form-item">
       <label class="layui-form-label">网站LOGO</label>
       <div class="layui-input-block">
@@ -46,11 +46,11 @@
       </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">在线咨询QQ</label>
-        <div class="layui-input-block">
-          <input type="text" name="qq" placeholder="请输入在线咨询QQ" class="layui-input">
-        </div>
+      <label class="layui-form-label">在线咨询QQ</label>
+      <div class="layui-input-block">
+        <input type="text" name="qq" placeholder="请输入在线咨询QQ" class="layui-input">
       </div>
+    </div>
     <div class="layui-form-item">
       <label class="layui-form-label">天猫商城</label>
       <div class="layui-input-block">
@@ -133,34 +133,40 @@
           en: $('input[name="en"]').val(),
           copyright: $('input[name="copyright"]').val()
         }
-        if (_sendData.logo) {
-          var file = document.getElementById("logo"); //上传图片的input
-          var formData = new FormData(); //创建formdata对象
-          formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
-          $.ajax({
-            url: '/api/upload',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-              if (data.code == 200) {
-                _sendData.logo = data.data;
-                publicAdd(_sendData)
-              } else {
-                layer.msg("图片上传失败", {
+        if (_sendData.name == "") {
+          layer.msg("请输入网站名称", {
+            time: 1000
+          });
+        } else {
+          if (_sendData.logo) {
+            var file = document.getElementById("logo"); //上传图片的input
+            var formData = new FormData(); //创建formdata对象
+            formData.append('file', file.files[0]); //给formdata对象中放入数据(键值对的方式)
+            $.ajax({
+              url: '/api/upload',
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                if (data.code == 200) {
+                  _sendData.logo = data.data;
+                  publicAdd(_sendData)
+                } else {
+                  layer.msg("图片上传失败", {
+                    time: 1000
+                  });
+                }
+              },
+              error: function () {
+                layer.msg("与服务器通信发生错误", {
                   time: 1000
                 });
               }
-            },
-            error: function () {
-              layer.msg("与服务器通信发生错误", {
-                time: 1000
-              });
-            }
-          });
-        } else {
-          publicAdd(_sendData)
+            });
+          } else {
+            publicAdd(_sendData)
+          }
         }
       })
 

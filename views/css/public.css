@@ -14,9 +14,13 @@
   padding: 20px 0;
 }
 
-.header .logo a, .header .logo img {
+.header .logo a {
   display: block;
   width: 100%;
+  height: 100%;
+}
+.header .logo img{
+  display: block;
   height: 100%;
 }
 

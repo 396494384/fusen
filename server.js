@@ -88,6 +88,7 @@ app.use('/api/recruit', require('./routers/recruit'))
 app.use('/api/store', require('./routers/store'))
 app.use('/api/about', require('./routers/about'))
 app.use('/api/find', require('./routers/find'))
+app.use('/api/video', require('./routers/video'))
 
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {
   useNewUrlParser: true

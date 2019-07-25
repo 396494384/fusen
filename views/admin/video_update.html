@@ -1,0 +1,260 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a href="/admin/about">视频管理</a>
+    <a class="active">修改视频</a>
+  </span>
+</div>
+<div class="layui-content">
+  <form class="layui-form">
+    <input type="hidden" name="id" value="{{ data._id.toString() }}">
+    <div class="layui-form-item">
+      <label class="layui-form-label">视频</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="video" id="video" />
+          <span type="button" class="layui-btn video_btn">
+            <i class="layui-icon">&#xe67c;</i>上传视频
+          </span>
+          <span class="video">{{ data.video }}</span>
+        </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">图片</label>
+      <div class="layui-input-block">
+        <label>
+          <input type="file" name="img" id="img" />
+          <img class="img" src="{{ data.video_img }}" alt="{{ data.video_img }}" />
+        </label>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">视频状态</label>
+      <div class="layui-input-block">
+        <input type="radio" name="status" value="true" title="开启" {% if data.video_status %} checked {% endif %}>
+        <input type="radio" name="status" value="false" title="关闭" {% if !data.video_status %} checked {% endif %}>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">*注：</label>
+      <div class="layui-input-block">
+        <p class="msg">有视频优先显示视频，没有视频就显示图片，视频状态关闭将显示图片</p>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a class="layui-btn update">修改</a>
+        <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
+      </div>
+    </div>
+  </form>
+</div>
+<style>
+  #video,
+  #img {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: none;
+  }
+
+  .video {
+    display: block;
+    line-height: 50px;
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 1px;
+  }
+
+  .img {
+    display: block;
+    max-width: 500px;
+    height: 200px;
+  }
+
+  .msg {
+    color: #666;
+    line-height: 38px;
+    letter-spacing: 1px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-input-block {
+    margin-left: 130px;
+  }
+</style>
+<script>
+  $(function () {
+    // var ue = UE.getEditor('editor');
+    layui.use(['element', 'form'], function () {
+      var element = layui.element;
+      var form = layui.form;
+      $('#video').change(function () {
+        var _file = $(this);
+        var _fileObj = _file[0];
+        if (_fileObj.files[0].type.indexOf('video') == -1) {
+          _file.val("");
+          $(".video").show().text("");
+          layer.msg("请上传视频类型", {
+            time: 1000
+          });
+          return;
+        }
+        $(".video").show().text(_file.val());
+      })
+      $('#img').change(function () {
+        var _file = $(this);
+        var _fileObj = _file[0];
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL;
+        var img = $(".img");
+        if (_fileObj.files[0].type.indexOf('image') == -1) {
+          _file.val("");
+          layer.msg("请上传图片类型", {
+            time: 1000
+          });
+          return;
+        }
+        if (_fileObj && _fileObj.files && _fileObj.files[0]) {
+          dataURL = windowURL.createObjectURL(_fileObj.files[0]);
+          img.show().attr('src', dataURL);
+          $('.img_btn').hide();
+        } else {
+          dataURL = _file.val();
+          var imgObj = img[0];
+          imgObj.style.filter =
+            "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+        }
+      })
+
+      $('.update').click(function () {
+        var _sendData = {
+          id: $('input[name="id"]').val(),
+          video: $('input[name="video"]').val(),
+          video_img: $('input[name="img"]').val(),
+          video_status: $('input[name="status"]:checked').val()
+        }
+        if (_sendData.video && _sendData.video_img) { //图片 视频都修改
+          uploadVideo(function () {
+            uploadVideoImg(function () {
+              updateVideo(_sendData)
+            })
+          })
+        } else if (_sendData.video) {//视频修改
+          uploadVideo(function () {
+            updateVideo(_sendData)
+          })
+        } else if (_sendData.video_img) {//图片修改
+          uploadVideoImg(function () {
+            updateVideo(_sendData)
+          })
+        } else {//都没修改
+          updateVideo(_sendData)
+        }
+
+
+        function uploadVideo(cb) {
+          var file = document.getElementById("video");//上传图片的input
+          var formData = new FormData();//创建formdata对象
+          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
+          $.ajax({
+            url: '/api/upload/video',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (data) {
+              if (data.code == 200) {
+                _sendData.video = data.data;
+                if (cb) {
+                  cb()
+                }
+                // updateVideo(_sendData)
+              } else {
+                layer.msg("视频上传失败", {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+
+        function uploadVideoImg(cb) {
+          var file = document.getElementById("img");//上传图片的input
+          var formData = new FormData();//创建formdata对象
+          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
+          $.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              if (data.code == 200) {
+                _sendData.video_img = data.data;
+                if (cb) {
+                  cb()
+                }
+              } else {
+                layer.msg("图片上传失败", {
+                  time: 1000
+                });
+              }
+            },
+            error: function () {
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+
+
+        function updateVideo(data) {
+          $.ajax({
+            url: '/api/video/video_update',
+            type: 'POST',
+            data: _sendData,
+            beforeSend: function () {
+              layer.load(2, {
+                shade: [0.2, '#000']
+              });
+            },
+            success: function (data) {
+              layer.closeAll();
+              layer.msg(data.msg, {
+                time: 1000
+              });
+              if (data.code == 200) {
+                setTimeout(function () {
+                  window.location.href = "/admin/video";
+                }, 1000)
+              }
+            },
+            error: function () {
+              layer.closeAll();
+              layer.msg("与服务器通信发生错误", {
+                time: 1000
+              });
+            }
+          });
+        }
+      })
+    })
+  })
+</script>
+{% endblock %}

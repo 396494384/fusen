@@ -35,6 +35,16 @@ router.post('/', upload.single('file'), (req, res) => {
   })
 })
 
+//保存上传的视频
+router.post('/video', upload.single('file'), (req, res) => {
+  res.json({
+    code: 200,
+    msg: "视频上传成功",
+    data: `\\${req.file.path}`
+    // data: `${req.headers.origin}\\`
+  })
+})
+
 //删除上传的图片
 router.post('/delete_img', (req, res) => {
   let _path = req.body.img;

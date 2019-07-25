@@ -358,6 +358,29 @@ router.get('/about_update', (req, res) => {
 })
 // 关于我们 end
 
+// 视频管理
+router.get('/video', (req, res) => {
+  Public.find().then(data=>{
+    res.render('admin/video', {
+      userInfo: req.userInfo,
+      data: data[0]
+    })
+  })
+})
+router.get('/video_add', (req, res) => {
+  res.render('admin/video_add', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/video_update', (req, res) => {
+  Public.find().then(data=>{
+    res.render('admin/video_update', {
+      userInfo: req.userInfo,
+      data: data[0]
+    })
+  })
+})
+// 视频管理 end
 
 
 // 404

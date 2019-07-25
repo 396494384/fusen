@@ -12,20 +12,17 @@ function getNowTime() { //时间显示
     "月" + dateFilter(_day) + "日 " + dateFilter(_hour) + ":" + dateFilter(_minute) + ":" + dateFilter(_second) + " " + _weeks
   setTimeout("getNowTime()", 1000)
 }
-
 function dateFilter(date) { //时间补0
   return ('0' + date).substr(-2, 2);
 }
-
 
 $(function () {
   //左侧列表选中当前
   var _key = window.location.href.split('admin')[1];
   var _asideItem = $('.aside .layui-nav li');
-  if (_key === '/' || _key === '') {
-    _key = '/index'
-  }
-  // console.log(_key)
+  // if (_key === '/' || _key === '') {
+  //   _key = '/index'
+  // }
   _asideItem.each(function () {
     var _currKey = $(this).attr('data-key');
     var _idx = $(this).index();

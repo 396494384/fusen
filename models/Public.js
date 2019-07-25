@@ -9,5 +9,11 @@ const PublicSchema = new mongoose.Schema({
   tmall: String,
   en: String,
   copyright: String,
+  video: String,
+  video_img: String,
+  video_status: {
+    type: Boolean,
+    default: true
+  }
 })
 module.exports = mongoose.model('Public', PublicSchema)
