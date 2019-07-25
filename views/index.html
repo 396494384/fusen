@@ -60,34 +60,22 @@
 <div class="index_module3">
   <strong class="module_title">系列产品</strong>
   <ul class="clearFix">
+    {% for item in product %}
     <li class="left">
-      <a href="product_detail.html">
+      <a href="product_detail?id={{ item._id.toString() }}">
         <span class="img">
-          <img src="./images/img3.jpg" alt="">
+          <img src="{{ item.product_img }}" alt="{{ item.name }}">
         </span>
         <p>
-          <span class="type">FOSEN-X01</span>
-          <strong>智能车载冰箱</strong>
+          <span class="type">{{ item.type }}</span>
+          <strong>{{ item.name }}</strong>
           <span class="line"></span>
-          <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
+          <span class="text">{{ item.function }}</span>
           <span class="link">了解详情 &gt;</span>
         </p>
       </a>
     </li>
-    <li class="left">
-      <a href="product_detail.html">
-        <span class="img">
-          <img src="./images/img4.jpg" alt="">
-        </span>
-        <p>
-          <span class="type">FOSEN-X02</span>
-          <strong>智能车载冰箱 PRO</strong>
-          <span class="line"></span>
-          <span class="text">品质技术，5L热电技术迷你冰箱，红色 - 12/220 伏</span>
-          <span class="link">了解详情 &gt;</span>
-        </p>
-      </a>
-    </li>
+    {% endfor %}
   </ul>
 </div>
 <div class="index_module4">
@@ -95,11 +83,10 @@
   <ul class="clearFix">
     {% for item in find %}
     <li class="left">
-      <a {% if item.type == "关于我们" %} href="about" {% endif %} 
-      {% if item.type == "复升新闻" %} href="news" {% endif %}
-      {% if item.type == "品牌服务" %} href="contact" {% endif %} >
+      <a {% if item.type == "关于我们" %} href="about" {% endif %} {% if item.type == "复升新闻" %} href="news" {% endif %}
+        {% if item.type == "品牌服务" %} href="contact" {% endif %}>
         <span class="img">
-          <img src="{{ item.img }}" alt="">
+          <img src="{{ item.img }}" alt="{{ item.img }}">
         </span>
         <strong>{{ item.title }}</strong>
         <p>{{ item.text }}</p>

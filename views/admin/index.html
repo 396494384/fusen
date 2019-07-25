@@ -1,9 +1,19 @@
 {% extends './template/layout.html' %}
 {% block main %}
-<blockquote class="layui-elem-quote layui-bg-green">
-  <div id="nowTime"></div>
-</blockquote>
-<div style="padding: 15px; text-align: center;">内容主体区域1</div>
+
+<div class="layui-bg-green" style="padding: 15px; text-align: center; margin: 50px; ">
+  <div class="layui-card layui-bg-green">
+    <div class="layui-card-header"
+      style="font-size: 26px; padding: 20px 0; letter-spacing: 3px; color: #fff; font-weight: bold;">后台管理系统</div>
+    <div class="layui-card-body layui-bg-green" style="font-size: 20px; padding: 30px 0; letter-spacing: 3px;">
+      亲爱的管理员 {{ userInfo.username }}，您好！ 欢迎登录管理后台。
+    </div>
+  </div>
+  <blockquote class="layui-elem-quote layui-bg-green">
+    <div id="nowTime"></div>
+  </blockquote>
+</div>
+
 <script>
   // JavaScript代码区域xxx
   $(function () {

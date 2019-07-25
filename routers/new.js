@@ -22,7 +22,7 @@ router.get('/new_list', (req, res) => {
 //添加资讯
 router.post('/new_add', (req, res) => {
   let _newDate = new Date();
-  req.body.date = `${_newDate.getFullYear()} - ${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)} - ${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
+  req.body.date = `${_newDate.getFullYear()}-${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)}-${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
   new New(req.body).save().then(() => {
     res.json({
       code: 200,
@@ -52,7 +52,7 @@ router.post('/new_update', (req, res) => {
   }
   function newUpdateSave(data) {
     let _newDate = new Date();
-    req.body.date = `${_newDate.getFullYear()} - ${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)} - ${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
+    req.body.date = `${_newDate.getFullYear()}-${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)}-${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
     New.updateOne({
       _id: req.body.id
     }, data).then(() => {

@@ -9,66 +9,44 @@
     <div class="result">
       搜索结果
     </div>
+    {% if result.length > 0 %}
+    <ul class="clearFix">
+      {% for item in result %}
+      <li class="left">
+        <a href="javascript:" id="{{ item._id.toString() }}">
+          <span class="img">
+            <img src="{{ item.img }}" alt="{{ item.img }}">
+          </span>
+          <strong class="txt_hide">{{ item.title }}</strong>
+          <b class="date">{{ item.date }}</b>
+          <p>{{ item.abstract.substring(0, 60) }}...</p>
+          <span class="link"><i>&gt;</i> 了解更多</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="clearFix page">
+      {% if currPage == 1 %}
+      <a class="left prev">&lt; 上一页</a>
+      {% else %}
+      <a href="news?page={{ currPage - 1 }}" class="left prev">&lt; 上一页</a>
+      {% endif %}
+      <div class="left number">
+        {% for item in recodes %}
+        <a href="news?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
+        {% endfor %}
+      </div>
+      {% if currPage == recodes.length %}
+      <a class="right next">下一页 &gt;</a>
+      {% else %}
+      <a href="news?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
+      {% endif %}
+    </div>
+    {% else %}
     <div class="result_not">
       <p>没有搜索结果~~</p>
     </div>
-    <ul class="clearFix">
-      <li class="left">
-        <a href="javascript:">
-          <span class="img">
-            <img src="./images/img6.jpg" alt="">
-          </span>
-          <strong>新品T28，10分钟可至0℃</strong>
-          <b class="date">2018-12-25</b>
-          <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-          <span class="link"><i>&gt;</i> 了解更多</span>
-        </a>
-      </li>
-      <li class="left">
-        <a href="javascript:">
-          <span class="img">
-            <img src="./images/img6.jpg" alt="">
-          </span>
-          <strong>新品T28，10分钟可至0℃</strong>
-          <b class="date">2018-12-25</b>
-          <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-          <span class="link"><i>&gt;</i> 了解更多</span>
-        </a>
-      </li>
-      <li class="left">
-        <a href="javascript:">
-          <span class="img">
-            <img src="./images/img6.jpg" alt="">
-          </span>
-          <strong>新品T28，10分钟可至0℃</strong>
-          <b class="date">2018-12-25</b>
-          <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-          <span class="link"><i>&gt;</i> 了解更多</span>
-        </a>
-      </li>
-      <li class="left">
-        <a href="javascript:">
-          <span class="img">
-            <img src="./images/img6.jpg" alt="">
-          </span>
-          <strong>新品T28，10分钟可至0℃</strong>
-          <b class="date">2018-12-25</b>
-          <p>进一步了解产品，我们将尽可为您提供详尽的服务。有真空绝热板的产品降温速度比没有真空绝热板的产品快80~100%；</p>
-          <span class="link"><i>&gt;</i> 了解更多</span>
-        </a>
-      </li>
-    </ul>
-    <!-- <div class="clearFix page">
-        <a href="#" class="left prev">&lt; 上一页</a>
-        <div class="left number">
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
-        </div>
-        <a href="#" class="right next">下一页 &gt;</a>
-      </div> -->
+    {% endif %}
   </div>
 </div>
 <div class="news_details">

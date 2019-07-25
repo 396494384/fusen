@@ -23,6 +23,9 @@ router.use((req, res, next) => {
 router.use((req, res, next) => {
   Category.find().then(data => {
     public.categorys = data;
+    public.categorys.forEach(i => {
+      i.id = i._id.toString();
+    })
     next();
   })
 })
@@ -40,13 +43,19 @@ function getIndex(res) {
       val.img = val.img.replace(/\\/g, "/");
       val.idx = idx + 1;
     })
-    Find.find().then(data=>{
-      let _find = data;
-      res.render('index', {
-        public: public,
-        title: public.name,
-        banner: _banner,
-        find: _find
+    Product.find({
+      status: true
+    }).limit(3).sort({ _id: -1 }).then(data => {
+      let _product = data;
+      Find.find().then(data => {
+        let _find = data;
+        res.render('index', {
+          public: public,
+          title: public.name,
+          banner: _banner,
+          product: _product,
+          find: _find
+        })
       })
     })
   })
@@ -110,7 +119,7 @@ router.get('/about', (req, res) => {
 // 新闻
 router.get('/news', (req, res) => {
   let page = req.query.page || 1;
-  let pageSize = 3;
+  let pageSize = 6;
   let _skip = ((page - 1) * pageSize) + 1;
   New.countDocuments().then(count => {
     let _recodes = [];
@@ -226,9 +235,28 @@ router.get('/branch', (req, res) => {
 
 // 搜索结果
 router.get("/result", (req, res) => {
-  res.render("result", {
-    public: public,
-    title: "搜索结果"
+  let page = req.query.page || 1;
+  let pageSize = 6;
+  let _skip = (page - 1) * pageSize;
+  New.where('title', new RegExp(req.query.search)).countDocuments().then(count => {
+    let _recodes = [];
+    let num = Math.ceil((count - 1) / pageSize);
+    for (let i = 1; i <= num; i++) {
+      _recodes.push(i);
+    }
+    New.find({
+      title: new RegExp(req.query.search),
+      status: true
+    }).limit(pageSize).skip(_skip).sort({ _id: -1 }).then(data => {
+      res.render('result', {
+        public: public,
+        result: data,
+        count: count,
+        currPage: page,
+        recodes: _recodes,
+        title: "搜索结果"
+      })
+    })
   })
 })
 

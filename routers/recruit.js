@@ -32,7 +32,7 @@ router.post('/recruit_add', (req, res) => {
       })
     } else {
       let _newDate = new Date();
-      req.body.date = `${_newDate.getFullYear()} - ${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)} - ${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
+      req.body.date = `${_newDate.getFullYear()}-${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)}-${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
       new Recruit(req.body).save().then(() => {
         res.json({
           code: 200,
@@ -59,7 +59,7 @@ router.post('/recruit_update', (req, res) => {
       })
     } else {
       let _newDate = new Date();
-      req.body.date = `${_newDate.getFullYear()} - ${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)} - ${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
+      req.body.date = `${_newDate.getFullYear()}-${(_newDate.getMonth() + 1 < 10 ? '0' + (_newDate.getMonth() + 1) : _newDate.getMonth() + 1)}-${_newDate.getDate() < 10 ? '0' + _newDate.getDate() : _newDate.getDate()}`;
       Recruit.updateOne({
         _id: req.body.id
       }, req.body).then(() => {
