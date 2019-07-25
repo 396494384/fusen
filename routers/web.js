@@ -159,12 +159,48 @@ router.get('/news', (req, res) => {
 })
 // 新闻详情
 router.post("/news_detail", (req, res) => {
-  New.findById(req.body.id).then(data => {
-    res.json({
-      code: 200,
-      data: data
+  let _id = req.body.id;
+  New.find({
+    status:true,
+    _id: {
+      $gt: _id
+    } 
+  }).sort({_id: 1}).limit(1).then(data=>{
+    let _prev = data[0];
+    if(data.length == 0){
+      _prev = null;
+    }
+    New.find({
+      status:true,
+      _id: {
+        $lt: _id
+      } 
+    }).sort({_id: -1}).limit(1).then(data=>{
+      let _next = data[0];
+      if(data.length == 0){
+        _next = null;
+      }
+      New.findById(req.body.id).then(data => {
+        res.json({
+          code: 200,
+          data: {
+            prev: _prev ? {
+              title: _prev.title,
+              id: _prev._id.toString() 
+            } : "",
+            data: data,
+            next: _next ? {
+              title: _next.title,
+              id: _next._id.toString()
+            } : ""
+          }
+        })
+      })
     })
   })
+  
+  
+  
 })
 
 // 招聘

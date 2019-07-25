@@ -109,8 +109,8 @@ $(function () {
           id: id
         },
         success: function (data) {
-          console.log(data)
           if (data.code == 200) {
+            var data = data.data;
             $('body').css('overflow', "hidden");
             $('.news_details').find("strong.title").html(data.data.title)
             $('.news_details').find("span.date span").html(data.data.date)
