@@ -6,6 +6,16 @@
     <a class="active">留言管理</a>
   </span>
 </div>
+<form class="layui-form" action="">
+  <div class="layui-inline">
+    <label class="layui-form-label">留言状态</label>
+    <div class="layui-input-inline">
+      <input lay-filter="toggleType" type="radio" name="status" value="" title="全部" checked>
+      <input lay-filter="toggleType" type="radio" name="status" value="true" title="已读">
+      <input lay-filter="toggleType" type="radio" name="status" value="false" title="未读">
+    </div>
+  </div>
+</form>
 <table class="layui-table" id="table" lay-filter="operation"></table>
 <script>
   $(function () {
@@ -59,9 +69,10 @@
       ],
       page: true
     };
-    layui.use(['element', 'table'], function () {
+    layui.use(['element', 'table', "form"], function () {
       var element = layui.element;
       var table = layui.table;
+      var form = layui.form;
       table.render(config);
 
       //监听工具条
@@ -109,6 +120,12 @@
             },
           })
         }
+      });
+
+      form.on('radio(toggleType)', function(data){
+        url = '/api/message/message_list?status=' + data.value;
+        config.url = url;
+        table.render(config);
       });
     });
   })

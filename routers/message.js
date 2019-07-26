@@ -16,9 +16,15 @@ router.post("/message_add", (req, res) => {
 })
 // 获取留言
 router.get("/message_list", (req, res) => {
+  let filter = {
+    status: req.query.status
+  }
+  if (req.query.status == undefined || req.query.status == "") {
+    delete filter.status
+  }
   let _skip = (req.query.page - 1) * parseInt(req.query.limit);
-  Message.countDocuments().then(count => {
-    Message.find().skip(_skip).limit(parseInt(req.query.limit)).sort({
+  Message.find(filter).countDocuments().then(count => {
+    Message.find(filter).skip(_skip).limit(parseInt(req.query.limit)).sort({
       _id: -1
     }).then(data => {
       res.json({
