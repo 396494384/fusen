@@ -371,9 +371,9 @@ $(function () {
 
 
 
-    setTimeout(function(){
+    setTimeout(function () {
       var scrollType = window.location.href.split("=")[1] || 1;
-      
+
       // aboutModule1Top = aboutModule1.offset().top;
       aboutModule2Top = aboutModule2.offset().top;
       aboutModule3Top = aboutModule3.offset().top;
@@ -396,8 +396,8 @@ $(function () {
           "scrollTop": aboutModule4Top - 30
         }, 500)
       }
-    },100)
-    
+    }, 100)
+
 
     $(window).scroll(function () {
       try {
