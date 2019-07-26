@@ -136,10 +136,10 @@ $(function () {
             $('.news_details').fadeIn();
             var clientHeight = $('body').outerHeight();
             var contentHeight = $('.news_details .content').outerHeight();
-            if(clientHeight > contentHeight){
-              $('.news_details .content').css({ top: "50%", marginTop: (-(contentHeight/2)) + "px"})
-            }else{
-              $('.news_details .content').css({ top: "0", marginTop: "0px"})
+            if (clientHeight > contentHeight) {
+              $('.news_details .content').css({ top: "50%", marginTop: (-(contentHeight / 2)) + "px" })
+            } else {
+              $('.news_details .content').css({ top: "0", marginTop: "0px" })
             }
           }
         },
@@ -172,16 +172,16 @@ $(function () {
         $('.news_details').find("strong.title").html("");
         $('.news_details').find("span.date span").html("");
         $('.news_details').find("div.text").html("");
-        $(".news_details .page .prev").text("").removeClass("not").attr("id","");
-        $(".news_details .page .next").text("").removeClass("not").attr("id","");
+        $(".news_details .page .prev").text("").removeClass("not").attr("id", "");
+        $(".news_details .page .next").text("").removeClass("not").attr("id", "");
         $('body').css('overflow', "auto");
       }, 500)
     }
     $('.news_list li a').click(function () {
-      showDetail( $(this).attr("id"))
+      showDetail($(this).attr("id"))
     })
     $('.news_big a').click(function () {
-      showDetail( $(this).attr("id"))
+      showDetail($(this).attr("id"))
     })
     $('.news_details span.close').click(function () {
       destory();
@@ -356,6 +356,9 @@ $(function () {
     $(".about_module_content .text").html($(".about_module_content input[name='content']").val());
 
 
+
+
+
     var aboutModule1 = $('.about .about_module1');
     var aboutModule1Top = aboutModule1.offset().top;
     var aboutModule2 = $('.about .about_module2');
@@ -365,6 +368,37 @@ $(function () {
     var aboutModule4 = $('.about .about_module4');
     var aboutModule4Top = aboutModule4.offset().top;
     var scrollTop = $(window).scrollTop();
+
+
+
+    setTimeout(function(){
+      var scrollType = window.location.href.split("=")[1] || 1;
+      
+      // aboutModule1Top = aboutModule1.offset().top;
+      aboutModule2Top = aboutModule2.offset().top;
+      aboutModule3Top = aboutModule3.offset().top;
+      aboutModule4Top = aboutModule4.offset().top;
+      if (scrollType == 1) {
+        $("body, html").animate({
+          "scrollTop": 0
+        }, 500)
+      } else if (scrollType == 2) {
+        console.log(aboutModule2Top)
+        $("body, html").animate({
+          "scrollTop": aboutModule2Top - 30
+        }, 500)
+      } else if (scrollType == 3) {
+        $("body, html").animate({
+          "scrollTop": aboutModule3Top - 30
+        }, 500)
+      } else if (scrollType == 4) {
+        $("body, html").animate({
+          "scrollTop": aboutModule4Top - 30
+        }, 500)
+      }
+    },100)
+    
+
     $(window).scroll(function () {
       try {
         scrollTop = $(window).scrollTop();
@@ -419,7 +453,7 @@ $(function () {
 
 
   // result
-  try{
+  try {
     var searchKey = window.location.search.split("=")[1];
     function showDetail(id) {
       layer.load(2, {
@@ -457,10 +491,10 @@ $(function () {
             $('.result_details').fadeIn();
             var clientHeight = $('body').outerHeight();
             var contentHeight = $('.result_details .content').outerHeight();
-            if(clientHeight > contentHeight){
-              $('.result_details .content').css({ top: "50%", marginTop: (-(contentHeight/2)) + "px"})
-            }else{
-              $('.result_details .content').css({ top: "0", marginTop: "0px"})
+            if (clientHeight > contentHeight) {
+              $('.result_details .content').css({ top: "50%", marginTop: (-(contentHeight / 2)) + "px" })
+            } else {
+              $('.result_details .content').css({ top: "0", marginTop: "0px" })
             }
           }
         },
@@ -493,13 +527,13 @@ $(function () {
         $('.result_details').find("strong.title").html("");
         $('.result_details').find("span.date span").html("");
         $('.result_details').find("div.text").html("");
-        $(".result_details .page .prev").text("").removeClass("not").attr("id","");
-        $(".result_details .page .next").text("").removeClass("not").attr("id","");
+        $(".result_details .page .prev").text("").removeClass("not").attr("id", "");
+        $(".result_details .page .next").text("").removeClass("not").attr("id", "");
         $('body').css('overflow', "auto");
       }, 500)
     }
     $('.result_list li a').click(function () {
-      showDetail( $(this).attr("id"))
+      showDetail($(this).attr("id"))
     })
     $('.result_details span.close').click(function () {
       destory();
@@ -507,6 +541,6 @@ $(function () {
     $('.result_details .page .back').click(function () {
       destory();
     })
-  }catch(e){}
+  } catch (e) { }
 
 })
