@@ -74,8 +74,6 @@ app.use((req, res, next) => {
 
 app.use('/', require('./routers/web'))
 app.use('/admin', require('./routers/admin')) //后台管理页面路由
-// app.use('/api', require('./routers/api'))
-
 // 加api是为了区分 前台页面和后台接口
 app.use('/api/upload', require('./routers/upload')) //图片上传
 app.use('/api/backend_public', require('./routers/backend_public')) //后台管理页面公共接口
@@ -89,6 +87,12 @@ app.use('/api/store', require('./routers/store'))
 app.use('/api/about', require('./routers/about'))
 app.use('/api/find', require('./routers/find'))
 app.use('/api/video', require('./routers/video'))
+app.use('/api/message', require('./routers/message'))
+
+// 404
+// app.use('*', (req, res) => {
+//   res.render('404')
+// })
 
 mongoose.connect('mongodb://ydias:qq942266@ds139427.mlab.com:39427/fusen', {
   useNewUrlParser: true

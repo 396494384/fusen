@@ -4,8 +4,8 @@
   <img src="./images/server.jpg" alt="">
   <!-- <div class="row1"><strong>搜索结果</strong></div> -->
 </div>
-<div class="news">
-  <div class="news_list show">
+<div class="result_box">
+  <div class="result_list show">
     <div class="result">
       搜索结果
     </div>
@@ -29,17 +29,17 @@
       {% if currPage == 1 %}
       <a class="left prev">&lt; 上一页</a>
       {% else %}
-      <a href="news?page={{ currPage - 1 }}" class="left prev">&lt; 上一页</a>
+      <a href="result?page={{ currPage - 1 }}" class="left prev">&lt; 上一页</a>
       {% endif %}
       <div class="left number">
         {% for item in recodes %}
-        <a href="news?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
+        <a href="result?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
         {% endfor %}
       </div>
       {% if currPage == recodes.length %}
       <a class="right next">下一页 &gt;</a>
       {% else %}
-      <a href="news?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
+      <a href="result?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
       {% endif %}
     </div>
     {% else %}
@@ -49,23 +49,17 @@
     {% endif %}
   </div>
 </div>
-<div class="news_details">
+<div class="result_details">
   <div class="content">
     <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
     <div class="text_box">
-      <strong class="title">自驾出行前，你需要为爱车做什么准备？</strong>
-      <span class="date">
-        <b>新闻</b> 2018-12-25
-      </span>
-      <div class="text">
-        自驾出行是很自由的旅游方式，方向盘握在自己手中，可以灵活调整旅程安排。沿途所过之处，多得是名不见经传的美丽风光。
-        我国幅员辽阔，若是长途自驾旅行，可能气候差异变化会比较大，相较于其它旅游方式，而自驾车却能满足多样的物品携带需求，不管是衣物，还是饮用水，食品，药物等各种所需之物都可以带足，使旅途变得非常舒适愉快。还可以带上餐具、帐篷等，来一场原生态的野炊。
-        <img src="./images/news.jpg" alt="">
-      </div>
+      <strong class="title"></strong>
+      <span class="date"><b>新闻</b> <span></span></span>
+      <div class="text"></div>
       <div class="clearFix page">
-        <a href="#" class="left prev">&lt; 上一篇</a>
+        <a href="javascript:" class="left prev">&lt; 上一篇</a>
         <a href="javascript:" class="back">返回</a>
-        <a href="#" class="right next">下一篇 &gt;</a>
+        <a href="javascript:" class="right next">下一篇 &gt;</a>
       </div>
     </div>
   </div>

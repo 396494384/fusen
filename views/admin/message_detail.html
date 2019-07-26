@@ -1,0 +1,51 @@
+{% extends './template/layout.html' %}
+{% block main %}
+<div class="layui-bread">
+  <span class="layui-breadcrumb">
+    <a href="/admin">后台管理系统</a>
+    <a class="active">留言信息</a>
+  </span>
+</div>
+<a href="/admin/message" class="layui-btn">返回</a>
+<table class="layui-table" lay-size="lg">
+  <colgroup>
+    <col width="200">
+    <col>
+  </colgroup>
+  <tr>
+    <td>留言类型</td>
+    <td>{{ data.msg_type }}</td>
+  </tr>
+  <tr>
+    <td>姓名</td>
+    <td>{{ data.name }}</td>
+  </tr>
+  <tr>
+    <td>电话</td>
+    <td>{{ data.phone }}</td>
+  </tr>
+  <tr>
+    <td>邮箱</td>
+    <td>{{ data.email }}</td>
+  </tr>
+  <tr>
+    <td>地址</td>
+    <td>{{ data.site }}</td>
+  </tr>
+  <tr>
+    <td>留言内容</td>
+    <td>{{ data.content }}</td>
+  </tr>
+  <tr>
+    <td>提交时间</td>
+    <td>{{ data.date }}</td>
+  </tr>
+</table>
+<script>
+  $(function () {
+    layui.use(['element'], function () {
+      var element = layui.element;
+    });
+  })
+</script>
+{% endblock %}

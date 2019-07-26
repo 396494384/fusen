@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Public = require('../models/Public')
+const Message = require('../models/Message')
 const Banner = require('../models/Banner')
 const City = require('../models/City')
 const Store = require('../models/Store')
@@ -19,6 +20,12 @@ router.use((req, res, next) => {
     return;
   }
   next()
+})
+router.use((req, res, next) => {
+  Message.find({ status: false }).then(data => {
+    req.userInfo.msg = data.length;
+    next();
+  })
 })
 
 router.get('/login', (req, res) => {
@@ -360,7 +367,7 @@ router.get('/about_update', (req, res) => {
 
 // 视频管理
 router.get('/video', (req, res) => {
-  Public.find().then(data=>{
+  Public.find().then(data => {
     res.render('admin/video', {
       userInfo: req.userInfo,
       data: data[0]
@@ -373,7 +380,7 @@ router.get('/video_add', (req, res) => {
   })
 })
 router.get('/video_update', (req, res) => {
-  Public.find().then(data=>{
+  Public.find().then(data => {
     res.render('admin/video_update', {
       userInfo: req.userInfo,
       data: data[0]
@@ -382,10 +389,36 @@ router.get('/video_update', (req, res) => {
 })
 // 视频管理 end
 
+// 留言管理
+router.get('/message', (req, res) => {
+  res.render('admin/message', {
+    userInfo: req.userInfo
+  })
+})
+router.get('/message_detail', (req, res) => {
+  Message.findById(req.query.id).then(data => {
+    let _detail = data;
+    if (_detail) {
+      Message.updateOne({ _id: req.query.id }, {
+        status: true
+      }).then(() => {
+        Message.find({ status: false }).then(data => {
+          req.userInfo.msg = data.length;
+          res.render('admin/message_detail', {
+            userInfo: req.userInfo,
+            data: _detail
+          })
+        })
+      })
+    }
+  })
+})
+// 留言管理 end
+
 
 // 404
-router.get('*', (req, res) => {
-  res.render('admin/404')
-})
+// router.get('*', (req, res) => {
+//   res.render('admin/404')
+// })
 
 module.exports = router;

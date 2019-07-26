@@ -5,6 +5,7 @@
     <li class="layui-nav-item"><a href="/" target="_blank"><i class="layui-icon">&#xe68e;</i> 前台首页</a></li>
   </ul>
   <ul class="layui-nav layui-layout-right">
+    <li class="layui-nav-item"><a href="/admin/message"><i class="layui-icon">&#xe667;</i> 留言消息{% if userInfo.msg > 0 %}<span class="layui-badge">{{ userInfo.msg }}</span>{% endif %}</a></li>
     <li class="layui-nav-item"><a class="clear_cache" href="javascript:"><i class="layui-icon">&#xe640;</i> 清除缓存</a></li>
     <li class="layui-nav-item">
       <a href="javascript:;">

@@ -198,9 +198,6 @@ router.post("/news_detail", (req, res) => {
       })
     })
   })
-  
-  
-  
 })
 
 // 招聘
@@ -296,8 +293,51 @@ router.get("/result", (req, res) => {
   })
 })
 
-// 404
-router.get('*', (req, res) => {
-  res.render('404')
+// 搜索结果详情
+router.post("/result_detail", (req, res) => {
+  let _id = req.body.id;
+  New.find({
+    title: new RegExp(req.body.search),
+    status:true,
+    _id: {
+      $gt: _id
+    } 
+  }).sort({_id: 1}).limit(1).then(data=>{
+    let _prev = data[0];
+    if(data.length == 0){
+      _prev = null;
+    }
+    New.find({
+      title: new RegExp(req.body.search),
+      status:true,
+      _id: {
+        $lt: _id
+      } 
+    }).sort({_id: -1}).limit(1).then(data=>{
+      let _next = data[0];
+      if(data.length == 0){
+        _next = null;
+      }
+      New.findById(req.body.id).then(data => {
+        res.json({
+          code: 200,
+          data: {
+            prev: _prev ? {
+              title: _prev.title,
+              id: _prev._id.toString() 
+            } : "",
+            data: data,
+            next: _next ? {
+              title: _next.title,
+              id: _next._id.toString()
+            } : ""
+          }
+        })
+      })
+    })
+  })
 })
+
+
+
 module.exports = router;

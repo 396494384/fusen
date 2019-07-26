@@ -102,6 +102,9 @@ $(function () {
   // news
   try {
     function showDetail(id) {
+      layer.load(2, {
+        shade: [0.3, '#000']
+      });
       $.ajax({
         type: "POST",
         url: "/news_detail",
@@ -109,36 +112,82 @@ $(function () {
           id: id
         },
         success: function (data) {
+          layer.closeAll('loading');
           if (data.code == 200) {
             var data = data.data;
             $('body').css('overflow', "hidden");
-            $('.news_details').find("strong.title").html(data.data.title)
-            $('.news_details').find("span.date span").html(data.data.date)
-            $('.news_details').find("div.text").html(data.data.content)
+            $('.news_details').find("strong.title").html(data.data.title);
+            $('.news_details').find("span.date span").html(data.data.date);
+            $('.news_details').find("div.text").html(data.data.content);
+
+            if (data.prev) {
+              var _prevtitle = data.prev.title.length > 12 ? data.prev.title.substring(0, 12) + "...." : data.prev.title;
+              $(".news_details .page .prev").text("< " + _prevtitle).removeClass("not").attr("id", data.prev.id);
+            } else {
+              $(".news_details .page .prev").text("< 没有了").addClass("not").attr("id", "");
+            }
+            if (data.next) {
+              var _nexttitle = data.next.title.length > 12 ? data.next.title.substring(0, 12) + "...." : data.next.title;
+              $(".news_details .page .next").text(_nexttitle + " >").removeClass("not").attr("id", data.next.id);
+            } else {
+              $(".news_details .page .next").text("没有了 >").addClass("not").attr("id", "");
+            }
+            toggleDetail();
             $('.news_details').fadeIn();
+            var clientHeight = $('body').outerHeight();
+            var contentHeight = $('.news_details .content').outerHeight();
+            if(clientHeight > contentHeight){
+              $('.news_details .content').css({ top: "50%", marginTop: (-(contentHeight/2)) + "px"})
+            }else{
+              $('.news_details .content').css({ top: "0", marginTop: "0px"})
+            }
           }
+        },
+        error: function () {
+          layer.closeAll('loading');
         }
       })
     }
+
+    function toggleDetail() {
+      $(".news_details .page .prev").unbind("click").click(function () {
+        if ($(this).hasClass("not")) {
+          return;
+        } else {
+          showDetail($(this).attr("id"));
+        }
+      })
+      $(".news_details .page .next").unbind("click").click(function () {
+        if ($(this).hasClass("not")) {
+          return;
+        } else {
+          showDetail($(this).attr("id"));
+        }
+      })
+    }
+
+    function destory() {
+      $('.news_details').fadeOut();
+      setTimeout(function () {
+        $('.news_details').find("strong.title").html("");
+        $('.news_details').find("span.date span").html("");
+        $('.news_details').find("div.text").html("");
+        $(".news_details .page .prev").text("").removeClass("not").attr("id","");
+        $(".news_details .page .next").text("").removeClass("not").attr("id","");
+        $('body').css('overflow', "auto");
+      }, 500)
+    }
     $('.news_list li a').click(function () {
-      var _id = $(this).attr("id");
-      showDetail(_id)
+      showDetail( $(this).attr("id"))
     })
     $('.news_big a').click(function () {
-      var _id = $(this).attr("id");
-      showDetail(_id)
+      showDetail( $(this).attr("id"))
     })
     $('.news_details span.close').click(function () {
-      $('.news_details').fadeOut();
-      setTimeout(function () {
-        $('body').css('overflow', "auto");
-      }, 500)
+      destory();
     })
     $('.news_details .page .back').click(function () {
-      $('.news_details').fadeOut();
-      setTimeout(function () {
-        $('body').css('overflow', "auto");
-      }, 500)
+      destory();
     })
 
     var news_big = $('.news_big');
@@ -366,5 +415,98 @@ $(function () {
       }
     })
   } catch (e) { }
+
+
+
+  // result
+  try{
+    var searchKey = window.location.search.split("=")[1];
+    function showDetail(id) {
+      layer.load(2, {
+        shade: [0.3, '#000']
+      });
+      $.ajax({
+        type: "POST",
+        url: "/result_detail",
+        data: {
+          id: id,
+          search: searchKey
+        },
+        success: function (data) {
+          layer.closeAll('loading');
+          if (data.code == 200) {
+            var data = data.data;
+            $('body').css('overflow', "hidden");
+            $('.result_details').find("strong.title").html(data.data.title);
+            $('.result_details').find("span.date span").html(data.data.date);
+            $('.result_details').find("div.text").html(data.data.content);
+
+            if (data.prev) {
+              var _prevtitle = data.prev.title.length > 12 ? data.prev.title.substring(0, 12) + "...." : data.prev.title;
+              $(".result_details .page .prev").text("< " + _prevtitle).removeClass("not").attr("id", data.prev.id);
+            } else {
+              $(".result_details .page .prev").text("< 没有了").addClass("not").attr("id", "");
+            }
+            if (data.next) {
+              var _nexttitle = data.next.title.length > 12 ? data.next.title.substring(0, 12) + "...." : data.next.title;
+              $(".result_details .page .next").text(_nexttitle + " >").removeClass("not").attr("id", data.next.id);
+            } else {
+              $(".result_details .page .next").text("没有了 >").addClass("not").attr("id", "");
+            }
+            toggleDetail();
+            $('.result_details').fadeIn();
+            var clientHeight = $('body').outerHeight();
+            var contentHeight = $('.result_details .content').outerHeight();
+            if(clientHeight > contentHeight){
+              $('.result_details .content').css({ top: "50%", marginTop: (-(contentHeight/2)) + "px"})
+            }else{
+              $('.result_details .content').css({ top: "0", marginTop: "0px"})
+            }
+          }
+        },
+        error: function () {
+          layer.closeAll('loading');
+        }
+      })
+    }
+
+    function toggleDetail() {
+      $(".result_details .page .prev").unbind("click").click(function () {
+        if ($(this).hasClass("not")) {
+          return;
+        } else {
+          showDetail($(this).attr("id"));
+        }
+      })
+      $(".result_details .page .next").unbind("click").click(function () {
+        if ($(this).hasClass("not")) {
+          return;
+        } else {
+          showDetail($(this).attr("id"));
+        }
+      })
+    }
+
+    function destory() {
+      $('.result_details').fadeOut();
+      setTimeout(function () {
+        $('.result_details').find("strong.title").html("");
+        $('.result_details').find("span.date span").html("");
+        $('.result_details').find("div.text").html("");
+        $(".result_details .page .prev").text("").removeClass("not").attr("id","");
+        $(".result_details .page .next").text("").removeClass("not").attr("id","");
+        $('body').css('overflow', "auto");
+      }, 500)
+    }
+    $('.result_list li a').click(function () {
+      showDetail( $(this).attr("id"))
+    })
+    $('.result_details span.close').click(function () {
+      destory();
+    })
+    $('.result_details .page .back').click(function () {
+      destory();
+    })
+  }catch(e){}
 
 })

@@ -12,15 +12,15 @@
     <div class="form">
       <div class="radios">
         <label>
-          <input type="radio" name="msg_type" checked />
+          <input type="radio" name="msg_type" value="售后服务反馈" checked />
           售后服务反馈
         </label>
         <label>
-          <input type="radio" name="msg_type" />
+          <input type="radio" name="msg_type" value="加盟合作" />
           加盟合作
         </label>
         <label>
-          <input type="radio" name="msg_type" />
+          <input type="radio" name="msg_type" value="其他建议或意见" />
           其他建议或意见
         </label>
       </div>
@@ -39,4 +39,62 @@
     </div>
   </div>
 </div>
+<script>
+  $(function () {
+
+
+    $(".submit").click(function () {
+      var _sendData = {
+        msg_type: $("input[name='msg_type']:checked").val(),
+        name: $("input[name='name']").val(),
+        phone: $("input[name='phone']").val(),
+        email: $("input[name='email']").val(),
+        site: $("input[name='site']").val(),
+        content: $("textarea[name='content']").val()
+      }
+
+      if (_sendData.name == "") {
+        layer.msg("请输入姓名", {
+          time: 1000
+        })
+      } else if (_sendData.phone == "") {
+        layer.msg("请输入电话", {
+          time: 1000
+        })
+      } else if (!(/1\d{10}/.test(_sendData.phone))) {
+        layer.msg("请输入正确的电话号码", {
+          time: 1000
+        })
+      } else if (_sendData.email == "") {
+        layer.msg("请输入邮箱", {
+          time: 1000
+        })
+      } else if (_sendData.site == "") {
+        layer.msg("请输入地址", {
+          time: 1000
+        })
+      } else if (_sendData.content == "") {
+        layer.msg("请输入留言内容", {
+          time: 1000
+        })
+      } else {
+        layer.load(2, {
+          shade: [0.3, '#000']
+        });
+        $.ajax({
+          type: "POST",
+          url: "/api/message/message_add",
+          data: _sendData,
+          success: function (data) {
+            layer.closeAll('loading');
+            console.log(data)
+          },
+          error: function () {
+            layer.closeAll('loading');
+          }
+        })
+      }
+    })
+  })
+</script>
 {% endblock %}
