@@ -7,19 +7,6 @@
   </span>
 </div>
 <table class="layui-table" id="table" lay-filter="operation"></table>
-<style>
-  .layui-table img.table_img {
-    display: block;
-    width: auto;
-    max-width: inherit;
-    height: 50px;
-    margin: 10px auto;
-  }
-
-  .layui-table-cell {
-    height: auto;
-  }
-</style>
 <script>
   $(function () {
     var url = '/api/message/message_list';
@@ -50,7 +37,7 @@
             align: "center",
             field: 'status',
             templet: function (item) {
-              return item.status ? "已读" : "未读"
+              return item.status ? "已读" : "未读 <span class='layui-badge-dot'></span>"
             }
           }, {
             width: "20%",

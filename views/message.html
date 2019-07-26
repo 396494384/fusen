@@ -41,8 +41,6 @@
 </div>
 <script>
   $(function () {
-
-
     $(".submit").click(function () {
       var _sendData = {
         msg_type: $("input[name='msg_type']:checked").val(),
@@ -87,10 +85,20 @@
           data: _sendData,
           success: function (data) {
             layer.closeAll('loading');
-            console.log(data)
+            layer.msg(data.msg, {
+              time: 1000
+            })
+            if (data.code == 200) {
+              setTimeout(function () {
+                location.href = "message";
+              }, 1000)
+            }
           },
           error: function () {
             layer.closeAll('loading');
+            layer.msg("与服务器通信发生错误", {
+              time: 1000
+            });
           }
         })
       }
