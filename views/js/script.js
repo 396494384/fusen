@@ -18,7 +18,9 @@ $(function () {
   $(".search .confirm").click(function () {
     var _searchKey = $(".search_key").val();
     if (_searchKey == "") {
-      alert("请输入搜索关键字")
+      layer.msg("请输入搜索关键字", {
+        time: 1000
+      })
     } else {
       window.location.href = "result?search=" + _searchKey;
     }
@@ -381,20 +383,20 @@ $(function () {
       if (scrollType == 1) {
         $("body, html").animate({
           "scrollTop": 0
-        }, 500)
+        }, 1)
       } else if (scrollType == 2) {
-        console.log(aboutModule2Top)
+        // console.log(aboutModule2Top)
         $("body, html").animate({
-          "scrollTop": aboutModule2Top - 30
-        }, 500)
+          "scrollTop": aboutModule2Top
+        }, 1)
       } else if (scrollType == 3) {
         $("body, html").animate({
-          "scrollTop": aboutModule3Top - 30
-        }, 500)
+          "scrollTop": aboutModule3Top
+        }, 1)
       } else if (scrollType == 4) {
         $("body, html").animate({
-          "scrollTop": aboutModule4Top - 30
-        }, 500)
+          "scrollTop": aboutModule4Top
+        }, 1)
       }
     }, 100)
 

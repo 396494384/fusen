@@ -22,8 +22,10 @@
       <li class="left product_nav">
         <span class="nav_title">复升事业<img class="img1" src="./images/icon_nav_down.png" alt=""><img class="img2"
             src="./images/icon_up.png" alt=""></span>
+        {% if public.categorys.length > 0 %}
         <div class="nav_item">
           <ul class="clearFix">
+            {% if public.categorys[0] %}
             <li class="left">
               <a href="product?category={{ public.categorys[0].id }}">
                 <img src="./images/img_nav10.png" alt="">
@@ -32,6 +34,8 @@
                 <b>探索该系列 &gt;</b>
               </a>
             </li>
+            {% endif %}
+            {% if public.categorys[1] %}
             <li class="left">
               <a href="product?category={{ public.categorys[1].id }}">
                 <img src="./images/img_nav11.png" alt="">
@@ -40,6 +44,8 @@
                 <b>探索该系列 &gt;</b>
               </a>
             </li>
+            {% endif %}
+            {% if public.categorys[2] %}
             <li class="left">
               <a href="product?category={{ public.categorys[2].id }}">
                 <img src="./images/img_nav12.png" alt="">
@@ -48,8 +54,10 @@
                 <b>探索该系列 &gt;</b>
               </a>
             </li>
+            {% endif %}
           </ul>
         </div>
+        {% endif %}
       </li>
       <li class="left">
         <a href="news"><span class="nav_title">资讯</span></a>

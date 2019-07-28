@@ -1,6 +1,5 @@
 {% extends './template/layout.html' %}
 {% block main %}
-
 <div class="head_diagram">
   <img src="./images/server.jpg" alt="">
   <div class="row1"><strong>复升资讯</strong></div>
@@ -11,7 +10,7 @@
         <strong>头条新闻</strong>
         <p>从这里，你能实时了解复升品牌的最新资讯新闻</p>
       </div>
-      {% if big %}
+      {% if big.length > 0 %}
       <div class="clearFix news_big">
         <a href="javascript:" class="left img" id="{{ big._id.toString() }}">
           <img src="{{ big.img }}" alt="{{ big.img }}">
@@ -28,7 +27,9 @@
       </div>
       {% endif %}
     </div>
+    {% if news.length > 0 %}
   <div class="news_list">
+   
     <ul class="clearFix">
       {% for item in news %}
       <li class="left">
@@ -61,7 +62,9 @@
       <a href="news?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
       {% endif %}
     </div>
+    
   </div>
+  {% endif %}
 </div>
 <div class="news_details">
   <div class="content">

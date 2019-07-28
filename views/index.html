@@ -1,6 +1,7 @@
 {% extends './template/layout.html' %}
 {% block main %}
 
+{% if banner.length > 0 %}
 <div class="banner">
   <div class="bx-wrapper">
     <div class="bx-viewport">
@@ -15,6 +16,8 @@
     </div>
   </div>
 </div>
+{% endif %}
+{% if public.video_img %}
 <div class="clearFix index_module1">
   <a href="javascript:" class="img">
     {% if public.video && public.video_status %}
@@ -32,6 +35,8 @@
     </a>
   </div>
 </div>
+{% endif %}
+{% if public.categorys.length > 0 %}
 <div class="index_module2">
   <div class="imgs">
     {% for item in public.categorys %}
@@ -61,43 +66,51 @@
     {% endfor %}
   </div>
 </div>
+{% endif %}
+
+{% if product.length > 0 %}
 <div class="index_module3">
-  <strong class="module_title">系列产品</strong>
-  <ul class="clearFix">
-    {% for item in product %}
-    <li class="left">
-      <a href="product_detail?id={{ item._id.toString() }}">
-        <span class="img">
-          <img src="{{ item.product_img }}" alt="{{ item.name }}">
-        </span>
-        <p>
-          <span class="type">{{ item.type }}</span>
-          <strong>{{ item.name }}</strong>
-          <span class="line"></span>
-          <span class="text">{{ item.function }}</span>
-          <span class="link">了解详情 &gt;</span>
-        </p>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+    <strong class="module_title">系列产品</strong>
+    <ul class="clearFix">
+      {% for item in product %}
+      <li class="left">
+        <a href="product_detail?id={{ item._id.toString() }}">
+          <span class="img">
+            <img src="{{ item.product_img }}" alt="{{ item.name }}">
+          </span>
+          <p>
+            <span class="type">{{ item.type }}</span>
+            <strong>{{ item.name }}</strong>
+            <span class="line"></span>
+            <span class="text">{{ item.function }}</span>
+            <span class="link">了解详情 &gt;</span>
+          </p>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% if find.length > 0 %}
 <div class="index_module4">
-  <span class="title">发现更多</span>
-  <ul class="clearFix">
-    {% for item in find %}
-    <li class="left">
-      <a {% if item.type == "关于我们" %} href="about" {% endif %} {% if item.type == "复升新闻" %} href="news" {% endif %}
-        {% if item.type == "品牌服务" %} href="contact" {% endif %}>
-        <span class="img">
-          <img src="{{ item.img }}" alt="{{ item.img }}">
-        </span>
-        <strong>{{ item.title }}</strong>
-        <p>{{ item.text }}</p>
-        <span class="link">&gt; 了解更多</span>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+    <span class="title">发现更多</span>
+    <ul class="clearFix">
+      {% for item in find %}
+      <li class="left">
+        <a {% if item.type == "关于我们" %} href="about" {% endif %} {% if item.type == "复升新闻" %} href="news" {% endif %}
+          {% if item.type == "品牌服务" %} href="contact" {% endif %}>
+          <span class="img">
+            <img src="{{ item.img }}" alt="{{ item.img }}">
+          </span>
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.text }}</p>
+          <span class="link">&gt; 了解更多</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
 {% endblock %}

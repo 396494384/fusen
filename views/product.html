@@ -1,7 +1,9 @@
 {% extends "./template/layout.html" %}
 {% block main %}
 <div class="cause">
+
   <div class="cause_top">
+    {% if category %}
     <img src="{{ category.img }}" alt="">
     <div class="text">
       <strong>{{ category.name }}</strong>
@@ -9,13 +11,17 @@
         {{ category.text }}
       </p>
     </div>
+    {% endif %}
   </div>
+
+  {% if public.categorys.length > 0 %}
   <div class="cause_type">
     {% for item in public.categorys %}
     <a href="product?category={{ item._id.toString() }}"
       class="{{ item._id.toString() == category._id.toString() && 'active' }}">{{ item.name }}</a>
     {% endfor %}
   </div>
+  {% endif %}
   <div class="cause_list">
     <div class="clearFix cause_list_title">
       <strong class="left">系列产品</strong>

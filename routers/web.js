@@ -13,19 +13,26 @@ const Product = require('../models/Product');
 const About = require('../models/About');
 const Find = require('../models/Find');
 
-let public = null;
+let public = "";
 router.use((req, res, next) => {
   Public.find().then(data => {
-    public = data[0];
+    if(data.length > 0){
+      public = data[0];
+    }
     next();
   })
 })
 router.use((req, res, next) => {
   Category.find().then(data => {
-    public.categorys = data;
-    public.categorys.forEach(i => {
-      i.id = i._id.toString();
-    })
+    console.log(public)
+    if(data.length > 0){
+      public.categorys = data;
+      public.categorys.forEach(i => {
+        i.id = i._id.toString();
+      })
+    }else{
+      public.categorys = [];
+    }
     next();
   })
 })
@@ -39,10 +46,12 @@ function getIndex(res) {
     _banner.forEach(i => {
       i.banner = i.banner.replace(/\\/g, "/");
     })
-    public.categorys.forEach((val, idx) => {
-      val.img = val.img.replace(/\\/g, "/");
-      val.idx = idx + 1;
-    })
+    if(public.categorys ){
+      public.categorys.forEach((val, idx) => {
+        val.img = val.img.replace(/\\/g, "/");
+        val.idx = idx + 1;
+      })
+    }
     Product.find({
       status: true
     }).limit(3).sort({ _id: -1 }).then(data => {
@@ -69,30 +78,50 @@ router.get('/index', (req, res) => {
 
 // 产品
 router.get('/product', (req, res) => {
-  let _item = public.categorys[0];
-  if (req.query.category) {
-    _item = public.categorys.filter(i => i._id == req.query.category)[0];
-  }
-  Product.find({
-    category: _item._id.toString(),
-    status: true
-  }).then(data => {
+  console.log()
+  let _item = "";
+  if(public.categorys){
+    _item = public.categorys[0];
+    if (req.query.category) {
+      _item = public.categorys.filter(i => i._id == req.query.category)[0];
+    }
+    Product.find({
+      category: _item._id.toString(),
+      status: true
+    }).then(data => {
+      res.render('product', {
+        public: public,
+        title: "产品",
+        category: _item,
+        product: data
+      })
+    })
+  }else{
     res.render('product', {
       public: public,
       title: "产品",
       category: _item,
-      product: data
+      product: []
     })
-  })
+  }
+  
 })
 // 产品详情
 router.get('/product_detail', (req, res) => {
   Product.findById(req.query.id).then(data => {
-    res.render('product_detail', {
-      public: public,
-      title: data.name,
-      product: data
-    })
+    if(data){
+      res.render('product_detail', {
+        public: public,
+        title: data.name,
+        product: data
+      })
+    }else{
+      res.render('product_detail', {
+        public: public,
+        title: "没有数据",
+        product: ""
+      })
+    }
   })
 })
 
@@ -147,8 +176,8 @@ router.get('/news', (req, res) => {
     } else {
       res.render('news', {
         public: public,
-        big: _big,
-        news: data,
+        big: [],
+        news: [],
         count: count,
         currPage: page,
         count: _recodes,

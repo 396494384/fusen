@@ -1,180 +1,182 @@
 {% extends "./template/layout.html" %}
 {% block main %}
 <div class="product">
-    <div class="product_menu">
-      <div class="clearFix">
-        <strong class="left">{{ product.name }}</strong>
-        <span class="left">{{ product.type }}</span>
-        <a href="{{ product.url }}" target="_blank" class="right">立刻购买</a>
-        <div class="middle">
-          <span class="overview">概览</span>
-          <span class="parameter">参数</span>
-        </div>
+  {% if product %}
+  <div class="product_menu">
+    <div class="clearFix">
+      <strong class="left">{{ product.name }}</strong>
+      <span class="left">{{ product.type }}</span>
+      <a href="{{ product.url }}" target="_blank" class="right">立刻购买</a>
+      <div class="middle">
+        <span class="overview">概览</span>
+        <span class="parameter">参数</span>
       </div>
-    </div>
-    <div class="product_imgs">
-      <div class="img1">
-        <img class="bg" src="./images/img_product2.jpg" alt="">
-        <div class="text">
-          <div>
-            <strong>复升智能车载冰箱</strong>
-            <p>·直流低功耗压缩机 · 超快降温 · 断电超长保温 · 高端核心保温材料·</p>
-            <span class="price">{{ product.price }}元</span>
-          </div>
-        </div>
-      </div>
-      <div class="img2">
-        <img class="bg" src="./images/img_product3.jpg" alt="">
-        <div class="text">
-          <div>
-            <div class="right">
-              <strong>
-                <i>超高效制冷/热 </i>
-                温度随心控制
-              </strong>
-              <p>
-                通过高效的真空绝热板 <br>
-                极大提高了制冷、制热效率
-              </p>
-              <span>
-                制冷<b class="blue">-18℃</b> 制热<b class="red">55℃</b>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="img3">
-        <img class="bg" src="./images/img_product6.jpg" alt="">
-        <div class="text">
-          <div>
-            <strong>
-              卓越性能 造良品
-            </strong>
-            <p>
-              采用再升科技真空绝热板，导热系数可达0.0018W/m.K。 <br>
-              隔热性能是传统聚氨酯泡沫10倍以上。
-            </p>
-            <ul class="clearFix">
-              <li class="left">
-                <img src="./images/icon_product2.png" alt="">
-                <b>降温速度</b>
-                <span>
-                  有真空绝热板的产品降温速度比 <br>
-                  没有真空绝热板的产品快
-                </span>
-                <i>80~100%</i>
-              </li>
-              <li class="left">
-                <img src="./images/icon_product3.png" alt="">
-                <b>保温时长</b>
-                <span>
-                  有真空绝热板的产品保温时间比没有<br>
-                  真空绝热板的产品长
-                </span>
-                <i>35~60%</i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="img4">
-        <img class="bg" src="./images/img_product4.jpg" alt="">
-        <div class="text">
-          <div>
-            <div class="right">
-              <strong>
-                简约几何设计 <br>
-                让美陪伴你一路出行
-              </strong>
-              <p>
-                简约的外形设计，黑色主体外观，<br>
-                搭配以金典的中国红，稳重而优雅。<br>
-                同时采用LED显示屏幕，<br>
-                尺寸大，亮度高，显示清晰。
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="clearFix product_details">
-      <div class="left">
-        <p class="clearFix">
-          <strong>产品参数<i></i></strong>
-          <span class="left">
-            <b>型号：</b>
-            {{ product.type }}
-          </span>
-          <span class="left">
-            <b>工作电压：</b>
-            {{ product.voltage }}
-          </span>
-          <span class="left">
-            <b>能耗：</b>
-            {{ product.energy }}
-          </span>
-          <span class="left">
-            <b>容积：</b>
-            {{ product.volume }}
-          </span>
-          <span class="left">
-            <b>功能：</b>
-            {{ product.function }}
-          </span>
-          <span class="left">
-            <b>包装规格：</b>
-            {{ product.specifications }}
-          </span>
-        </p>
-        <a href="{{ product.url }}" target="_blank">立刻购买<img src="./images/icon_product1.png" alt=""></a>
-      </div>
-      <div class="right">
-        <div class="slide">
-          {% for item in product.imgs %}
-          <img src="{{ item }}" alt="">
-          {% endfor %}
-        </div>
-        <div class="idx">
-          {% for item in product.imgs %}
-          <span></span>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-    <div class="more">
-      <span class="title">了解更多</span>
-      <ul class="clearFix">
-        <li class="left">
-          <a href="#">
-            <span class="img">
-              <img src="./images/img_product7.jpg" alt="">
-            </span>
-            <strong>品牌产品咨询</strong>
-            <p>进一步了解产品，我们将尽可为您提供详尽的服务。</p>
-            <span class="link">&gt; 了解更多</span>
-          </a>
-        </li>
-        <li class="left">
-          <a href="#">
-            <span class="img">
-              <img src="./images/img_product8.jpg" alt="">
-            </span>
-            <strong>服务与支持</strong>
-            <p>我们有专业技术人员，为你技术解答，全心支持。</p>
-            <span class="link">&gt; 了解更多</span>
-          </a>
-        </li>
-        <li class="left">
-          <a href="#">
-            <span class="img">
-              <img src="./images/img_product9.jpg" alt="">
-            </span>
-            <strong>品牌下载中心</strong>
-            <p>更多产品指引，贴心伴行。</p>
-            <span class="link">&gt; 了解更多</span>
-          </a>
-        </li>
-      </ul>
     </div>
   </div>
+  <div class="product_imgs">
+    <div class="img1">
+      <img class="bg" src="./images/img_product2.jpg" alt="">
+      <div class="text">
+        <div>
+          <strong>复升智能车载冰箱</strong>
+          <p>·直流低功耗压缩机 · 超快降温 · 断电超长保温 · 高端核心保温材料·</p>
+          <span class="price">{{ product.price }}元</span>
+        </div>
+      </div>
+    </div>
+    <div class="img2">
+      <img class="bg" src="./images/img_product3.jpg" alt="">
+      <div class="text">
+        <div>
+          <div class="right">
+            <strong>
+              <i>超高效制冷/热 </i>
+              温度随心控制
+            </strong>
+            <p>
+              通过高效的真空绝热板 <br>
+              极大提高了制冷、制热效率
+            </p>
+            <span>
+              制冷<b class="blue">-18℃</b> 制热<b class="red">55℃</b>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="img3">
+      <img class="bg" src="./images/img_product6.jpg" alt="">
+      <div class="text">
+        <div>
+          <strong>
+            卓越性能 造良品
+          </strong>
+          <p>
+            采用再升科技真空绝热板，导热系数可达0.0018W/m.K。 <br>
+            隔热性能是传统聚氨酯泡沫10倍以上。
+          </p>
+          <ul class="clearFix">
+            <li class="left">
+              <img src="./images/icon_product2.png" alt="">
+              <b>降温速度</b>
+              <span>
+                有真空绝热板的产品降温速度比 <br>
+                没有真空绝热板的产品快
+              </span>
+              <i>80~100%</i>
+            </li>
+            <li class="left">
+              <img src="./images/icon_product3.png" alt="">
+              <b>保温时长</b>
+              <span>
+                有真空绝热板的产品保温时间比没有<br>
+                真空绝热板的产品长
+              </span>
+              <i>35~60%</i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="img4">
+      <img class="bg" src="./images/img_product4.jpg" alt="">
+      <div class="text">
+        <div>
+          <div class="right">
+            <strong>
+              简约几何设计 <br>
+              让美陪伴你一路出行
+            </strong>
+            <p>
+              简约的外形设计，黑色主体外观，<br>
+              搭配以金典的中国红，稳重而优雅。<br>
+              同时采用LED显示屏幕，<br>
+              尺寸大，亮度高，显示清晰。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearFix product_details">
+    <div class="left">
+      <p class="clearFix">
+        <strong>产品参数<i></i></strong>
+        <span class="left">
+          <b>型号：</b>
+          {{ product.type }}
+        </span>
+        <span class="left">
+          <b>工作电压：</b>
+          {{ product.voltage }}
+        </span>
+        <span class="left">
+          <b>能耗：</b>
+          {{ product.energy }}
+        </span>
+        <span class="left">
+          <b>容积：</b>
+          {{ product.volume }}
+        </span>
+        <span class="left">
+          <b>功能：</b>
+          {{ product.function }}
+        </span>
+        <span class="left">
+          <b>包装规格：</b>
+          {{ product.specifications }}
+        </span>
+      </p>
+      <a href="{{ product.url }}" target="_blank">立刻购买<img src="./images/icon_product1.png" alt=""></a>
+    </div>
+    <div class="right">
+      <div class="slide">
+        {% for item in product.imgs %}
+        <img src="{{ item }}" alt="">
+        {% endfor %}
+      </div>
+      <div class="idx">
+        {% for item in product.imgs %}
+        <span></span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="more {% if !product %}show{% endif %}">
+    <span class="title">了解更多</span>
+    <ul class="clearFix">
+      <li class="left">
+        <a href="#">
+          <span class="img">
+            <img src="./images/img_product7.jpg" alt="">
+          </span>
+          <strong>品牌产品咨询</strong>
+          <p>进一步了解产品，我们将尽可为您提供详尽的服务。</p>
+          <span class="link">&gt; 了解更多</span>
+        </a>
+      </li>
+      <li class="left">
+        <a href="#">
+          <span class="img">
+            <img src="./images/img_product8.jpg" alt="">
+          </span>
+          <strong>服务与支持</strong>
+          <p>我们有专业技术人员，为你技术解答，全心支持。</p>
+          <span class="link">&gt; 了解更多</span>
+        </a>
+      </li>
+      <li class="left">
+        <a href="#">
+          <span class="img">
+            <img src="./images/img_product9.jpg" alt="">
+          </span>
+          <strong>品牌下载中心</strong>
+          <p>更多产品指引，贴心伴行。</p>
+          <span class="link">&gt; 了解更多</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
 {% endblock %}

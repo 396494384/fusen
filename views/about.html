@@ -5,8 +5,9 @@
   <div class="row1"><strong>探索复升</strong></div>
 </div>
 <div class="about">
-  {% if about %}
+  
   <div class="about_module about_module1">
+    
     <div class="about_module_title">
       <strong>复升品牌</strong>
       <p>
@@ -14,6 +15,7 @@
         我们的服务全面周到、细致入微，复升不断创新、进取与突破是复升不变的追求。
       </p>
     </div>
+    {% if about %}
     <div class="clearFix about_module_content">
       <input type="hidden" name="content" value='{{ about.content }}'>
       <div class="left text"></div>
@@ -21,8 +23,9 @@
         <img src="{{ about.img }}" alt="">
       </div>
     </div>
+    {% endif %}
   </div>
-  {% endif %}
+  
   <div class="about_module about_module2">
     <div class="about_module_title">
       <strong>品牌实力</strong>
@@ -107,6 +110,7 @@
       <strong>合作伙伴</strong>
       <p>复升与其合作伙伴有共同的理念：合作、学习、双赢。 通过在前沿技术领域的合作，创造未来。</p>
     </div>
+    {% if partner.length > 0 %}
     <div class="about_module_content">
       <ul class="clearFix">
         {% for item in partner %}
@@ -118,6 +122,7 @@
         {% endfor %}
       </ul>
     </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
