@@ -135,13 +135,24 @@ $(function () {
               $(".news_details .page .next").text("没有了 >").addClass("not").attr("id", "");
             }
             toggleDetail();
-            $('.news_details').fadeIn();
+            $('.news_details').fadeIn().scrollTop(0);
+
             var clientHeight = $('body').outerHeight();
             var contentHeight = $('.news_details .content').outerHeight();
+            var clientWidth = $('.news_details').outerWidth();
             if (clientHeight > contentHeight) {
               $('.news_details .content').css({ top: "50%", marginTop: (-(contentHeight / 2)) + "px" })
+              $('.news_details .news_details_btns').css({
+                position: "absolute",
+                right: "-60px"
+              }).find(".scroll_top").hide()
             } else {
               $('.news_details .content').css({ top: "0", marginTop: "0px" })
+              var right = ((clientWidth - 1000) / 2) - 50;
+              $('.news_details .news_details_btns').css({
+                position: "fixed",
+                right: right
+              }).find(".scroll_top").show()
             }
           }
         },
@@ -179,6 +190,8 @@ $(function () {
         $('body').css('overflow', "auto");
       }, 500)
     }
+
+
     $('.news_list li a').click(function () {
       showDetail($(this).attr("id"))
     })
@@ -190,6 +203,9 @@ $(function () {
     })
     $('.news_details .page .back').click(function () {
       destory();
+    })
+    $('.news_details span.scroll_top').click(function () {
+      $('.news_details').scrollTop(0);
     })
 
     var news_big = $('.news_big');
@@ -476,7 +492,6 @@ $(function () {
             $('.result_details').find("strong.title").html(data.data.title);
             $('.result_details').find("span.date span").html(data.data.date);
             $('.result_details').find("div.text").html(data.data.content);
-
             if (data.prev) {
               var _prevtitle = data.prev.title.length > 12 ? data.prev.title.substring(0, 12) + "...." : data.prev.title;
               $(".result_details .page .prev").text("< " + _prevtitle).removeClass("not").attr("id", data.prev.id);
@@ -490,13 +505,24 @@ $(function () {
               $(".result_details .page .next").text("没有了 >").addClass("not").attr("id", "");
             }
             toggleDetail();
-            $('.result_details').fadeIn();
+            $('.result_details').fadeIn().scrollTop(0);
+
             var clientHeight = $('body').outerHeight();
             var contentHeight = $('.result_details .content').outerHeight();
+            var clientWidth = $('.result_details').outerWidth();
             if (clientHeight > contentHeight) {
               $('.result_details .content').css({ top: "50%", marginTop: (-(contentHeight / 2)) + "px" })
+              $('.result_details .result_details_btns').css({
+                position: "absolute",
+                right: "-60px"
+              }).find(".scroll_top").hide()
             } else {
               $('.result_details .content').css({ top: "0", marginTop: "0px" })
+              var right = ((clientWidth - 1000) / 2) - 50;
+              $('.result_details .result_details_btns').css({
+                position: "fixed",
+                right: right
+              }).find(".scroll_top").show()
             }
           }
         },
@@ -542,6 +568,10 @@ $(function () {
     })
     $('.result_details .page .back').click(function () {
       destory();
+    })
+
+    $('.result_details span.scroll_top').click(function () {
+      $('.result_details').scrollTop(0);
     })
   } catch (e) { }
 

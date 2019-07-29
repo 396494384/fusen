@@ -77,7 +77,7 @@
     </div>
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <a class="layui-btn add">添加联系我们</a>
+        <a class="layui-btn add">添加</a>
         <a class="layui-btn layui-btn-primary" onclick="window.history.go(-1);">返回</a>
       </div>
     </div>
@@ -147,35 +147,55 @@
           join_phone: $('input[name="join_phone"]').val(),
           code: $('input[name="code"]').val()
         }
-        if (_sendData.code) {
-          var file = document.getElementById("code");//上传图片的input
-          var formData = new FormData();//创建formdata对象
-          formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
-          $.ajax({
-            url: '/api/upload',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-              if (data.code == 200) {
-                _sendData.code = data.data;
-                contactAdd(_sendData)
-              } else {
-                layer.msg("图片上传失败", {
+        if (_sendData.name == "") {
+          layer.msg('请输入公司名称', {
+            time: 1000
+          })
+        } else if (_sendData.address == "") {
+          layer.msg('请输入公司地址', {
+            time: 1000
+          })
+        }
+        // else if (_sendData.join_name == "") {
+        //   layer.msg('请输入加盟管理人称呼', {
+        //     time: 1000
+        //   })
+        // } else if (_sendData.join_phone == "") {
+        //   layer.msg('请输入加盟管理人电话', {
+        //     time: 1000
+        //   })
+        // }
+         else {
+          if (_sendData.code) {
+            var file = document.getElementById("code");//上传图片的input
+            var formData = new FormData();//创建formdata对象
+            formData.append('file', file.files[0]);//给formdata对象中放入数据(键值对的方式)
+            $.ajax({
+              url: '/api/upload',
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                if (data.code == 200) {
+                  _sendData.code = data.data;
+                  contactAdd(_sendData)
+                } else {
+                  layer.msg("图片上传失败", {
+                    time: 1000
+                  });
+                }
+              },
+              error: function () {
+                layer.msg("与服务器通信发生错误", {
                   time: 1000
                 });
               }
-            },
-            error: function () {
-              layer.msg("与服务器通信发生错误", {
-                time: 1000
-              });
-            }
-          });
-        } else {
-          delete _sendData.code;
-          contactAdd(_sendData)
+            });
+          } else {
+            delete _sendData.code;
+            contactAdd(_sendData)
+          }
         }
       })
 

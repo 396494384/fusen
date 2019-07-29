@@ -30,6 +30,10 @@ router.post('/partner_add', (req, res) => {
         msg: "合作伙伴名称重复"
       })
     } else {
+      let _url = req.body.url;
+      if (_url.indexOf("http://") == -1) {
+        req.body.url = "http://" + _url;
+      }
       new Partner(req.body).save().then(() => {
         res.json({
           code: 200,
@@ -56,6 +60,9 @@ router.post('/partner_update', (req, res) => {
     })
   } else {
     delete _update.img
+  }
+  if (_update.url.indexOf("http://") == -1) {
+    _update.url = "http://" + _update.url;
   }
   Partner.updateOne({
     _id: _id

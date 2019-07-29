@@ -14,10 +14,17 @@
           <strong>{{ data.name }}</strong>
           <p>
             地址&nbsp;&nbsp;{{ data.address }}<br>
+            {% if data.postal_code %}
             邮编&nbsp;&nbsp;{{ data.postal_code }}<br>
+            {% endif %}
+            {% if data.email %}
             邮件&nbsp;&nbsp;{{ data.email }}<br>
+            {% endif %}
+            {% if data.telephone %}
             座机&nbsp;&nbsp;{{ data.telephone }}
+            {% endif %}
           </p>
+          
         </li>
         <li class="left">
           <strong>全国统一服务热线</strong>
@@ -25,21 +32,31 @@
             售后服务支持，您可拨打我们的服务专线<br>
             (工作日9:00 — 17:00)
           </p>
-          <b>400 8888 666</b>
+          <b>{{ public.hotline }}</b>
         </li>
         <li class="left">
+          {% if data.join_phone %}
           <strong>经销商加盟服务</strong>
+          {% endif %}
           <p>
             {{ data.join_position }} <br>
             {{ data.join_name }} <br>
+            {% if data.join_email %}
             邮件&nbsp;&nbsp;{{ data.join_email }} <br>
+            {% endif %}
+            {% if data.join_phone %}
             电话&nbsp;&nbsp;{{ data.join_phone }}
+            {% endif %}
           </p>
         </li>
+        
         <li class="right">
+          {% if data.code %}
           <strong>微信公众号</strong>
           <img src="{{ data.code }}" alt="">
+          {% endif %}
         </li>
+        
       </ul>
     </div>
     <div id="map" style="width: 100%; height: 600px;"></div>

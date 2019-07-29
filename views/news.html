@@ -6,30 +6,30 @@
 </div>
 <div class="news">
   <div class="news_big_box">
-      <div class="title">
-        <strong>头条新闻</strong>
-        <p>从这里，你能实时了解复升品牌的最新资讯新闻</p>
-      </div>
-      {% if big.length > 0 %}
-      <div class="clearFix news_big">
-        <a href="javascript:" class="left img" id="{{ big._id.toString() }}">
-          <img src="{{ big.img }}" alt="{{ big.img }}">
-        </a>
-        <a href="javascript:" class="right text" id="{{ big._id.toString() }}">
-          <strong class="txt_hide">{{ big.title }}</strong>
-          <b class="date">{{ big.date }}</b>
-          <p>{{ big.abstract.substring(0, 100) }}</p>
-          <span class="link">
-            <em></em>
-            <i>&gt; 了解更多</i>
-          </span>
-        </a>
-      </div>
-      {% endif %}
+    <div class="title">
+      <strong>头条新闻</strong>
+      <p>从这里，你能实时了解复升品牌的最新资讯新闻</p>
     </div>
-    {% if news.length > 0 %}
+    {% if big %}
+    <div class="clearFix news_big">
+      <a href="javascript:" class="left img" id="{{ big._id.toString() }}">
+        <img src="{{ big.img }}" alt="{{ big.img }}">
+      </a>
+      <a href="javascript:" class="right text" id="{{ big._id.toString() }}">
+        <strong class="txt_hide">{{ big.title }}</strong>
+        <b class="date">{{ big.date }}</b>
+        <p>{{ big.abstract.substring(0, 100) }}</p>
+        <span class="link">
+          <em></em>
+          <i>&gt; 了解更多</i>
+        </span>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
   <div class="news_list">
-   
+    {% if news.length > 0 %}
     <ul class="clearFix">
       {% for item in news %}
       <li class="left">
@@ -53,7 +53,8 @@
       {% endif %}
       <div class="left number">
         {% for item in recodes %}
-        <a href="news?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
+        <a {% if item != currPage %} href="news?page={{ item }}" {% endif %}
+          class="{{ item == currPage && 'active' }}">{{ item }}</a>
         {% endfor %}
       </div>
       {% if currPage == recodes.length %}
@@ -62,13 +63,16 @@
       <a href="news?page={{ currPage + 1 }}" class="right next">下一页 &gt;</a>
       {% endif %}
     </div>
-    
+    {% endif %}
   </div>
-  {% endif %}
+
 </div>
 <div class="news_details">
   <div class="content">
-    <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
+    <div class="news_details_btns">
+      <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
+      <span class="scroll_top"><img src="./images/icon_close_search.jpg" alt=""></span>
+    </div>
     <div class="text_box">
       <strong class="title"></strong>
       <span class="date">

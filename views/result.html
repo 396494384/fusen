@@ -33,7 +33,8 @@
       {% endif %}
       <div class="left number">
         {% for item in recodes %}
-        <a href="result?page={{ item }}" class="{{ item == currPage && 'active' }}">{{ item }}</a>
+        <a {% if item != currPage %} href="result?page={{ item }}" {% endif %}
+          class="{{ item == currPage && 'active' }}">{{ item }}</a>
         {% endfor %}
       </div>
       {% if currPage == recodes.length %}
@@ -51,7 +52,10 @@
 </div>
 <div class="result_details">
   <div class="content">
-    <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
+    <div class="result_details_btns">
+      <span class="close"><img src="./images/icon_close_search.jpg" alt=""></span>
+      <span class="scroll_top"><img src="./images/icon_close_search.jpg" alt=""></span>
+    </div>
     <div class="text_box">
       <strong class="title"></strong>
       <span class="date"><b>新闻</b> <span></span></span>

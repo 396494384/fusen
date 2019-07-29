@@ -1,23 +1,25 @@
 {% extends './template/layout.html' %}
 {% block main %}
 
-{% if banner.length > 0 %}
+
 <div class="banner">
   <div class="bx-wrapper">
     <div class="bx-viewport">
       <div class="slider">
+        {% if banner.length > 0 %}
         {% for item in banner %}
         <div class="slide">
           <a {% if item.url %} href="{{ item.url }}" target="_blank" {% else %}{% endif %}
             style="background: url('{{ item.banner }}') no-repeat center center; background-size: cover;"></a>
         </div>
         {% endfor %}
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
-{% endif %}
-{% if public.video_img %}
+
+
 <div class="clearFix index_module1">
   <a href="javascript:" class="img">
     {% if public.video && public.video_status %}
@@ -29,15 +31,16 @@
   <div class="right content">
     <strong>尖端技术<br>铸就更高品质</strong>
     <p>依托再升科技核心部件的研发能力和技术优势<br>成就享誉行业的领先科技与过硬品质</p>
-    <a href="">
+    <a href="javascript:">
       <b></b>
       <span>探索更多 &gt;</span>
     </a>
   </div>
 </div>
-{% endif %}
-{% if public.categorys.length > 0 %}
+
+
 <div class="index_module2">
+  {% if public.categorys.length > 0 %}
   <div class="imgs">
     {% for item in public.categorys %}
     <div class="img{{ item.idx }}" style="background: url('{{ item.img }}') no-repeat center center;"></div>
@@ -65,52 +68,58 @@
     </div>
     {% endfor %}
   </div>
+  {% endif %}
 </div>
-{% endif %}
 
-{% if product.length > 0 %}
+
+
 <div class="index_module3">
-    <strong class="module_title">系列产品</strong>
-    <ul class="clearFix">
-      {% for item in product %}
-      <li class="left">
-        <a href="product_detail?id={{ item._id.toString() }}">
-          <span class="img">
-            <img src="{{ item.product_img }}" alt="{{ item.name }}">
-          </span>
-          <p>
-            <span class="type">{{ item.type }}</span>
-            <strong>{{ item.name }}</strong>
-            <span class="line"></span>
-            <span class="text">{{ item.function }}</span>
-            <span class="link">了解详情 &gt;</span>
-          </p>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endif %}
+  {% if product.length > 0 %}
+  <strong class="module_title">系列产品</strong>
+  <ul class="clearFix">
+    {% for item in product %}
+    <li class="left">
+      <a href="product_detail?id={{ item._id.toString() }}">
+        <span class="img">
+          <img src="{{ item.product_img }}" alt="{{ item.name }}">
+        </span>
+        <p>
+          <span class="type">{{ item.type }}</span>
+          <strong>{{ item.name }}</strong>
+          <span class="line"></span>
+          <span class="text">{{ item.function }}</span>
+          <span class="link">了解详情 &gt;</span>
+        </p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
 
-{% if find.length > 0 %}
+
+
 <div class="index_module4">
-    <span class="title">发现更多</span>
-    <ul class="clearFix">
-      {% for item in find %}
-      <li class="left">
-        <a {% if item.type == "关于我们" %} href="about" {% endif %} {% if item.type == "复升新闻" %} href="news" {% endif %}
-          {% if item.type == "品牌服务" %} href="contact" {% endif %}>
-          <span class="img">
-            <img src="{{ item.img }}" alt="{{ item.img }}">
-          </span>
-          <strong>{{ item.title }}</strong>
-          <p>{{ item.text }}</p>
-          <span class="link">&gt; 了解更多</span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endif %}
+  {% if find.length > 0 %}
+  <span class="title">发现更多</span>
+  <ul class="clearFix">
+    {% for item in find %}
+    <li class="left">
+      <a {% if item.type == "关于我们" %} href="about" {% endif %} {% if item.type == "复升新闻" %} href="news" {% endif %}
+        {% if item.type == "品牌服务" %} href="contact" {% endif %}>
+        <span class="img">
+          <img src="{{ item.img }}" alt="{{ item.img }}">
+          {% if item.type == "复升新闻" %} <b>最新动态</b> {% endif %}
+        </span>
+        <strong class="txt_hide">{{ item.title }}</strong>
+        <p>{{ item.text.substr(0, 60) }}...</p>
+        <span class="link">&gt; 了解更多</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
 
 {% endblock %}

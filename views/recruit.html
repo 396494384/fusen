@@ -39,7 +39,7 @@
             <div class="recruit_detail">
               <input type="hidden" name="content" value='{{ item.content }}'>
               <div class="text"></div>
-              <span class="apply" id="{{ item._id.toString() }}">立刻申请</span>
+              <a href="contact" class="apply" id="{{ item._id.toString() }}">立刻申请</a>
             </div>
           </li>
           {% endfor %}

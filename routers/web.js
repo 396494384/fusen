@@ -16,7 +16,7 @@ const Find = require('../models/Find');
 let public = "";
 router.use((req, res, next) => {
   Public.find().then(data => {
-    if(data.length > 0){
+    if (data.length > 0) {
       public = data[0];
     }
     next();
@@ -24,13 +24,13 @@ router.use((req, res, next) => {
 })
 router.use((req, res, next) => {
   Category.find().then(data => {
-    console.log(public)
-    if(data.length > 0){
+    // console.log(public)
+    if (data.length > 0) {
       public.categorys = data;
       public.categorys.forEach(i => {
         i.id = i._id.toString();
       })
-    }else{
+    } else {
       public.categorys = [];
     }
     next();
@@ -41,12 +41,12 @@ router.use((req, res, next) => {
 function getIndex(res) {
   Banner.find({
     status: true
-  }).then(data => {
+  }).sort({_id: -1}).then(data => {
     let _banner = data;
     _banner.forEach(i => {
       i.banner = i.banner.replace(/\\/g, "/");
     })
-    if(public.categorys ){
+    if (public.categorys) {
       public.categorys.forEach((val, idx) => {
         val.img = val.img.replace(/\\/g, "/");
         val.idx = idx + 1;
@@ -56,14 +56,13 @@ function getIndex(res) {
       status: true
     }).limit(3).sort({ _id: -1 }).then(data => {
       let _product = data;
-      Find.find().then(data => {
-        let _find = data;
+      Find.find().sort({_id: -1}).then(data => {
         res.render('index', {
           public: public,
           title: public.name,
           banner: _banner,
           product: _product,
-          find: _find
+          find: data
         })
       })
     })
@@ -78,9 +77,8 @@ router.get('/index', (req, res) => {
 
 // 产品
 router.get('/product', (req, res) => {
-  console.log()
   let _item = "";
-  if(public.categorys){
+  if (public.categorys) {
     _item = public.categorys[0];
     if (req.query.category) {
       _item = public.categorys.filter(i => i._id == req.query.category)[0];
@@ -88,7 +86,7 @@ router.get('/product', (req, res) => {
     Product.find({
       category: _item._id.toString(),
       status: true
-    }).then(data => {
+    }).sort({_id: -1}).then(data => {
       res.render('product', {
         public: public,
         title: "产品",
@@ -96,7 +94,7 @@ router.get('/product', (req, res) => {
         product: data
       })
     })
-  }else{
+  } else {
     res.render('product', {
       public: public,
       title: "产品",
@@ -104,18 +102,18 @@ router.get('/product', (req, res) => {
       product: []
     })
   }
-  
+
 })
 // 产品详情
 router.get('/product_detail', (req, res) => {
   Product.findById(req.query.id).then(data => {
-    if(data){
+    if (data) {
       res.render('product_detail', {
         public: public,
         title: data.name,
         product: data
       })
-    }else{
+    } else {
       res.render('product_detail', {
         public: public,
         title: "没有数据",
@@ -130,7 +128,7 @@ router.get('/product_detail', (req, res) => {
 router.get('/about', (req, res) => {
   Partner.find({
     status: true
-  }).then(data => {
+  }).sort({ _id: -1 }).then(data => {
     let _partner = data;
     About.find().then(data => {
       let _about = data[0];
@@ -150,7 +148,7 @@ router.get('/news', (req, res) => {
   let page = req.query.page || 1;
   let pageSize = 6;
   let _skip = ((page - 1) * pageSize) + 1;
-  New.countDocuments().then(count => {
+  New.find({ status: true }).countDocuments().then(count => {
     let _recodes = [];
     let num = Math.ceil((count - 1) / pageSize);
     for (let i = 1; i <= num; i++) {
@@ -190,23 +188,23 @@ router.get('/news', (req, res) => {
 router.post("/news_detail", (req, res) => {
   let _id = req.body.id;
   New.find({
-    status:true,
+    status: true,
     _id: {
       $gt: _id
-    } 
-  }).sort({_id: 1}).limit(1).then(data=>{
+    }
+  }).sort({ _id: 1 }).limit(1).then(data => {
     let _prev = data[0];
-    if(data.length == 0){
+    if (data.length == 0) {
       _prev = null;
     }
     New.find({
-      status:true,
+      status: true,
       _id: {
         $lt: _id
-      } 
-    }).sort({_id: -1}).limit(1).then(data=>{
+      }
+    }).sort({ _id: -1 }).limit(1).then(data => {
       let _next = data[0];
-      if(data.length == 0){
+      if (data.length == 0) {
         _next = null;
       }
       New.findById(req.body.id).then(data => {
@@ -215,7 +213,7 @@ router.post("/news_detail", (req, res) => {
           data: {
             prev: _prev ? {
               title: _prev.title,
-              id: _prev._id.toString() 
+              id: _prev._id.toString()
             } : "",
             data: data,
             next: _next ? {
@@ -300,9 +298,13 @@ router.get("/result", (req, res) => {
   let page = req.query.page || 1;
   let pageSize = 6;
   let _skip = (page - 1) * pageSize;
-  New.where('title', new RegExp(req.query.search)).countDocuments().then(count => {
+  New.where({
+    'title' : new RegExp(req.query.search),
+    status: true
+  }).countDocuments().then(count => {
+    // console.log(count)
     let _recodes = [];
-    let num = Math.ceil((count - 1) / pageSize);
+    let num = Math.ceil(count / pageSize);
     for (let i = 1; i <= num; i++) {
       _recodes.push(i);
     }
@@ -325,26 +327,27 @@ router.get("/result", (req, res) => {
 // 搜索结果详情
 router.post("/result_detail", (req, res) => {
   let _id = req.body.id;
+  let _searchKey = decodeURI(req.body.search);
   New.find({
-    title: new RegExp(req.body.search),
-    status:true,
+    title: new RegExp(_searchKey),
+    status: true,
     _id: {
       $gt: _id
-    } 
-  }).sort({_id: 1}).limit(1).then(data=>{
+    }
+  }).sort({ _id: 1 }).limit(1).then(data => {
     let _prev = data[0];
-    if(data.length == 0){
+    if (data.length == 0) {
       _prev = null;
     }
     New.find({
-      title: new RegExp(req.body.search),
-      status:true,
+      title: new RegExp(_searchKey),
+      status: true,
       _id: {
         $lt: _id
-      } 
-    }).sort({_id: -1}).limit(1).then(data=>{
+      }
+    }).sort({ _id: -1 }).limit(1).then(data => {
       let _next = data[0];
-      if(data.length == 0){
+      if (data.length == 0) {
         _next = null;
       }
       New.findById(req.body.id).then(data => {
@@ -353,7 +356,7 @@ router.post("/result_detail", (req, res) => {
           data: {
             prev: _prev ? {
               title: _prev.title,
-              id: _prev._id.toString() 
+              id: _prev._id.toString()
             } : "",
             data: data,
             next: _next ? {

@@ -18,7 +18,9 @@ const storage = multer.diskStorage({
     })
   },
   filename(req, file, cb) { //修改文件名称
-    cb(null, new Date().getTime() + file.originalname);
+    let _arr = file.originalname.split(".");
+    let _ext = "." + _arr[_arr.length - 1];
+    cb(null, new Date().getTime() + _ext);
   }
 });
 const upload = multer({

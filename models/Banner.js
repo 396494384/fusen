@@ -5,8 +5,7 @@ const BannerSchema = new mongoose.Schema({
     required: true
   },
   url:{
-    type:String,
-    required: true
+    type:String
   },
   status:{
     type: Boolean,

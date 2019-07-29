@@ -99,41 +99,55 @@
     </div>
   </div>
   <div class="clearFix product_details">
-    <div class="left">
+    <div class="left clearFix">
       <p class="clearFix">
         <strong>产品参数<i></i></strong>
         <span class="left">
           <b>型号：</b>
           {{ product.type }}
         </span>
+        {% if product.voltage %}
         <span class="left">
           <b>工作电压：</b>
           {{ product.voltage }}
         </span>
+        {% endif %}
+        {% if product.energy %}
         <span class="left">
           <b>能耗：</b>
           {{ product.energy }}
         </span>
+        {% endif %}
+        {% if product.volume %}
         <span class="left">
           <b>容积：</b>
           {{ product.volume }}
         </span>
+        {% endif %}
+        {% if product.function %}
         <span class="left">
           <b>功能：</b>
           {{ product.function }}
         </span>
+        {% endif %}
+        {% if product.specifications %}
         <span class="left">
           <b>包装规格：</b>
           {{ product.specifications }}
         </span>
+        {% endif %}
       </p>
       <a href="{{ product.url }}" target="_blank">立刻购买<img src="./images/icon_product1.png" alt=""></a>
     </div>
     <div class="right">
       <div class="slide">
+        {% if product.imgs.length > 0 %}
         {% for item in product.imgs %}
         <img src="{{ item }}" alt="">
         {% endfor %}
+        {% else %}
+        <img src="{{ product.product_img }}" alt="">
+        {% endif %}
       </div>
       <div class="idx">
         {% for item in product.imgs %}

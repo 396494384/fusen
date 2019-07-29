@@ -1,7 +1,6 @@
 {% extends "./template/layout.html" %}
 {% block main %}
 <div class="cause">
-
   <div class="cause_top">
     {% if category %}
     <img src="{{ category.img }}" alt="">
@@ -13,12 +12,11 @@
     </div>
     {% endif %}
   </div>
-
   {% if public.categorys.length > 0 %}
   <div class="cause_type">
     {% for item in public.categorys %}
-    <a href="product?category={{ item._id.toString() }}"
-      class="{{ item._id.toString() == category._id.toString() && 'active' }}">{{ item.name }}</a>
+    <a {% if item._id.toString() != category._id.toString() %} href="product?category={{ item._id.toString() }}"
+      {% endif %} class="{{ item._id.toString() == category._id.toString() && 'active' }}">{{ item.name }}</a>
     {% endfor %}
   </div>
   {% endif %}

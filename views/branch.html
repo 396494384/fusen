@@ -7,6 +7,7 @@
 <div class="server">
   {% include "./template/server_menu.html" %}
   <div class="branch">
+    {% if branch.length > 0 %}
     <h2>服务网点查询</h2>
     <div class="clearFix branch_search">
       <input type="text" class="left" placeholder="输入省份/直辖市" />
@@ -20,7 +21,7 @@
           {% for item in city.items %}
           <li class="left">
             <strong>{{ item.name }}</strong>
-            <p> 
+            <p>
               地址：{{ item.position }}<br>
               时间：{{ item.worktime }}<br>
               电话：{{ item.phone }}
@@ -31,6 +32,9 @@
       </dd>
     </dl>
     {% endfor %}
+    {% else %}
+    <p class="not">暂无数据~~</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
