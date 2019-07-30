@@ -1,0 +1,14 @@
+服务器
+cp.xinnet.com
+用户名 host5230817 密码 w8N6S5v2
+
+
+
+普惠型-3 新开 fs-coldchain.com 2019-01-08 2020-02-08
+操作系统 Windows 专用解析地址 host5230817.xincache5.cn
+WEB地址 host5230817.xincache1.cn 独立IP地址 --
+FTP用户名 host5230817 FTP密码 w8N6S5v2
+数据库类型 SQLServer2008 数据库名称/用户名 ms1388837
+数据库密码 S2C6r7g6 数据库地址 ms1388837.xincache1.cn
+数据库类型 MySQL5 数据库名称/用户名 my0955140
+数据库密码 k1V7x3T4 数据库地址 my0955140.xincache1.cn
